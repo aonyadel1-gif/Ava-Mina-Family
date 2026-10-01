@@ -101,13 +101,15 @@ html.js .rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,tra
 .fab{position:fixed;z-index:40;left:14px;width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:21px;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.22);transition:transform .2s,opacity .3s;padding:0}.fab:hover{transform:scale(1.1) rotate(10deg)}
 #tg{bottom:calc(14px + env(safe-area-inset-bottom,0px))}#up{bottom:calc(72px + env(safe-area-inset-bottom,0px));opacity:0;pointer-events:none}#up.show{opacity:1;pointer-events:auto}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html.js .rv{opacity:1;transform:none}}
+.vod{max-width:920px;margin:-28px auto 0;padding:0 18px;position:relative;z-index:2}.verse{text-align:center;padding:22px 20px;border-top:4px solid var(--gold)}
+.verse .vh{color:var(--gold);font-weight:800}.verse p{font-size:21px;line-height:2;margin:6px 0}.verse .vr{color:var(--mute);font-weight:700}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
 </head>
 <body>
 <nav>
-<span class="brand"><img data-logo alt="" width="34" height="34"><span>آڤا مينا</span></span><a href="#home">الرئيسية</a><a href="#about">عن الأسرة</a><a href="#servants">خدام الأسرة</a><a href="#rules">قواعد الأسرة</a><a href="#join">تسجيل عضو</a><a href="#news">الأخبار</a><a href="#gallery">الصور</a><a href="#contact">تواصل معنا</a>
+<span class="brand"><img data-logo alt="" width="34" height="34"><span>آڤا مينا</span></span><a href="#home">الرئيسية</a><a href="#about">عن الأسرة</a><a href="#servants">خدام الأسرة</a><a href="#rules">قواعد الأسرة</a><a href="#join">تسجيل عضو</a><a href="#news">الأخبار</a><a href="#gallery">الصور</a><a href="#sugg">اقتراحات</a><a href="#contact">تواصل معنا</a>
 </nav>
 
 <section class="hero" id="home">
@@ -125,6 +127,7 @@ html.js .rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,tra
 <div class="scroll" aria-hidden="true">⌄</div>
 </section>
 
+<div class="vod"><div class="card verse"><div class="vh">📖 آية اليوم</div><p id="vt"></p><div class="vr" id="vr"></div></div></div>
 <section id="about">
 <h2>❤️ عن الأسرة</h2>
 <p class="sub">أسرة آڤا مينا وسط مريح للكل، قايم على المحبة والخدمة والصلاة.</p>
@@ -199,6 +202,12 @@ html.js .rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,tra
 <p class="sub">لحظات من اجتماعاتنا ورحلاتنا وأيام الأسرة. اضغط على أي صورة لتكبيرها.</p>
 <figure class="ft" id="ft"></figure>
 <div class="mas" id="mas"></div>
+</section>
+
+<section id="sugg">
+<h2>💡 صندوق الاقتراحات</h2>
+<p class="sub">عندك فكرة أو ملاحظة لتطوير الأسرة؟ اكتبها من غير اسم، ومحدش هيعرف إنت مين.</p>
+<form class="card" id="sf" style="grid-template-columns:1fr"><label>اقتراحك<textarea name="body" rows="4" minlength="3" maxlength="1000" required placeholder="اكتب اقتراحك هنا..."></textarea></label><div><button class="btn" type="submit">ابعت اقتراحك 💡</button><p class="note" id="sm" role="status" style="font-weight:700"></p></div></form>
 </section>
 
 <section id="contact">
@@ -298,6 +307,14 @@ document.querySelectorAll('section h2,section .sub,section .card,.ft,.mas img').
 var links=[].slice.call(document.querySelectorAll('nav a')),so=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting)links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id)})})},{rootMargin:'-45% 0px -50% 0px'});
 document.querySelectorAll('section[id]').forEach(function(x){so.observe(x)})}
 })();
+var VERSES=[["الرَّبُّ نُورِي وَخَلاَصِي، مِمَّنْ أَخَافُ؟ الرَّبُّ حِصْنُ حَيَاتِي، مِمَّنْ أَرْتَعِبُ؟", "مزمور 27:1"], ["الرَّبُّ رَاعِيَّ فَلاَ يُعْوِزُنِي شَيْءٌ.", "مزمور 23:1"], ["أَسْتَطِيعُ كُلَّ شَيْءٍ فِي الْمَسِيحِ الَّذِي يُقَوِّينِي.", "فيلبي 4:13"], ["تَوَكَّلْ عَلَى الرَّبِّ بِكُلِّ قَلْبِكَ، وَعَلَى فَهْمِكَ لاَ تَعْتَمِدْ. فِي كُلِّ طُرُقِكَ اعْرِفْهُ، وَهُوَ يُقَوِّمُ سُبُلَكَ.", "أمثال 3:5-6"], ["لأَنَّهُ هكَذَا أَحَبَّ اللهُ الْعَالَمَ حَتَّى بَذَلَ ابْنَهُ الْوَحِيدَ، لِكَيْ لاَ يَهْلِكَ كُلُّ مَنْ يُؤْمِنُ بِهِ، بَلْ تَكُونُ لَهُ الْحَيَاةُ الأَبَدِيَّةُ.", "يوحنا 3:16"], ["تَعَالَوْا إِلَيَّ يَا جَمِيعَ الْمُتْعَبِينَ وَالثَّقِيلِي الأَحْمَالِ، وَأَنَا أُرِيحُكُمْ.", "متى 11:28"], ["لاَ تَخَفْ لأَنِّي مَعَكَ. لاَ تَتَلَفَّتْ لأَنِّي إِلهُكَ. قَدْ أَيَّدْتُكَ وَأَعَنْتُكَ وَعَضَدْتُكَ بِيَمِينِ بِرِّي.", "إشعياء 41:10"], ["اُطْلُبُوا أَوَّلاً مَلَكُوتَ اللهِ وَبِرَّهُ، وَهذِهِ كُلُّهَا تُزَادُ لَكُمْ.", "متى 6:33"], ["هذِهِ هِيَ وَصِيَّتِي أَنْ تُحِبُّوا بَعْضُكُمْ بَعْضًا كَمَا أَحْبَبْتُكُمْ.", "يوحنا 15:12"], ["الْمَحَبَّةُ تَتَأَنَّى وَتَرْفُقُ. الْمَحَبَّةُ لاَ تَحْسِدُ. الْمَحَبَّةُ لاَ تَتَفَاخَرُ وَلاَ تَنْتَفِخُ.", "1 كورنثوس 13:4"], ["الرَّبُّ قَرِيبٌ مِنَ الْمُنْكَسِرِي الْقُلُوبِ، وَيُخَلِّصُ الْمُنْسَحِقِي الرُّوحِ.", "مزمور 34:18"], ["لأَنِّي عَرَفْتُ الأَفْكَارَ الَّتِي أَنَا مُفْتَكِرٌ بِهَا عَنْكُمْ، يَقُولُ الرَّبُّ، أَفْكَارَ سَلاَمٍ لاَ شَرٍّ، لأُعْطِيَكُمْ آخِرَةً وَرَجَاءً.", "إرميا 29:11"], ["افْرَحُوا فِي الرَّبِّ كُلَّ حِينٍ، وَأَقُولُ أَيْضًا: افْرَحُوا.", "فيلبي 4:4"], ["أَلْقُوا كُلَّ هَمِّكُمْ عَلَيْهِ لأَنَّهُ هُوَ يَعْتَنِي بِكُمْ.", "1 بطرس 5:7"], ["أَنَا هُوَ الطَّرِيقُ وَالْحَقُّ وَالْحَيَاةُ. لَيْسَ أَحَدٌ يَأْتِي إِلَى الآبِ إلاَّ بِي.", "يوحنا 14:6"], ["وَلْنُلاَحِظْ بَعْضُنَا بَعْضًا لِلتَّحْرِيضِ عَلَى الْمَحَبَّةِ وَالأَعْمَالِ الْحَسَنَةِ.", "عبرانيين 10:24"], ["فِي الْعَالَمِ سَيَكُونُ لَكُمْ ضِيقٌ، وَلكِنْ ثِقُوا: أَنَا قَدْ غَلَبْتُ الْعَالَمَ.", "يوحنا 16:33"], ["الرَّبُّ يُقَاتِلُ عَنْكُمْ وَأَنْتُمْ تَصْمُتُونَ.", "خروج 14:14"], ["لأَنَّ اللهَ لَمْ يُعْطِنَا رُوحَ الْفَشَلِ، بَلْ رُوحَ الْقُوَّةِ وَالْمَحَبَّةِ وَالنُّصْحِ.", "2 تيموثاوس 1:7"], ["طُوبَى لِلْحَزَانَى لأَنَّهُمْ يَتَعَزَّوْنَ.", "متى 5:4"], ["أَنْتُمْ نُورُ الْعَالَمِ. لاَ يُمْكِنُ أَنْ تُخْفَى مَدِينَةٌ مَوْضُوعَةٌ عَلَى جَبَلٍ.", "متى 5:14"], ["كُنْ أَمِينًا إِلَى الْمَوْتِ فَسَأُعْطِيَكَ إِكْلِيلَ الْحَيَاةِ.", "رؤيا 2:10"], ["أَمَّا مُنْتَظِرُو الرَّبِّ فَيُجَدِّدُونَ قُوَّةً. يَرْفَعُونَ أَجْنِحَةً كَالنُّسُورِ.", "إشعياء 40:31"], ["بِالْمَحَبَّةِ اخْدِمُوا بَعْضُكُمْ بَعْضًا.", "غلاطية 5:13"], ["اشْكُرُوا فِي كُلِّ شَيْءٍ، لأَنَّ هذِهِ هِيَ مَشِيئَةُ اللهِ فِي الْمَسِيحِ يَسُوعَ مِنْ جِهَتِكُمْ.", "1 تسالونيكي 5:18"], ["اسْأَلُوا تُعْطَوْا. اطْلُبُوا تَجِدُوا. اقْرَعُوا يُفْتَحْ لَكُمْ.", "متى 7:7"], ["إِنْ كَانَ اللهُ مَعَنَا فَمَنْ عَلَيْنَا؟", "رومية 8:31"], ["تَشَدَّدْ وَتَشَجَّعْ. لاَ تَرْهَبْ وَلاَ تَرْتَعِبْ، لأَنَّ الرَّبَّ إِلهَكَ مَعَكَ حَيْثُمَا تَذْهَبُ.", "يشوع 1:9"], ["صَلُّوا بِلاَ انْقِطَاعٍ.", "1 تسالونيكي 5:17"]];
+(function(){var d=Math.floor((Date.now()-new Date(new Date().getFullYear(),0,0))/864e5),v=VERSES[d%VERSES.length];document.getElementById('vt').textContent='«'+v[0]+'»';document.getElementById('vr').textContent=v[1]})();
+document.getElementById('sf').addEventListener('submit',async function(e){e.preventDefault();var f=e.target,m=document.getElementById('sm'),b=f.querySelector('button'),sb=sbClient();
+ if(!sb){m.textContent='الصندوق هيشتغل بعد ربط الموقع بقاعدة البيانات.';return}
+ try{if(Date.now()-(+localStorage.getItem('avaSg')||0)<30000){m.textContent='استنى شوية قبل ما تبعت اقتراح تاني.';return}}catch(x){}
+ b.disabled=true;var r=await sb.from('suggestions').insert({body:f.elements.body.value.trim()});
+ if(r.error)m.textContent='حصلت مشكلة، جرّب تاني.';else{f.reset();m.textContent='وصل اقتراحك، شكراً ليك ❤️';try{localStorage.setItem('avaSg',Date.now())}catch(x){}}
+ b.disabled=false});
 </script>
 </body>
 </html>
