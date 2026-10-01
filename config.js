@@ -1,5 +1,4 @@
-// الصق رابط المشروع والمفتاح بين العلامتين "" ثم احفظ الملف (ده الملف الوحيد اللي هتعدل فيه)
-window.AVA_CONFIG = {
-  url: "",
-  key: ""
+﻿window.AVA_CONFIG = {
+  url: "https://caymfckypfcfuocxlykn.supabase.co",
+  key: "sb_publishable_DYqUgJ_5IC7KSuWmkwvqtw_PuHN3t1r"
 };
