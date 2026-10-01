@@ -83,6 +83,24 @@ input,select,textarea{font:inherit;padding:10px;border-radius:10px;border:1px so
 .soon .wd{font-family:'Cormorant Garamond',Georgia,serif;font-size:40px;letter-spacing:.05em;display:inline-block}.soon p{margin:0 0 16px;color:var(--mute)}
 [hidden]{display:none!important}
 footer{text-align:center;padding:28px 18px;color:var(--mute);font-size:14px;border-top:1px solid var(--line)}
+html{scroll-behavior:smooth}body{transition:background .4s,color .4s}
+nav{backdrop-filter:blur(14px) saturate(1.4);background:color-mix(in srgb,var(--card) 78%,transparent)}
+nav a{transition:background .2s,color .2s}nav a.on{background:var(--gold);color:#1a1a1a}
+#bar{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--gold),#f3d27a);z-index:50}
+h2{display:inline-block;position:relative;padding-bottom:8px}h2::after{content:"";position:absolute;inset-inline-start:0;bottom:0;width:48px;height:4px;border-radius:4px;background:var(--gold)}
+.card{box-shadow:0 2px 10px rgba(20,30,60,.06);transition:transform .25s,box-shadow .25s,border-color .25s}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(20,30,60,.16);border-color:var(--gold)}
+.btn{transition:transform .2s,box-shadow .2s,filter .2s}.btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.25);filter:brightness(1.07)}.btn:active{transform:none}
+.ph2{transition:transform .3s}.sv:hover .ph2{transform:scale(1.08) rotate(2deg)}
+.mas img,.ft img{transition:transform .3s,filter .3s}.mas img:hover,.ft img:hover{transform:scale(1.02);filter:brightness(1.06)}
+.hero>.orb{position:absolute;margin:0;max-width:none;border-radius:50%;filter:blur(50px);opacity:.35;z-index:0;animation:fl 9s ease-in-out infinite}
+.o1{width:240px;height:240px;background:var(--gold);top:-60px;right:-40px}.o2{width:300px;height:300px;background:#4f7be0;bottom:-120px;left:-80px;animation-delay:2s}
+@keyframes fl{50%{transform:translate(20px,26px) scale(1.1)}}
+.scroll{margin-top:20px;font-size:26px;opacity:.85;animation:bob 2s ease-in-out infinite}
+html.js .rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}html.js .rv.in{opacity:1;transform:none}
+.fab{position:fixed;z-index:40;left:14px;width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:21px;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.22);transition:transform .2s,opacity .3s;padding:0}.fab:hover{transform:scale(1.1) rotate(10deg)}
+#tg{bottom:calc(14px + env(safe-area-inset-bottom,0px))}#up{bottom:calc(72px + env(safe-area-inset-bottom,0px));opacity:0;pointer-events:none}#up.show{opacity:1;pointer-events:auto}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html.js .rv{opacity:1;transform:none}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
@@ -93,6 +111,7 @@ footer{text-align:center;padding:28px 18px;color:var(--mute);font-size:14px;bord
 </nav>
 
 <section class="hero" id="home">
+<span class="orb o1"></span><span class="orb o2"></span>
 <img class="badge" data-logo alt="شعار أسرة آڤا مينا - جامعيين علوم مالية وإدارية بسوهاج">
 <h1>أسرة آڤا مينا</h1>
 <div class="en">Ava Mina Family</div>
@@ -103,6 +122,7 @@ footer{text-align:center;padding:28px 18px;color:var(--mute);font-size:14px;bord
 <a class="btn o" href="#servants">خدام الأسرة</a>
 <a class="btn o" href="#rules">قواعد الأسرة</a>
 </div>
+<div class="scroll" aria-hidden="true">⌄</div>
 </section>
 
 <section id="about">
@@ -150,7 +170,7 @@ footer{text-align:center;padding:28px 18px;color:var(--mute);font-size:14px;bord
 <label>رقم الهاتف<input name="p" type="tel" required></label>
 <label>Email<input name="e" type="email"></label>
 <label>الفرقة<select name="y" required><option value="">اختر</option><option>الأولى</option><option>الثانية</option><option>الثالثة</option><option>الرابعة</option></select></label>
-<label>القسم<input name="d" required></label>
+<label>القسم<input name="d" list="dl" required placeholder="اختر أو اكتب"><datalist id="dl"><option value="محاسبة"><option value="إدارة أعمال"><option value="اقتصاد"><option value="تمويل وبنوك"><option value="نظم معلومات إدارية"><option value="إحصاء وتأمين"></datalist></label>
 <label>تاريخ الميلاد<input name="b" type="date"></label>
 <label>سنة الانضمام للأسرة<input name="j" type="number" min="2015" max="2035" placeholder="2026"></label>
 <label>مهارات أو مواهب<input name="s"></label>
@@ -188,6 +208,7 @@ footer{text-align:center;padding:28px 18px;color:var(--mute);font-size:14px;bord
 </section>
 
 <div class="lb" id="lb" dir="ltr"><button class="x" id="lx" aria-label="إغلاق">×</button><button class="pv" id="lp" aria-label="السابق">‹</button><img id="li" alt=""><button class="nx" id="ln" aria-label="التالي">›</button><div class="ct" id="lc"></div></div>
+<div id="bar"></div><button class="fab" id="up" aria-label="للأعلى">↑</button><button class="fab" id="tg" aria-label="تبديل الوضع الليلي والنهاري">🌙</button>
 <footer>أسرة آڤا مينا ❤️ جامعيين العلوم المالية والإدارية، سوهاج<br><span dir="ltr" style="font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;letter-spacing:.1em">Ava Mina Family</span></footer>
 
 <script>
@@ -263,6 +284,19 @@ document.getElementById('lp').onclick=function(){show(cur+1)};
 document.getElementById('ln').onclick=function(){show(cur-1)};
 lb.addEventListener('click',function(e){if(e.target===lb)lb.classList.remove('on')});
 document.addEventListener('keydown',function(e){if(!lb.classList.contains('on'))return;if(e.key==='Escape')lb.classList.remove('on');if(e.key==='ArrowLeft')show(cur-1);if(e.key==='ArrowRight')show(cur+1)});
+})();
+(function(){var de=document.documentElement,tg=document.getElementById('tg'),up=document.getElementById('up'),bar=document.getElementById('bar');de.classList.add('js');
+function cur(){return de.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}
+function setT(t,save){de.setAttribute('data-theme',t);tg.textContent=t==='dark'?'☀️':'🌙';if(save)try{localStorage.setItem('avaTheme',t)}catch(e){}}
+try{var s=localStorage.getItem('avaTheme');if(s)de.setAttribute('data-theme',s)}catch(e){}
+setT(cur(),false);tg.onclick=function(){setT(cur()==='dark'?'light':'dark',true)};
+up.onclick=function(){scrollTo({top:0,behavior:'smooth'})};
+addEventListener('scroll',function(){var h=de.scrollHeight-innerHeight;bar.style.width=(h>0?scrollY/h*100:0)+'%';up.classList.toggle('show',scrollY>600)},{passive:true});
+if('IntersectionObserver' in window){
+var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){var t=e.target;t.classList.add('in');io.unobserve(t);setTimeout(function(){t.classList.remove('rv','in');t.style.transitionDelay=''},900)}})},{threshold:.1});
+document.querySelectorAll('section h2,section .sub,section .card,.ft,.mas img').forEach(function(el,i){if(el.closest('.hero'))return;el.classList.add('rv');el.style.transitionDelay=((i%4)*70)+'ms';io.observe(el)});
+var links=[].slice.call(document.querySelectorAll('nav a')),so=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting)links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id)})})},{rootMargin:'-45% 0px -50% 0px'});
+document.querySelectorAll('section[id]').forEach(function(x){so.observe(x)})}
 })();
 </script>
 </body>
