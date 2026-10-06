@@ -5,14 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>لوحة أمين الأسرة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
 <style>
 :root{--bg:#f6f3ea;--card:#fff;--ink:#1f2a44;--mute:#5d6680;--pri:#1f3a6e;--gold:#c8962e;--line:#e6dfcf;--red:#b3261e;--ok:#1e7a3c}
 @media (prefers-color-scheme:dark){:root{--bg:#121a2e;--card:#1b2542;--ink:#f1ede2;--mute:#a9b2cc;--pri:#8fb0ee;--gold:#e0b24e;--line:#2c3860;--red:#ff8a80;--ok:#6fdc96}}
 *{box-sizing:border-box}[hidden]{display:none!important}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:Tahoma,Arial,sans-serif;line-height:1.7}
-.wrap{max-width:1100px;margin:auto;padding:16px}h1{font-size:22px;margin:0;color:var(--pri)}h3{margin:18px 0 8px;color:var(--pri)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans Arabic',Tahoma,Arial,sans-serif;line-height:1.7}
+.wrap{max-width:1100px;margin:auto;padding:16px}h1{font-family:'El Messiri','IBM Plex Sans Arabic',sans-serif;font-size:24px;margin:0;color:var(--pri)}h3{margin:18px 0 8px;color:var(--pri)}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
 input,select,button{font:inherit;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
 button{cursor:pointer;font-weight:700}button.on,.p{background:var(--pri);color:var(--bg);border:0}.g{background:var(--gold);border:0;color:#1a1a1a}
@@ -33,6 +35,14 @@ dialog form{display:grid;gap:10px;grid-template-columns:1fr 1fr}dialog label{dis
 dialog input,dialog select,dialog textarea{width:100%;font:inherit;padding:9px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
 .nt{border-inline-start:3px solid var(--gold);padding:6px 10px;margin:8px 0;background:var(--bg);border-radius:8px}.nt small{color:var(--mute)}
 .ban{background:linear-gradient(135deg,var(--gold),#f3d27a);color:#1a1a1a;border-radius:14px;padding:12px 16px;margin:12px 0;font-weight:700}.ban a{color:#1a1a1a}
+.it{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;padding:12px 14px}.it .bx{min-width:62px;text-align:center;font-weight:800;color:var(--gold);line-height:1.3}.it .bx b{display:block;font-size:24px}
+.it .gr{flex:1;min-width:0}.it .gr small{display:block;color:var(--mute)}.it .ac{display:flex;gap:6px;flex-wrap:wrap}
+.th{width:84px;height:64px;border-radius:10px;object-fit:cover;background:var(--line);flex:none;display:grid;place-items:center;color:var(--mute);font-size:22px}
+.gy{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}.gy .card{padding:10px;display:grid;gap:6px}.gy .th{width:100%;height:130px}
+.tag.red{background:#fde3e0;color:#b3261e}.tag.ok{background:#d8f1e0;color:var(--ok)}.badge{background:var(--red);color:#fff;border-radius:99px;padding:0 8px;font-size:12px;margin-inline-start:4px}
+.pr{border-inline-start:4px solid var(--gold)}.pr.done{opacity:.65;border-inline-start-color:var(--ok)}
+.hint{background:var(--bg);border:1px dashed var(--line);border-radius:10px;padding:8px 12px;color:var(--mute);font-size:13px}
+@media(max-width:520px){dialog form{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -59,15 +69,15 @@ var $=function(i){return document.getElementById(i)};
 function esc(s){var d=document.createElement('div');d.textContent=s==null?'':s;return d.innerHTML}
 var MN=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
 var YO=['الأولى','الثانية','الثالثة','الرابعة'];
-var TABS=[['over','📊 نظرة عامة'],['bd','🎂 أعياد الميلاد'],['yr','🎓 الفرق'],['dp','🏛️ الأقسام'],['fu','🤝 الافتقاد'],['all','👥 كل الأعضاء'],['sg','💡 الاقتراحات']];
-var st={tab:'over',y:'',d:'',mode:'cal',q:'',fy:'',fs:'',fd:30},notes=[],sugs=[],miss=false,DL=document.getElementById('dlg');
+var TABS=[['over','📊 نظرة عامة'],['bd','🎂 أعياد الميلاد'],['yr','🎓 الفرق'],['dp','🏛️ الأقسام'],['fu','🤝 الافتقاد'],['all','👥 كل الأعضاء'],['sg','💡 الاقتراحات'],['pr','🙏 طلبات الصلاة'],['ev','📅 الفعاليات'],['cp','🏆 المسابقات'],['ar','🗂️ الأرشيف']];
+var st={tab:'over',y:'',d:'',mode:'cal',q:'',fy:'',fs:'',fd:30,pf:'new'},notes=[],sugs=[],miss=false,events=[],comps=[],arch=[],prayers=[],miss3=false,DL=document.getElementById('dlg');
 function ea(s){return esc(s).replace(/"/g,'&quot;')}
 function greet(m){return 'كل سنة وانت طيب يا '+m.full_name.split(' ')[0]+' ❤️\nربنا يفرّح قلبك ويبارك حياتك ويحفظك قريب منه.\nأسرة آڤا مينا'}
 function nc(id){return notes.filter(function(n){return n.member_id===id}).length}
 function lastC(id){var n=notes.find(function(x){return x.member_id===id});return n?n.created_at:null}
 function needs(d){var lim=Date.now()-d*864e5;return all.map(function(m){return{m:m,l:lastC(m.id)}}).filter(function(x){return !x.l||new Date(x.l).getTime()<lim}).sort(function(a,c){return (a.l?new Date(a.l).getTime():0)-(c.l?new Date(c.l).getTime():0)})}
 function dt(s){return new Date(s).toLocaleDateString('ar-EG',{day:'numeric',month:'long',year:'numeric'})}
-function ban(){var t=bdList().filter(function(x){return x.b.days===0});$('ban').innerHTML=t.length?'<div class="ban">🎉 النهاردة عيد ميلاد: '+t.map(function(x){return esc(x.m.full_name)+' <a target="_blank" rel="noopener" href="'+wa(x.m.phone,greet(x.m))+'">(ابعت تهنئة)</a>'}).join(' • ')+'</div>':''}
+function ban(){var t=bdList().filter(function(x){return x.b.days===0}),np=prayers.filter(function(p){return p.status==='new'}).length;$('ban').innerHTML=(np?'<div class="ban">🙏 عندك '+np+' طلب صلاة جديد <a href="#" data-go="pr">(افتحها)</a></div>':'')+(t.length?'<div class="ban">🎉 النهاردة عيد ميلاد: '+t.map(function(x){return esc(x.m.full_name)+' <a target="_blank" rel="noopener" href="'+wa(x.m.phone,greet(x.m))+'">(ابعت تهنئة)</a>'}).join(' • ')+'</div>':'')}
 function fuTab(){if(miss)return '<p class="em">شغّل ملف update-2.sql في Supabase الأول.</p>';var l=needs(st.fd);
  return '<div class="bar"><span>اللي ماتفتقدش من آخر</span><select id="fd">'+[14,30,60,90].map(function(d){return '<option value="'+d+'"'+(st.fd===d?' selected':'')+'>'+d+' يوم</option>'}).join('')+'</select><b>'+l.length+' عضو</b></div>'+(l.map(function(x){var m=x.m;return '<div class="card bd">'+ava(m)+'<div><b>'+esc(m.full_name)+'</b><small>'+esc(m.year)+' / '+esc(m.department)+' • '+(x.l?'آخر افتقاد: '+dt(x.l):'لسه ماتفتقدش')+'</small></div><div class="sp"></div><a target="_blank" rel="noopener" href="'+wa(m.phone,'سلام يا '+m.full_name.split(' ')[0]+' ❤️ وحشتنا، عامل إيه؟')+'">واتساب</a><button data-a="nt" data-id="'+m.id+'">📝 سجّل متابعة</button></div>'}).join('')||'<p class="em">كله متفتقد 👏</p>')}
 function sgTab(){if(miss)return '<p class="em">شغّل ملف update-2.sql في Supabase الأول.</p>';return '<h3>💡 اقتراحات الأعضاء (بدون أسماء) — '+sugs.length+'</h3>'+(sugs.map(function(s){return '<div class="card nt"><div style="white-space:pre-wrap">'+esc(s.body)+'</div><small>'+dt(s.created_at)+'</small> <button class="d" data-a="ds" data-id="'+s.id+'">حذف</button></div>'}).join('')||'<p class="em">لسه مفيش اقتراحات.</p>')}
@@ -88,6 +98,74 @@ document.addEventListener('submit',async function(e){e.preventDefault();var f=e.
   var r=await sb.from('members').update(row).eq('id',id);if(r.error){alert('فشل الحفظ: '+r.error.message);return}Object.assign(all.find(function(x){return x.id===id}),row);DL.close();draw()}
  else if(f.id==='nf'){var r2=await sb.from('notes').insert({member_id:id,kind:g('kind'),note:g('note')}).select().single();if(r2.error){alert('فشل الحفظ: '+r2.error.message);return}notes.unshift(r2.data);DL.innerHTML=ntF(all.find(function(x){return x.id===id}));draw()}});
 
+/* ===== تحديث 3: فعاليات / مسابقات / أرشيف / صلاة ===== */
+function today(){return new Date().toLocaleDateString('en-CA',{timeZone:'Africa/Cairo'})}
+var EK={meeting:'اجتماع',trip:'رحلة',carnival:'كرنفال',day:'يوم أسرة',service:'خدمة',other:'أخرى'};
+function pub(p){return sb.storage.from('site-media').getPublicUrl(p).data.publicUrl}
+function th(p,ic){return p?'<img class="th" src="'+ea(pub(p))+'" alt="" loading="lazy">':'<div class="th">'+ic+'</div>'}
+function need3(){return miss3?'<p class="em">شغّل ملف update-3.sql في Supabase الأول (SQL Editor ← Run).</p>':''}
+function shrinkImg(file,max){return new Promise(function(res){var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){var s=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);c.getContext('2d').drawImage(im,0,0,c.width,c.height);c.toBlob(function(b){res(b)},'image/jpeg',.84)};im.onerror=function(){res(null)};im.src=r.result};r.onerror=function(){res(null)};r.readAsDataURL(file)})}
+async function upImg(file,folder){var b=await shrinkImg(file,1500);if(!b)throw new Error('الصورة مش مقروءة');var p=folder+'/'+crypto.randomUUID()+'.jpg',r=await sb.storage.from('site-media').upload(p,b,{contentType:'image/jpeg'});if(r.error)throw r.error;return p}
+async function rmImg(p){if(p)await sb.storage.from('site-media').remove([p])}
+
+function evTab(){if(miss3)return need3();var t=today(),up=events.filter(function(e){return (e.end_date||e.event_date)>=t}).sort(function(a,c){return a.event_date.localeCompare(c.event_date)}),old=events.filter(function(e){return (e.end_date||e.event_date)<t}).sort(function(a,c){return c.event_date.localeCompare(a.event_date)});
+ var card=function(e,past){var p=e.event_date.split('-');return '<div class="card it"><div class="bx"><b>'+(+p[2])+'</b>'+MN[+p[1]-1]+'</div><div class="gr"><b>'+esc(e.title)+'</b> <span class="tag">'+esc(EK[e.kind]||'أخرى')+'</span>'+(e.end_date&&e.end_date!==e.event_date?' <span class="tag">لحد '+esc(e.end_date)+'</span>':'')+'<small>'+esc([e.event_time,e.place].filter(Boolean).join(' • '))+'</small>'+(e.details?'<small>'+esc(e.details)+'</small>':'')+'</div><div class="ac"><button data-a="eve" data-id="'+e.id+'">تعديل</button><button class="d" data-a="evd" data-id="'+e.id+'">حذف</button></div></div>'};
+ return '<div class="bar"><button class="g" data-a="evn">＋ فعالية جديدة</button><span class="hint">الفعالية بتظهر في الموقع لحد ما يعدي تاريخها، وبعدها بتختفي لوحدها.</span></div><h3>القادمة ('+up.length+')</h3>'+(up.map(function(e){return card(e)}).join('')||'<p class="em">مفيش فعاليات قادمة. أضف أول فعالية.</p>')+(old.length?'<h3>انتهت (مخفية من الموقع) ('+old.length+')</h3>'+old.map(function(e){return card(e,1)}).join(''):'')}
+function cpTab(){if(miss3)return need3();
+ return '<div class="bar"><button class="g" data-a="cpn">＋ مسابقة جديدة</button></div>'+(comps.map(function(c){var cl=c.status==='closed';return '<div class="card it">'+th(c.image_path,'🏆')+'<div class="gr"><b>'+esc(c.title)+'</b> <span class="tag '+(cl?'red':'ok')+'">'+(cl?'انتهت':'مفتوحة')+'</span><small>'+esc([c.prize&&'الجايزة: '+c.prize,c.deadline&&'آخر موعد: '+c.deadline].filter(Boolean).join(' • '))+'</small>'+(c.description?'<small>'+esc(c.description.slice(0,140))+(c.description.length>140?'…':'')+'</small>':'')+'</div><div class="ac"><button data-a="cpt" data-id="'+c.id+'">'+(cl?'افتحها':'اقفلها')+'</button><button data-a="cpe" data-id="'+c.id+'">تعديل</button><button class="d" data-a="cpd" data-id="'+c.id+'">حذف</button></div></div>'}).join('')||'<p class="em">لسه مفيش مسابقات. أضف أول مسابقة.</p>')}
+function arTab(){if(miss3)return need3();var ys=[];arch.forEach(function(a){if(ys.indexOf(a.year)<0)ys.push(a.year)});ys.sort(function(a,c){return c-a});
+ return '<div class="bar"><button class="g" data-a="arn">＋ إضافة للأرشيف</button></div>'+(ys.map(function(y){return '<h3>'+y+'</h3><div class="gy">'+arch.filter(function(a){return a.year===y}).map(function(a){return '<div class="card">'+th(a.image_path,'🗂️')+'<b>'+esc(a.title)+'</b>'+(a.description?'<small>'+esc(a.description.slice(0,90))+'</small>':'')+'<div class="ac"><button data-a="are" data-id="'+a.id+'">تعديل</button><button class="d" data-a="ard" data-id="'+a.id+'">حذف</button></div></div>'}).join('')+'</div>'}).join('')||'<p class="em">الأرشيف فاضي. أضف أول ذكرى.</p>')}
+function prTab(){if(miss3)return need3();var c={all:prayers.length,new:prayers.filter(function(p){return p.status==='new'}).length};c.prayed=c.all-c.new;
+ var l=prayers.filter(function(p){return st.pf==='all'||p.status===st.pf});
+ return '<div class="bar">'+[['new','جديدة'],['prayed','تمت الصلاة'],['all','الكل']].map(function(x){return '<button data-pf="'+x[0]+'" class="'+(st.pf===x[0]?'on':'')+'">'+x[1]+' ('+c[x[0]]+')</button>'}).join('')+'</div><p class="hint">الطلبات دي بتظهر ليك ولأبونا بس، ومش بتظهر في الموقع.</p>'+(l.map(function(p){var d=p.status==='prayed';return '<div class="card it pr'+(d?' done':'')+'"><div class="gr"><b>'+(p.name?esc(p.name):'بدون اسم')+'</b> <small style="display:inline">'+dt(p.created_at)+'</small><div style="white-space:pre-wrap;margin-top:4px">'+esc(p.body)+'</div></div><div class="ac"><button data-a="prx" data-id="'+p.id+'">'+(d?'رجّعه جديد':'🙏 تمت الصلاة')+'</button><button class="d" data-a="prd" data-id="'+p.id+'">حذف</button></div></div>'}).join('')||'<p class="em">مفيش طلبات هنا.</p>')}
+
+function evF(e){e=e||{};var o=function(k,v){return '<option value="'+k+'"'+(k===(e.kind||'meeting')?' selected':'')+'>'+v+'</option>'};
+ return '<h3 style="margin-top:0">'+(e.id?'✏️ تعديل فعالية':'📅 فعالية جديدة')+'</h3><form id="evf" data-id="'+(e.id||'')+'"><label class="f">العنوان<input name="title" required value="'+ea(e.title)+'" placeholder="اجتماع الأسرة الأسبوعي"></label><label>النوع<select name="kind">'+Object.keys(EK).map(function(k){return o(k,EK[k])}).join('')+'</select></label><label>التاريخ<input name="event_date" type="date" required value="'+ea(e.event_date)+'"></label><label>لحد تاريخ <small>(لو أكتر من يوم)</small><input name="end_date" type="date" value="'+ea(e.end_date)+'"></label><label>الميعاد<input name="event_time" value="'+ea(e.event_time)+'" placeholder="٦ مساءً"></label><label class="f">المكان<input name="place" value="'+ea(e.place)+'"></label><label class="f">تفاصيل<textarea name="details" rows="3">'+esc(e.details)+'</textarea></label><div class="f"><button class="p" type="submit">حفظ</button> <button type="button" data-a="cl">إلغاء</button></div></form>'}
+function cpF(c){c=c||{};
+ return '<h3 style="margin-top:0">'+(c.id?'✏️ تعديل مسابقة':'🏆 مسابقة جديدة')+'</h3><form id="cpf" data-id="'+(c.id||'')+'"><label class="f">اسم المسابقة<input name="title" required value="'+ea(c.title)+'"></label><label class="f">الوصف والشروط<textarea name="description" rows="4">'+esc(c.description)+'</textarea></label><label>الجايزة<input name="prize" value="'+ea(c.prize)+'"></label><label>آخر موعد<input name="deadline" type="date" value="'+ea(c.deadline)+'"></label><label class="f">رابط المشاركة <small>(اختياري، لازم يبدأ بـ https://)</small><input name="link" type="url" value="'+ea(c.link)+'" placeholder="https://forms.gle/..."></label><label>الحالة<select name="status"><option value="open"'+(c.status!=='closed'?' selected':'')+'>مفتوحة</option><option value="closed"'+(c.status==='closed'?' selected':'')+'>انتهت</option></select></label><label>الفائزين <small>(لو انتهت)</small><input name="winners" value="'+ea(c.winners)+'"></label><label class="f">صورة المسابقة (اختياري)<input name="img" type="file" accept="image/*"></label>'+(c.image_path?'<label class="f" style="display:flex;gap:8px;align-items:center">'+th(c.image_path,'')+' <span><input type="checkbox" name="rmimg" style="width:auto"> احذف الصورة الحالية</span></label>':'')+'<div class="f"><button class="p" type="submit">حفظ</button> <button type="button" data-a="cl">إلغاء</button></div></form>'}
+function arF(r){r=r||{};
+ return '<h3 style="margin-top:0">'+(r.id?'✏️ تعديل في الأرشيف':'🗂️ إضافة للأرشيف')+'</h3><form id="arf" data-id="'+(r.id||'')+'"><label class="f">العنوان<input name="title" required value="'+ea(r.title)+'" placeholder="رحلة الدير 2025"></label><label>السنة<input name="year" type="number" required min="2000" max="2100" value="'+ea(r.year||new Date().getFullYear())+'"></label><label class="f">وصف قصير<textarea name="description" rows="3">'+esc(r.description)+'</textarea></label><label class="f">الصورة<input name="img" type="file" accept="image/*"></label>'+(r.image_path?'<label class="f" style="display:flex;gap:8px;align-items:center">'+th(r.image_path,'')+' <span>صورة حالية (اختار صورة جديدة لو عايز تغيّرها)</span></label>':'')+'<div class="f"><button class="p" type="submit">حفظ</button> <button type="button" data-a="cl">إلغاء</button></div></form>'}
+
+function openD(h){DL.innerHTML=h;if(!DL.open)DL.showModal()}
+document.addEventListener('click',async function(e){
+ var g=e.target.closest('[data-go]');if(g){e.preventDefault();st.tab=g.dataset.go;draw();return}
+ var f=e.target.closest('[data-pf]');if(f){st.pf=f.dataset.pf;draw();return}
+ var b=e.target.closest('button');if(!b||!b.dataset.a)return;var D=b.dataset,a=D.a,id=D.id;
+ var by=function(l){return l.find(function(x){return x.id===id})};
+ if(a==='evn')openD(evF());else if(a==='eve')openD(evF(by(events)));
+ else if(a==='cpn')openD(cpF());else if(a==='cpe')openD(cpF(by(comps)));
+ else if(a==='arn')openD(arF());else if(a==='are')openD(arF(by(arch)));
+ else if(a==='evd'){if(!confirm('حذف الفعالية؟'))return;var r=await sb.from('events').delete().eq('id',id);if(!r.error){events=events.filter(function(x){return x.id!==id});draw()}else alert(r.error.message)}
+ else if(a==='cpd'){var c=by(comps);if(!confirm('حذف مسابقة "'+c.title+'"؟'))return;var r2=await sb.from('competitions').delete().eq('id',id);if(!r2.error){await rmImg(c.image_path);comps=comps.filter(function(x){return x.id!==id});draw()}else alert(r2.error.message)}
+ else if(a==='cpt'){var c2=by(comps),ns=c2.status==='closed'?'open':'closed',r3=await sb.from('competitions').update({status:ns}).eq('id',id);if(!r3.error){c2.status=ns;draw()}else alert(r3.error.message)}
+ else if(a==='ard'){var ar=by(arch);if(!confirm('حذف "'+ar.title+'" من الأرشيف؟'))return;var r4=await sb.from('archive_items').delete().eq('id',id);if(!r4.error){await rmImg(ar.image_path);arch=arch.filter(function(x){return x.id!==id});draw()}else alert(r4.error.message)}
+ else if(a==='prx'){var p=by(prayers),ns2=p.status==='new'?'prayed':'new',r5=await sb.from('prayers').update({status:ns2}).eq('id',id);if(!r5.error){p.status=ns2;draw()}else alert(r5.error.message)}
+ else if(a==='prd'){if(!confirm('حذف طلب الصلاة نهائياً؟'))return;var r6=await sb.from('prayers').delete().eq('id',id);if(!r6.error){prayers=prayers.filter(function(x){return x.id!==id});draw()}else alert(r6.error.message)}
+});
+document.addEventListener('submit',async function(e){
+ var f=e.target,fid=f.id;if(fid!=='evf'&&fid!=='cpf'&&fid!=='arf')return;e.preventDefault();
+ var id=f.dataset.id,g=function(k){return f.elements[k].value.trim()},btn=f.querySelector('[type=submit]');btn.disabled=true;btn.textContent='جاري الحفظ...';
+ try{
+  if(fid==='evf'){var row={title:g('title'),kind:g('kind'),event_date:g('event_date'),end_date:g('end_date')||null,event_time:g('event_time')||null,place:g('place')||null,details:g('details')||null};
+   if(row.end_date&&row.end_date<row.event_date)throw new Error('تاريخ النهاية قبل تاريخ البداية');
+   var r=id?await sb.from('events').update(row).eq('id',id).select().single():await sb.from('events').insert(row).select().single();if(r.error)throw r.error;
+   events=events.filter(function(x){return x.id!==r.data.id}).concat([r.data])}
+  else if(fid==='cpf'){var c=id?comps.find(function(x){return x.id===id}):null,file=f.elements.img.files[0],img=c?c.image_path:null;
+   var lk=g('link');if(lk&&!/^https?:\/\//i.test(lk))throw new Error('الرابط لازم يبدأ بـ https://');
+   if(f.elements.rmimg&&f.elements.rmimg.checked){await rmImg(img);img=null}
+   if(file){var np=await upImg(file,'competitions');if(img)await rmImg(img);img=np}
+   var row2={title:g('title'),description:g('description')||null,prize:g('prize')||null,deadline:g('deadline')||null,link:lk||null,status:g('status'),winners:g('winners')||null,image_path:img};
+   var r2=id?await sb.from('competitions').update(row2).eq('id',id).select().single():await sb.from('competitions').insert(row2).select().single();if(r2.error)throw r2.error;
+   comps=comps.filter(function(x){return x.id!==r2.data.id});comps.unshift(r2.data)}
+  else{var a0=id?arch.find(function(x){return x.id===id}):null,fl=f.elements.img.files[0],im=a0?a0.image_path:null;
+   if(fl){var np2=await upImg(fl,'archive');if(im)await rmImg(im);im=np2}
+   var row3={title:g('title'),year:+g('year'),description:g('description')||null,image_path:im};
+   var r3=id?await sb.from('archive_items').update(row3).eq('id',id).select().single():await sb.from('archive_items').insert(row3).select().single();if(r3.error)throw r3.error;
+   arch=arch.filter(function(x){return x.id!==r3.data.id});arch.unshift(r3.data);arch.sort(function(x,y){return y.year-x.year})}
+  DL.close();draw();
+ }catch(err){alert('فشل الحفظ: '+(err.message||err));btn.disabled=false;btn.textContent='حفظ'}
+});
+
 function nk(s){return (s||'').trim().replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/\s+/g,' ')}
 function bdi(m){if(!m.birth_date)return null;var p=m.birth_date.split('-'),mo=+p[1],d=+p[2],t=new Date(),y=t.getFullYear(),td=new Date(y,t.getMonth(),t.getDate()),n=new Date(y,mo-1,d);if(n<td)n=new Date(y+1,mo-1,d);return{mo:mo,d:d,days:Math.round((n-td)/864e5),age:n.getFullYear()-(+p[0])}}
 function wa(p,t){return 'https://wa.me/'+String(p||'').replace(/\D/g,'').replace(/^0/,'20')+(t?'?text='+encodeURIComponent(t):'')}
@@ -99,7 +177,7 @@ function bdCard(x){var b=x.b,m=x.m,t=b.days===0?'<span class="tag t">🎉 الن
 function bdList(){return all.map(function(m){return{m:m,b:bdi(m)}}).filter(function(x){return x.b})}
 function groups(key){var g={};all.forEach(function(m){var k=nk(m[key]);if(!k)return;(g[k]=g[k]||{l:m[key].trim(),n:[]}).n.push(m)});return g}
 function over(){var b=bdList().sort(function(a,c){return a.b.days-c.b.days}),y=groups('year');
- return '<div class="stats"><div class="card st"><b>'+all.length+'</b>إجمالي الأعضاء</div><div class="card st"><b>'+all.filter(function(m){return m.status==='new'}).length+'</b>طلبات جديدة</div><div class="card st"><b>'+b.filter(function(x){return x.b.days===0}).length+'</b>أعياد ميلاد النهاردة</div><div class="card st"><b>'+needs(30).length+'</b>محتاجين افتقاد (+30 يوم)</div>'+Object.keys(y).map(function(k){return '<div class="card st"><b>'+y[k].n.length+'</b>الفرقة '+esc(y[k].l)+'</div>'}).join('')+'</div><h3>🎂 أقرب أعياد الميلاد</h3>'+(b.slice(0,5).map(bdCard).join('')||'<p class="em">لسه مفيش تواريخ ميلاد.</p>')}
+ return '<div class="stats"><div class="card st"><b>'+all.length+'</b>إجمالي الأعضاء</div><div class="card st"><b>'+all.filter(function(m){return m.status==='new'}).length+'</b>طلبات جديدة</div><div class="card st"><b>'+b.filter(function(x){return x.b.days===0}).length+'</b>أعياد ميلاد النهاردة</div><div class="card st"><b>'+needs(30).length+'</b>محتاجين افتقاد (+30 يوم)</div><div class="card st"><b>'+prayers.filter(function(p){return p.status==='new'}).length+'</b>طلبات صلاة جديدة</div><div class="card st"><b>'+events.filter(function(e){return (e.end_date||e.event_date)>=today()}).length+'</b>فعاليات قادمة</div>'+Object.keys(y).map(function(k){return '<div class="card st"><b>'+y[k].n.length+'</b>الفرقة '+esc(y[k].l)+'</div>'}).join('')+'</div><h3>🎂 أقرب أعياد الميلاد</h3>'+(b.slice(0,5).map(bdCard).join('')||'<p class="em">لسه مفيش تواريخ ميلاد.</p>')}
 function bdTab(){var l=bdList(),no=all.length-l.length;
  if(st.mode==='near')l.sort(function(a,c){return a.b.days-c.b.days});else l.sort(function(a,c){return a.b.mo-c.b.mo||a.b.d-c.b.d||a.m.full_name.localeCompare(c.m.full_name,'ar')});
  var h='<div class="bar"><button data-mode="cal" class="'+(st.mode==='cal'?'on':'')+'">ترتيب التقويم (1/1 ← 31/12)</button><button data-mode="near" class="'+(st.mode==='near'?'on':'')+'">الأقرب أولاً</button></div>',last=0;
@@ -112,15 +190,17 @@ function grpTab(key,cur,attr){var g=groups(key),ks=Object.keys(g);
  var o=key==='year'?'department':'year';return h+tbl(g[cur].n.slice().sort(function(a,c){return nk(a[o]).localeCompare(nk(c[o]),'ar')||a.full_name.localeCompare(c.full_name,'ar')}))}
 function allTab(){var ys=Object.keys(groups('year'));return '<div class="bar"><input id="q" placeholder="ابحث بالاسم أو الهاتف أو القسم" value="'+esc(st.q)+'"><select id="fy"><option value="">كل الفرق</option>'+ys.map(function(k){var v=groups('year')[k].l;return '<option'+(st.fy===v?' selected':'')+'>'+esc(v)+'</option>'}).join('')+'</select><select id="fs"><option value="">كل الحالات</option><option value="new"'+(st.fs==='new'?' selected':'')+'>جديد</option><option value="accepted"'+(st.fs==='accepted'?' selected':'')+'>تم القبول</option></select><button class="g" id="csv">تصدير Excel</button></div><div id="tb">'+tbl(view())+'</div>'}
 function view(){var q=st.q.trim().toLowerCase();return all.filter(function(m){return(!st.fy||m.year===st.fy)&&(!st.fs||m.status===st.fs)&&(!q||[m.full_name,m.phone,m.department].join(' ').toLowerCase().indexOf(q)>-1)})}
-function draw(){ban();$('tabs').innerHTML=TABS.map(function(t){return '<button data-tab="'+t[0]+'" class="'+(st.tab===t[0]?'on':'')+'">'+t[1]+'</button>'}).join('');
- $('main').innerHTML={over:over,bd:bdTab,yr:function(){return grpTab('year',st.y,'y')},dp:function(){return grpTab('department',st.d,'d')},all:allTab,fu:fuTab,sg:sgTab}[st.tab]()}
+function draw(){ban();$('tabs').innerHTML=TABS.map(function(t){var n=t[0]==='pr'?prayers.filter(function(p){return p.status==='new'}).length:0;return '<button data-tab="'+t[0]+'" class="'+(st.tab===t[0]?'on':'')+'">'+t[1]+(n?'<span class="badge">'+n+'</span>':'')+'</button>'}).join('');
+ $('main').innerHTML={over:over,bd:bdTab,yr:function(){return grpTab('year',st.y,'y')},dp:function(){return grpTab('department',st.d,'d')},all:allTab,fu:fuTab,sg:sgTab,pr:prTab,ev:evTab,cp:cpTab,ar:arTab}[st.tab]()}
 async function boot(){var s=(await sb.auth.getSession()).data.session;$('login').hidden=!!s;$('app').hidden=!s;if(s)load()}
 async function load(){var r=await sb.from('members').select('*').order('created_at',{ascending:false}).limit(1000);
  if(r.error){$('main').innerHTML='<p class="em">تعذر تحميل البيانات: '+esc(r.error.message)+'</p>';return}
  all=r.data;var p=all.filter(function(m){return m.photo_path}).map(function(m){return m.photo_path});
  if(p.length){var s=await sb.storage.from('member-photos').createSignedUrls(p,3600);(s.data||[]).forEach(function(x){urls[x.path]=x.signedUrl})}
  var n=await sb.from('notes').select('*').order('created_at',{ascending:false}).limit(5000),g=await sb.from('suggestions').select('*').order('created_at',{ascending:false}).limit(500);
- miss=!!(n.error||g.error);notes=n.data||[];sugs=g.data||[];draw()}
+ miss=!!(n.error||g.error);notes=n.data||[];sugs=g.data||[];
+ var x=await Promise.all([sb.from('events').select('*').order('event_date'),sb.from('competitions').select('*').order('created_at',{ascending:false}),sb.from('archive_items').select('*').order('year',{ascending:false}).order('created_at',{ascending:false}),sb.from('prayers').select('*').order('created_at',{ascending:false}).limit(1000)]);
+ miss3=!!(x[0].error||x[1].error||x[2].error||x[3].error);events=x[0].data||[];comps=x[1].data||[];arch=x[2].data||[];prayers=x[3].data||[];draw()}
 $('go').onclick=async function(){var r=await sb.auth.signInWithPassword({email:$('em').value.trim(),password:$('pw').value});if(r.error){$('err').textContent='الإيميل أو كلمة المرور غلط';return}boot()};
 $('out').onclick=async function(){await sb.auth.signOut();boot()};$('rf').onclick=load;
 document.addEventListener('visibilitychange',function(){if(!document.hidden&&!$('app').hidden)load()});
