@@ -262,6 +262,34 @@ p{margin:0}
 .qo:disabled{cursor:default}
 .qx{padding:10px 14px;border-radius:12px;background:var(--bg2);color:var(--ink);font-weight:600}
 .qscore{font-family:var(--fh);font-size:clamp(44px,10vw,72px);color:var(--goldt);line-height:1.1;text-align:center}
+.qo.sel{border-color:var(--gold);background:rgba(200,150,46,.2)}
+.qrev{display:grid;gap:10px}
+.qri{padding:12px 14px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg);display:grid;gap:4px}
+.qri.ok{border-color:var(--ok)}.qri.no{border-color:var(--red)}
+.qri p{margin:0}
+.qa{font-weight:700}.qa.ok{color:var(--ok)}.qa.no{color:var(--red)}
+.qrules{margin:0;padding-inline-start:20px;display:grid;gap:4px;color:var(--mute);font-weight:600}
+.qo.on{border-color:var(--gold);background:rgba(200,150,46,.2);box-shadow:0 0 0 3px rgba(200,150,46,.2)}
+.qnav{margin-top:6px}
+.qh{font-family:var(--fh);font-size:20px;margin:14px 0 4px;color:var(--goldt)}
+.qrev{display:grid;gap:10px}
+.qc{display:grid;grid-template-columns:auto 1fr;gap:12px;padding:14px;border-radius:16px;border:1.5px solid var(--line);background:var(--bg)}
+.qc[hidden]{display:none}
+.qc.ok{border-color:var(--ok)}.qc.no{border-color:var(--red)}
+.qcn{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:700;background:var(--bg2)}
+.qc.ok .qcn{background:var(--ok);color:#fff}.qc.no .qcn{background:var(--red);color:#fff}
+.qcq{font-weight:700;margin:0 0 4px}.qca{margin:2px 0}.qc .qx{margin-top:8px}
+.qhd{display:grid;gap:8px;justify-items:start}
+.qstats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.qstats div{background:var(--bg2);border-radius:14px;padding:10px 4px;text-align:center;display:grid;gap:0;line-height:1.25}
+.qstats b{font-family:var(--fh);font-size:clamp(24px,5vw,32px);color:var(--goldt)}
+.qstats span{font-size:13px;color:var(--mute);font-weight:600}
+.qsteps{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:q}
+.qsteps li{counter-increment:q;display:grid;grid-template-columns:auto 1fr;column-gap:12px;align-items:center;padding:10px 14px;border:1px solid var(--line);border-radius:14px;background:var(--bg)}
+.qsteps li:before{content:counter(q,arabic-indic);grid-row:span 2;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--hero);color:var(--hero-gold);font-weight:700;font-family:var(--fh)}
+.qsteps b{font-size:17px}.qsteps span{color:var(--mute);font-size:15px}
+.qform{display:grid;gap:12px}
+@media(max-width:420px){.qstats{grid-template-columns:repeat(2,1fr)}}
 .qend{display:grid;gap:12px;text-align:center;justify-items:center}
 .qrow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
 .evs{display:grid;gap:14px}
@@ -1004,61 +1032,101 @@ document.addEventListener('dragstart',function(e){if(e.target.tagName==='IMG')e.
 document.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&(e.key==='s'||e.key==='S'||e.key==='u'||e.key==='U'))e.preventDefault()});
 $$('img').forEach(function(i){i.draggable=false});
 
-/* ---------- مسابقة سفر التثنية ---------- */
+/* ---------- امتحان سفر التثنية (مرة واحدة) ---------- */
 var QZ={"mcq": [{"q": "معنى اسم سفر «التثنية»؟", "o": ["تكرار الشريعة وإعادتها", "قصة الخلق", "بناء الهيكل", "سبي بابل"], "a": 0, "x": "التثنية معناها التكرار، فيه موسى بيعيد الشريعة للجيل الجديد"}, {"q": "مين هو كاتب سفر التثنية حسب التقليد؟", "o": ["يشوع", "موسى النبي", "هارون", "صموئيل"], "a": 1, "x": "موسى النبي هو كاتب الأسفار الخمسة"}, {"q": "فين كان بنو إسرائيل لما ألقى موسى خطبه؟", "o": ["في مصر", "في بابل", "في عبر الأردن في أرض موآب", "في أورشليم"], "a": 2, "x": "تث ١:٥، في عبر الأردن في أرض موآب"}, {"q": "كم سنة قضى بنو إسرائيل في البرية؟", "o": ["٧ سنين", "٤٠ سنة", "٧٠ سنة", "١٢٠ سنة"], "a": 1, "x": "تث ٨:٢، أربعين سنة"}, {"q": "قال موسى «اسمع يا إسرائيل» وبعدها مباشرة قال", "o": ["الرب إلهنا رب واحد", "اتركوا الأصنام", "احفظوا السبت", "ابنوا بيتاً"], "a": 0, "x": "تث ٦:٤"}, {"q": "على أي جبل صعد موسى ليشوف أرض الموعد قبل موته؟", "o": ["جبل سيناء", "جبل نبو", "جبل الزيتون", "جبل حرمون"], "a": 1, "x": "تث ٣٤:١، جبل نبو"}, {"q": "مين خلف موسى في قيادة الشعب؟", "o": ["كالب", "هارون", "يشوع بن نون", "جدعون"], "a": 2, "x": "تث ٣٤:٩، يشوع بن نون امتلأ روح حكمة"}, {"q": "كان عمر موسى لما مات", "o": ["٨٠ سنة", "١٠٠ سنة", "١٢٠ سنة", "١٥٠ سنة"], "a": 2, "x": "تث ٣٤:٧"}, {"q": "في أي أصحاح من التثنية اتكررت الوصايا العشر؟", "o": ["الأصحاح ٥", "الأصحاح ١", "الأصحاح ١٠", "الأصحاح ٢٠"], "a": 0, "x": "تث ٥، وهو تكرار للوصايا اللي في سفر الخروج"}, {"q": "الرب يسوع قال لإبليس «مكتوب ليس بالخبز وحده يحيا الإنسان» وهي مأخوذة من", "o": ["سفر التثنية", "سفر الخروج", "سفر المزامير", "سفر اللاويين"], "a": 0, "x": "تث ٨:٣"}, {"q": "كم مدينة ملجأ عيّنها موسى شرقي الأردن؟", "o": ["مدينة واحدة", "٣ مدن", "١٢ مدينة", "٤٨ مدينة"], "a": 1, "x": "تث ٤:٤١-٤٣، باصر وراموت جلعاد وجولان"}, {"q": "في نشيد موسى، شبّه الرب اعتناءه بشعبه بـ", "o": ["الأسد", "النسر", "الحمامة", "الراعي والغنم فقط"], "a": 1, "x": "تث ٣٢:١١، كالنسر الذي يُحرّك عشه وعلى فراخه يرف"}, {"q": "حسب تث ٦:٥ نحب الرب إلهنا من", "o": ["كل القلب والنفس والقوة", "الفم فقط", "الأعمال فقط", "وقت الشدة فقط"], "a": 0, "x": "تث ٦:٥"}, {"q": "على أي جبلين اتقالت البركة واللعنة؟", "o": ["حرمون وتابور", "جرزيم وعيبال", "سيناء وحوريب", "نبو وفسجة"], "a": 1, "x": "تث ١١:٢٩، البركة على جرزيم واللعنة على عيبال"}, {"q": "كم يوم بكى بنو إسرائيل على موسى؟", "o": ["٧ أيام", "١٠ أيام", "٣٠ يوماً", "٤٠ يوماً"], "a": 2, "x": "تث ٣٤:٨، ثلاثين يوماً"}], "tf": [{"q": "سفر التثنية هو الخامس في أسفار موسى الخمسة", "a": 1, "x": "صح، آخر الأسفار الخمسة"}, {"q": "موسى دخل أرض الموعد مع الشعب", "a": 0, "x": "غلط، مات في أرض موآب بعد ما شاف الأرض من بعيد"}, {"q": "أوصى الرب ألا يزيدوا على كلامه ولا يُنقصوا منه", "a": 1, "x": "صح، تث ٤:٢"}, {"q": "سمح الرب لبني إسرائيل يصنعوا تمثالاً منحوتاً للعبادة", "a": 0, "x": "غلط، الوصية الثانية تمنع ده، تث ٥:٨"}, {"q": "أوصى الرب بتعليم الوصايا للأولاد والكلام عنها في البيت وفي الطريق", "a": 1, "x": "صح، تث ٦:٧"}, {"q": "العشور والتقدمات كانت تُقدَّم في المكان اللي يختاره الرب", "a": 1, "x": "صح، تث ١٢:١١"}, {"q": "قال الرب إن الإنسان مش بالخبز وحده يحيا", "a": 1, "x": "صح، تث ٨:٣"}, {"q": "في ٤٠ سنة البرية ثياب الشعب ما بليتش ورجليهم ما تورمتش", "a": 1, "x": "صح، تث ٨:٤"}, {"q": "اختار الرب شعبه لأنهم أكثر الشعوب عدداً", "a": 0, "x": "غلط، اختارهم لمحبته لهم وهم أقل الشعوب، تث ٧:٧-٨"}, {"q": "يوم السبت يوم عادي نشتغل فيه زي باقي الأيام", "a": 0, "x": "غلط، السبت للراحة والتقديس، تث ٥:١٢-١٤"}, {"q": "أوصى الرب بمحبة الغريب لأنهم كانوا غرباء في أرض مصر", "a": 1, "x": "صح، تث ١٠:١٩"}, {"q": "الشريعة ما كانتش بتتقري على الشعب بعد موسى", "a": 0, "x": "غلط، كانت تُقرأ كل سبع سنين في عيد المظال، تث ٣١:١٠-١١"}, {"q": "اتدفن موسى في مكان معروف وقبره موجود لحد النهارده", "a": 0, "x": "غلط، ما عرفش إنسان قبره، تث ٣٤:٦"}, {"q": "ما قامش بعد موسى في إسرائيل نبي زيه", "a": 1, "x": "صح، تث ٣٤:١٠"}, {"q": "نهى الرب عن العرافة والسحر وتحضير الأرواح", "a": 1, "x": "صح، تث ١٨:١٠-١٢"}]};
-var QPART={mcq:'الاختيار من متعدد',tf:'صح وغلط'},qs=null;
+var QPART={mcq:'الجزء الأول: اختيار من متعدد',tf:'الجزء التاني: صح وغلط'},qs=null,QKEY='ava_quiz_done';
 function qShuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+function qNorm(s){return String(s||'').trim().replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/\s+/g,' ').toLowerCase()}
+function qDone(){try{return JSON.parse(store(QKEY)||'null')}catch(e){return null}}
 function qHome(){
-  qs=null;var nm=store('ava_qname')||'';
-  $('#quiz').innerHTML='<span class="qtag">مسابقة مفتوحة</span><h3>مسابقة سفر التثنية</h3><p class="psub">٣٠ سؤال على جزئين: ١٥ اختيار من متعدد و١٥ صح وغلط، اكتب اسمك وابدأ، ونتيجتك تتبعت للأسرة</p>'+
-  '<label class="fld" for="qn">اسمك<input class="qn" id="qn" maxlength="80" autocomplete="name" value="'+esc(nm)+'" placeholder="الاسم بالكامل"></label>'+
-  '<div class="qparts"><button class="btn gold" type="button" data-qp="mcq">الجزء الأول: اختيار من متعدد</button><button class="btn pri" type="button" data-qp="tf">الجزء التاني: صح وغلط</button></div><p class="msg" id="qm"></p>';
+  qs=null;var d=qDone();
+  if(d){qReview(d,true);return}
+  var nm=store('ava_qname')||'';
+  $('#quiz').innerHTML='<div class="qhd"><span class="qtag">مسابقة مفتوحة</span><h3>امتحان سفر التثنية</h3><p class="psub">اختبر معلوماتك في سفر التثنية، وصاحب أعلى درجة ياخد شهادة تقدير من الأسرة</p></div>'+
+  '<div class="qstats"><div><b>٣٠</b><span>سؤال</span></div><div><b>١٥</b><span>اختيار من متعدد</span></div><div><b>١٥</b><span>صح وغلط</span></div><div><b>١</b><span>محاولة واحدة</span></div></div>'+
+  '<ol class="qsteps"><li><b>اكتب اسمك</b><span>اسمك الأول والتاني على الأقل</span></li><li><b>جاوب براحتك</b><span>تقدر ترجع وتغيّر إجابتك قبل التسليم</span></li><li><b>سلّم الامتحان</b><span>مفيش تصحيح أثناء الحل، والامتحان مرة واحدة بس</span></li><li><b>شوف نتيجتك</b><span>درجتك وكل الإجابات الصح والغلط والتصحيح في الآخر</span></li></ol>'+
+  '<div class="qform"><label class="fld" for="qn">اسمك بالكامل<input class="qn" id="qn" maxlength="80" autocomplete="name" value="'+esc(nm)+'" placeholder="الاسم الثلاثي"></label>'+
+  '<button class="btn gold" type="button" data-qgo="1">ابدأ الامتحان</button></div><p class="msg" id="qm"></p>';
 }
-function qStart(part){
-  var n=($('#qn').value||'').trim();
-  if(n.length<2){say($('#qm'),'اكتب اسمك الأول','bad');$('#qn').focus();return}
+async function qStart(btn){
+  var n=($('#qn').value||'').trim(),m=$('#qm');
+  if(n.split(/\s+/).length<2||n.length<5){say(m,'اكتب اسمك الأول والتاني على الأقل','bad');$('#qn').focus();return}
+  var sb=sbClient();
+  if(sb){
+    btn.disabled=true;
+    try{
+      var r=await sb.rpc('quiz_taken',{p_quiz:'deuteronomy',p_name_key:qNorm(n),p_device:voterId()});
+      if(r.error)throw r.error;
+      if(r.data){btn.disabled=false;say(m,'الاسم ده أو الجهاز ده امتحن قبل كده، الامتحان مرة واحدة بس','bad');return}
+    }catch(e){btn.disabled=false;say(m,'حصلت مشكلة في الاتصال، جرب تاني بعد شوية','bad');return}
+  }
   store('ava_qname',n);
-  var list=QZ[part].map(function(q,i){
-    if(part==='tf')return q;
-    var idx=qShuffle([0,1,2,3]);return {q:q.q,o:idx.map(function(k){return q.o[k]}),a:idx.indexOf(q.a),x:q.x}});
-  qs={part:part,name:n,list:qShuffle(list),i:0,score:0,t0:Date.now(),done:false};qAsk();
+  var list=[];
+  ['mcq','tf'].forEach(function(part){
+    var items=QZ[part].map(function(q){
+      if(part==='tf')return {part:part,q:q.q,o:['صح','غلط'],a:q.a?0:1,x:q.x};
+      var idx=qShuffle([0,1,2,3]);
+      return {part:part,q:q.q,o:idx.map(function(k){return q.o[k]}),a:idx.indexOf(q.a),x:q.x}});
+    list=list.concat(qShuffle(items));
+  });
+  qs={name:n,list:list,i:0,pick:list.map(function(){return -1}),t0:Date.now()};qAsk();
 }
 function qAsk(){
-  var q=qs.list[qs.i],t=qs.list.length,opts=qs.part==='tf'?['صح','غلط']:q.o;
-  var ans=qs.part==='tf'?(q.a?0:1):q.a;
-  $('#quiz').innerHTML='<div class="qmeta"><span>'+QPART[qs.part]+'</span><span>سؤال '+AR(qs.i+1)+' من '+AR(t)+'</span></div><div class="qbar"><i style="width:'+(qs.i/t*100)+'%"></i></div><p class="qq">'+esc(q.q)+'</p><div class="qopts">'+
-   opts.map(function(o,k){return '<button class="qo" type="button" data-qa="'+k+'">'+esc(o)+'</button>'}).join('')+'</div><div id="qfb"></div>';
-  qs.ans=ans;
+  var q=qs.list[qs.i],t=qs.list.length,last=qs.i===t-1,got=qs.pick.filter(function(x){return x>=0}).length;
+  $('#quiz').innerHTML='<div class="qmeta"><span>'+QPART[q.part]+'</span><span>سؤال '+AR(qs.i+1)+' من '+AR(t)+'</span></div><div class="qbar"><i style="width:'+((qs.i+1)/t*100)+'%"></i></div>'+
+   '<p class="qq">'+esc(q.q)+'</p><div class="qopts" role="radiogroup">'+
+   q.o.map(function(o,k){return '<button class="qo'+(qs.pick[qs.i]===k?' on':'')+'" type="button" role="radio" aria-checked="'+(qs.pick[qs.i]===k)+'" data-qa="'+k+'">'+esc(o)+'</button>'}).join('')+'</div>'+
+   '<div class="qrow qnav"><button class="btn line sm" type="button" data-qprev="1"'+(qs.i?'':' disabled')+'>السؤال اللي قبله</button>'+
+   (last?'<button class="btn gold" type="button" data-qfin="1">سلّم الامتحان</button>':'<button class="btn pri" type="button" data-qnext="1">اللي بعده</button>')+'</div>'+
+   '<p class="psub" style="text-align:center">جاوبت على '+AR(got)+' من '+AR(t)+'</p><p class="msg" id="qm"></p>';
 }
-function qPick(k){
-  var q=qs.list[qs.i],ok=(k===qs.ans);if(ok)qs.score++;
-  $$('#quiz .qo').forEach(function(b,i){b.disabled=true;if(i===qs.ans)b.classList.add('right');else if(i===k)b.classList.add('wrong')});
-  var last=qs.i===qs.list.length-1;
-  $('#qfb').innerHTML='<p class="qx">'+(ok?'إجابة صح ✓ ':'إجابة غلط ✗ ')+esc(q.x)+'</p><button class="btn pri" type="button" data-qnext="1" style="margin-top:10px">'+(last?'شوف نتيجتك':'السؤال اللي بعده')+'</button>';
-  $('#qfb [data-qnext]').focus();
+async function qFinish(btn){
+  var m=$('#qm'),t=qs.list.length,left=qs.pick.filter(function(x){return x<0}).length;
+  if(left&&!confirm('لسه '+AR(left)+' سؤال من غير إجابة وهتتحسب غلط، تسلّم برضه؟'))return;
+  if(!left&&!confirm('تسلّم الامتحان؟ مش هتقدر تعدّل بعد كده'))return;
+  var sm=0,st=0,res=qs.list.map(function(q,i){
+    var ok=qs.pick[i]===q.a;if(ok){if(q.part==='mcq')sm++;else st++}
+    return {p:q.part,q:q.q,m:qs.pick[i]>=0?q.o[qs.pick[i]]:'',r:q.o[q.a],x:q.x,ok:ok}});
+  var d={name:qs.name,score:sm+st,total:t,sm:sm,st:st,secs:Math.round((Date.now()-qs.t0)/1000),res:res},sb=sbClient();
+  if(sb){
+    btn.disabled=true;say(m,'جاري تسليم الامتحان','');
+    var r=await sb.from('quiz_results').insert({quiz:'deuteronomy',part:'all',name:qs.name,name_key:qNorm(qs.name),device_id:voterId(),score:d.score,total:t,score_mcq:sm,score_tf:st,seconds:d.secs});
+    if(r.error&&r.error.code==='23505'){
+      qs=null;$('#quiz').innerHTML='<span class="qtag">تنبيه</span><h3>الامتحان اتسلّم قبل كده</h3><p class="psub">الاسم ده أو الجهاز ده امتحن قبل كده، والامتحان مرة واحدة بس</p>';return}
+    if(r.error){btn.disabled=false;say(m,'حصلت مشكلة وإجاباتك لسه محفوظة، دوس تاني بعد شوية','bad');return}
+    d.saved=true;
+  }
+  store(QKEY,JSON.stringify(d));qs=null;qReview(d,false);
+  $('#quiz').scrollIntoView({behavior:RM?'auto':'smooth',block:'start'});
 }
-function qEnd(){
-  var t=qs.list.length,sc=qs.score,pc=sc/t,secs=Math.round((Date.now()-qs.t0)/1000);qs.secs=secs;
-  var msg=pc===1?'ممتاز، كل إجاباتك صح 🎉':pc>=.8?'جميل جداً، ربنا يباركك':pc>=.5?'كويس، وبالمذاكرة هتبقى أحسن':'ولا يهمك، افتح سفر التثنية وجرّب تاني';
-  $('#quiz').innerHTML='<div class="qend"><span class="qtag">'+QPART[qs.part]+'</span><div class="qscore">'+AR(sc)+' / '+AR(t)+'</div><p class="qq">'+msg+'</p><p class="psub">الوقت: '+AR(Math.floor(secs/60))+' دقيقة و'+AR(secs%60)+' ثانية</p>'+
-   '<div class="qrow"><button class="btn gold" type="button" data-qsend="1">ابعت نتيجتي للأسرة</button><button class="btn line" type="button" data-qhome="1">'+(qs.part==='mcq'?'جرّب جزء صح وغلط':'جرّب جزء الاختيار')+'</button></div><p class="msg" id="qm"></p></div>';
-}
-async function qSend(btn){
-  var m=$('#qm'),sb=sbClient();
-  if(!sb){say(m,'إرسال النتيجة هيشتغل بعد ما الموقع يتربط بقاعدة البيانات','');return}
-  if(qs.sent){say(m,'نتيجتك اتبعتت قبل كده','good');return}
-  btn.disabled=true;
-  var r=await sb.from('quiz_results').insert({quiz:'deuteronomy',part:qs.part,name:qs.name,score:qs.score,total:qs.list.length,seconds:qs.secs});
-  if(r.error){btn.disabled=false;say(m,'حصلت مشكلة، جرب تاني بعد شوية','bad');return}
-  qs.sent=true;say(m,'وصلت نتيجتك للأسرة، شكراً ليك ❤️','good');
+function qReview(d,again){
+  var pc=d.score/d.total,msg=pc===1?'ممتاز، كل إجاباتك صح 🎉':pc>=.8?'جميل جداً، ربنا يباركك':pc>=.5?'كويس، وبالمذاكرة هتبقى أحسن':'ولا يهمك، افتح سفر التثنية وذاكر وهتبقى أحسن';
+  var wrong=d.res.filter(function(x){return !x.ok}).length;
+  var h='<div class="qend"><span class="qtag">'+(again?'امتحنت قبل كده':'اتسلّم الامتحان')+'</span><p class="psub">'+esc(d.name)+'</p><div class="qscore">'+AR(d.score)+' / '+AR(d.total)+'</div><p class="qq">'+msg+'</p>'+
+   '<div class="qrow"><span class="pchip">اختيار من متعدد: '+AR(d.sm)+' / ١٥</span><span class="pchip">صح وغلط: '+AR(d.st)+' / ١٥</span><span class="pchip">الوقت: '+AR(Math.floor(d.secs/60))+' د و'+AR(d.secs%60)+' ث</span></div>'+
+   (d.saved===false?'<p class="msg">الامتحان ده تجريبي ومش اتبعت للأسرة لأن الموقع مش مربوط بقاعدة البيانات</p>':'<p class="msg good">نتيجتك وصلت للأسرة ❤️</p>')+'</div>'+
+   '<div class="qrow"><button class="fchip" type="button" data-qf="all" aria-pressed="true">كل الأسئلة ('+AR(d.total)+')</button><button class="fchip" type="button" data-qf="bad" aria-pressed="false">الغلط بس ('+AR(wrong)+')</button></div><div class="qrev" id="qrev">';
+  var last='';
+  d.res.forEach(function(x,i){
+    if(x.p!==last){last=x.p;h+='<h4 class="qh">'+QPART[x.p]+'</h4>'}
+    h+='<article class="qc '+(x.ok?'ok':'no')+'" data-ok="'+(x.ok?1:0)+'"><div class="qcn">'+AR(i+1)+'</div><div><p class="qcq">'+esc(x.q)+'</p>'+
+     '<p class="qca">إجابتك: <b>'+(x.m?esc(x.m):'ما جاوبتش')+'</b> '+(x.ok?'✓':'✗')+'</p>'+
+     (x.ok?'':'<p class="qca">الإجابة الصح: <b>'+esc(x.r)+'</b></p>')+'<p class="qx">'+esc(x.x)+'</p></div></article>';
+  });
+  h+='</div>';
+  $('#quiz').innerHTML=h;
 }
 document.addEventListener('click',function(e){
   var b=e.target.closest&&e.target.closest('#quiz button');if(!b)return;
-  if(b.dataset.qp)qStart(b.dataset.qp);
-  else if(b.dataset.qa!==undefined)qPick(+b.dataset.qa);
-  else if(b.dataset.qnext){qs.i++;if(qs.i>=qs.list.length)qEnd();else qAsk()}
-  else if(b.dataset.qsend)qSend(b);
-  else if(b.dataset.qhome){var p=qs.part;qHome()}
+  if(b.dataset.qgo)qStart(b);
+  else if(b.dataset.qa!==undefined){qs.pick[qs.i]=+b.dataset.qa;qAsk()}
+  else if(b.dataset.qnext){qs.i++;qAsk()}
+  else if(b.dataset.qprev){qs.i--;qAsk()}
+  else if(b.dataset.qfin)qFinish(b);
+  else if(b.dataset.qf){
+    $$('#quiz [data-qf]').forEach(function(c){c.setAttribute('aria-pressed',c===b)});
+    $$('#qrev .qc').forEach(function(c){c.hidden=(b.dataset.qf==='bad'&&c.dataset.ok==='1')});
+  }
 });
 qHome();
 
