@@ -68,9 +68,10 @@ var sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY),all=[],urls={};
 var $=function(i){return document.getElementById(i)};
 function esc(s){var d=document.createElement('div');d.textContent=s==null?'':s;return d.innerHTML}
 var MN=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+var DEPTS=['نظم معلومات الأعمال (BIS)','محاسبة والتمويل دولي (IAF)','الأسواق والمنشآت المالية (FMI)'];
 var YO=['الأولى','الثانية','الثالثة','الرابعة'];
-var TABS=[['over','📊 نظرة عامة'],['bd','🎂 أعياد الميلاد'],['yr','🎓 الفرق'],['dp','🏛️ الأقسام'],['fu','🤝 الافتقاد'],['all','👥 كل الأعضاء'],['sg','💡 الاقتراحات'],['pr','🙏 طلبات الصلاة'],['ev','📅 الفعاليات'],['cp','🏆 المسابقات'],['ar','🗂️ الأرشيف']];
-var st={tab:'over',y:'',d:'',mode:'cal',q:'',fy:'',fs:'',fd:30,pf:'new'},notes=[],sugs=[],miss=false,events=[],comps=[],arch=[],prayers=[],miss3=false,DL=document.getElementById('dlg');
+var TABS=[['over','📊 نظرة عامة'],['bd','🎂 أعياد الميلاد'],['yr','🎓 الفرق'],['dp','🏛️ الأقسام'],['fu','🤝 الافتقاد'],['all','👥 كل الأعضاء'],['sg','💡 الاقتراحات'],['pr','🙏 طلبات الصلاة'],['ev','📅 الفعاليات'],['cp','🏆 المسابقات'],['ar','🗂️ الأرشيف'],['pl','🗳️ التصويت']];
+var st={tab:'over',y:'',d:'',mode:'cal',q:'',fy:'',fs:'',fd:30,pf:'new'},notes=[],sugs=[],miss=false,events=[],comps=[],arch=[],prayers=[],miss3=false,polls=[],miss4=false,qres=[],miss5=false,DL=document.getElementById('dlg');
 function ea(s){return esc(s).replace(/"/g,'&quot;')}
 function greet(m){return 'كل سنة وانت طيب يا '+m.full_name.split(' ')[0]+' ❤️\nربنا يفرّح قلبك ويبارك حياتك ويحفظك قريب منه.\nأسرة آڤا مينا'}
 function nc(id){return notes.filter(function(n){return n.member_id===id}).length}
@@ -82,7 +83,7 @@ function fuTab(){if(miss)return '<p class="em">شغّل ملف update-2.sql في
  return '<div class="bar"><span>اللي ماتفتقدش من آخر</span><select id="fd">'+[14,30,60,90].map(function(d){return '<option value="'+d+'"'+(st.fd===d?' selected':'')+'>'+d+' يوم</option>'}).join('')+'</select><b>'+l.length+' عضو</b></div>'+(l.map(function(x){var m=x.m;return '<div class="card bd">'+ava(m)+'<div><b>'+esc(m.full_name)+'</b><small>'+esc(m.year)+' / '+esc(m.department)+' • '+(x.l?'آخر افتقاد: '+dt(x.l):'لسه ماتفتقدش')+'</small></div><div class="sp"></div><a target="_blank" rel="noopener" href="'+wa(m.phone,'سلام يا '+m.full_name.split(' ')[0]+' ❤️ وحشتنا، عامل إيه؟')+'">واتساب</a><button data-a="nt" data-id="'+m.id+'">📝 سجّل متابعة</button></div>'}).join('')||'<p class="em">كله متفتقد 👏</p>')}
 function sgTab(){if(miss)return '<p class="em">شغّل ملف update-2.sql في Supabase الأول.</p>';return '<h3>💡 اقتراحات الأعضاء (بدون أسماء) — '+sugs.length+'</h3>'+(sugs.map(function(s){return '<div class="card nt"><div style="white-space:pre-wrap">'+esc(s.body)+'</div><small>'+dt(s.created_at)+'</small> <button class="d" data-a="ds" data-id="'+s.id+'">حذف</button></div>'}).join('')||'<p class="em">لسه مفيش اقتراحات.</p>')}
 function edF(m){var o=function(v){return '<option'+(v===m.year?' selected':'')+'>'+esc(v)+'</option>'};
- return '<h3 style="margin-top:0">✏️ تعديل بيانات العضو</h3><form id="ef" data-id="'+m.id+'"><label class="f">الاسم<input name="full_name" required value="'+ea(m.full_name)+'"></label><label>الهاتف<input name="phone" required value="'+ea(m.phone)+'"></label><label>Email<input name="email" value="'+ea(m.email)+'"></label><label>الفرقة<select name="year">'+(m.year&&YO.indexOf(m.year)<0?o(m.year):'')+YO.map(o).join('')+'</select></label><label>القسم<input name="department" value="'+ea(m.department)+'"></label><label>تاريخ الميلاد<input name="birth_date" type="date" value="'+ea(m.birth_date)+'"></label><label>سنة الانضمام<input name="joined_year" type="number" value="'+ea(m.joined_year)+'"></label><label class="f">مهارات<input name="skills" value="'+ea(m.skills)+'"></label><label class="f"><span><input type="checkbox" name="prev_service" style="width:auto"'+(m.prev_service?' checked':'')+'> شارك في خدمة/لجنة قبل كده</span></label><div class="f"><button class="p" type="submit">حفظ</button> <button type="button" data-a="cl">إلغاء</button></div></form>'}
+ return '<h3 style="margin-top:0">✏️ تعديل بيانات العضو</h3><form id="ef" data-id="'+m.id+'"><label class="f">الاسم<input name="full_name" required value="'+ea(m.full_name)+'"></label><label>الهاتف<input name="phone" required value="'+ea(m.phone)+'"></label><label>Email<input name="email" value="'+ea(m.email)+'"></label><label>الفرقة<select name="year">'+(m.year&&YO.indexOf(m.year)<0?o(m.year):'')+YO.map(o).join('')+'</select></label><label>القسم<select name="department">'+DEPTS.concat(m.department&&DEPTS.indexOf(m.department)<0?[m.department]:[]).map(function(d){return '<option'+(d===m.department?' selected':'')+'>'+esc(d)+'</option>'}).join('')+'</select></label><label>تاريخ الميلاد<input name="birth_date" type="date" value="'+ea(m.birth_date)+'"></label><label>سنة الانضمام<input name="joined_year" type="number" value="'+ea(m.joined_year)+'"></label><label class="f">مهارات<input name="skills" value="'+ea(m.skills)+'"></label><label class="f"><span><input type="checkbox" name="prev_service" style="width:auto"'+(m.prev_service?' checked':'')+'> شارك في خدمة/لجنة قبل كده</span></label><div class="f"><button class="p" type="submit">حفظ</button> <button type="button" data-a="cl">إلغاء</button></div></form>'}
 var K={call:'📞 اتصال',visit:'🏠 زيارة',meet:'🤝 لقاء',other:'📝 أخرى'};
 function ntF(m){var l=notes.filter(function(n){return n.member_id===m.id});
  return '<h3 style="margin-top:0">📝 متابعة: '+esc(m.full_name)+'</h3><form id="nf" data-id="'+m.id+'" style="grid-template-columns:1fr"><label>النوع<select name="kind">'+Object.keys(K).map(function(k){return '<option value="'+k+'">'+K[k]+'</option>'}).join('')+'</select></label><label>الملاحظة<textarea name="note" rows="3" required placeholder="اتصلت بيه، ظروفه، محتاج إيه..."></textarea></label><div><button class="p" type="submit">إضافة</button> <button type="button" data-a="cl">إغلاق</button></div></form><h3>السجل ('+l.length+')</h3>'+(l.map(function(n){return '<div class="nt"><b>'+(K[n.kind]||'')+'</b> <small>'+dt(n.created_at)+'</small> <button class="d" data-a="dn" data-id="'+n.id+'">حذف</button><div style="white-space:pre-wrap">'+esc(n.note)+'</div></div>'}).join('')||'<p class="em">مفيش متابعات لسه.</p>')}
@@ -112,7 +113,7 @@ function evTab(){if(miss3)return need3();var t=today(),up=events.filter(function
  var card=function(e,past){var p=e.event_date.split('-');return '<div class="card it"><div class="bx"><b>'+(+p[2])+'</b>'+MN[+p[1]-1]+'</div><div class="gr"><b>'+esc(e.title)+'</b> <span class="tag">'+esc(EK[e.kind]||'أخرى')+'</span>'+(e.end_date&&e.end_date!==e.event_date?' <span class="tag">لحد '+esc(e.end_date)+'</span>':'')+'<small>'+esc([e.event_time,e.place].filter(Boolean).join(' • '))+'</small>'+(e.details?'<small>'+esc(e.details)+'</small>':'')+'</div><div class="ac"><button data-a="eve" data-id="'+e.id+'">تعديل</button><button class="d" data-a="evd" data-id="'+e.id+'">حذف</button></div></div>'};
  return '<div class="bar"><button class="g" data-a="evn">＋ فعالية جديدة</button><span class="hint">الفعالية بتظهر في الموقع لحد ما يعدي تاريخها، وبعدها بتختفي لوحدها.</span></div><h3>القادمة ('+up.length+')</h3>'+(up.map(function(e){return card(e)}).join('')||'<p class="em">مفيش فعاليات قادمة. أضف أول فعالية.</p>')+(old.length?'<h3>انتهت (مخفية من الموقع) ('+old.length+')</h3>'+old.map(function(e){return card(e,1)}).join(''):'')}
 function cpTab(){if(miss3)return need3();
- return '<div class="bar"><button class="g" data-a="cpn">＋ مسابقة جديدة</button></div>'+(comps.map(function(c){var cl=c.status==='closed';return '<div class="card it">'+th(c.image_path,'🏆')+'<div class="gr"><b>'+esc(c.title)+'</b> <span class="tag '+(cl?'red':'ok')+'">'+(cl?'انتهت':'مفتوحة')+'</span><small>'+esc([c.prize&&'الجايزة: '+c.prize,c.deadline&&'آخر موعد: '+c.deadline].filter(Boolean).join(' • '))+'</small>'+(c.description?'<small>'+esc(c.description.slice(0,140))+(c.description.length>140?'…':'')+'</small>':'')+'</div><div class="ac"><button data-a="cpt" data-id="'+c.id+'">'+(cl?'افتحها':'اقفلها')+'</button><button data-a="cpe" data-id="'+c.id+'">تعديل</button><button class="d" data-a="cpd" data-id="'+c.id+'">حذف</button></div></div>'}).join('')||'<p class="em">لسه مفيش مسابقات. أضف أول مسابقة.</p>')}
+ return '<div class="bar"><button class="g" data-a="cpn">＋ مسابقة جديدة</button></div>'+(comps.map(function(c){var cl=c.status==='closed';return '<div class="card it">'+th(c.image_path,'🏆')+'<div class="gr"><b>'+esc(c.title)+'</b> <span class="tag '+(cl?'red':'ok')+'">'+(cl?'انتهت':'مفتوحة')+'</span><small>'+esc([c.prize&&'الجايزة: '+c.prize,c.deadline&&'آخر موعد: '+c.deadline].filter(Boolean).join(' • '))+'</small>'+(c.description?'<small>'+esc(c.description.slice(0,140))+(c.description.length>140?'…':'')+'</small>':'')+'</div><div class="ac"><button data-a="cpt" data-id="'+c.id+'">'+(cl?'افتحها':'اقفلها')+'</button><button data-a="cpe" data-id="'+c.id+'">تعديل</button><button class="d" data-a="cpd" data-id="'+c.id+'">حذف</button></div></div>'}).join('')||'<p class="em">لسه مفيش مسابقات. أضف أول مسابقة.</p>')+qrBlock()}
 function arTab(){if(miss3)return need3();var ys=[];arch.forEach(function(a){if(ys.indexOf(a.year)<0)ys.push(a.year)});ys.sort(function(a,c){return c-a});
  return '<div class="bar"><button class="g" data-a="arn">＋ إضافة للأرشيف</button></div>'+(ys.map(function(y){return '<h3>'+y+'</h3><div class="gy">'+arch.filter(function(a){return a.year===y}).map(function(a){return '<div class="card">'+th(a.image_path,'🗂️')+'<b>'+esc(a.title)+'</b>'+(a.description?'<small>'+esc(a.description.slice(0,90))+'</small>':'')+'<div class="ac"><button data-a="are" data-id="'+a.id+'">تعديل</button><button class="d" data-a="ard" data-id="'+a.id+'">حذف</button></div></div>'}).join('')+'</div>'}).join('')||'<p class="em">الأرشيف فاضي. أضف أول ذكرى.</p>')}
 function prTab(){if(miss3)return need3();var c={all:prayers.length,new:prayers.filter(function(p){return p.status==='new'}).length};c.prayed=c.all-c.new;
@@ -166,6 +167,68 @@ document.addEventListener('submit',async function(e){
  }catch(err){alert('فشل الحفظ: '+(err.message||err));btn.disabled=false;btn.textContent='حفظ'}
 });
 
+/* ---- التصويت ---- */
+async function loadPolls(){
+ var a=await sb.from('polls').select('*').order('created_at',{ascending:false});
+ if(a.error){miss4=true;polls=[];return}
+ miss4=false;polls=a.data||[];
+ var o=await sb.from('poll_options').select('*').order('sort');var opts=o.data||[];
+ for(var i=0;i<polls.length;i++){var q=polls[i];q.options=opts.filter(function(x){return x.poll_id===q.id});q.res={};
+  var r=await sb.rpc('poll_results',{p_poll:q.id});(r.data||[]).forEach(function(x){q.res[x.option_id]=+x.votes})}
+}
+function plTab(){
+ if(miss4)return '<p class="em">شغّل ملف update-4.sql في Supabase الأول (SQL Editor ← Run).</p>';
+ return '<div class="bar"><button class="g" data-a="pln">＋ تصويت جديد</button><span class="hint">التصويت الأساسي (welcome-day) هو اللي بيظهر في الموقع تحت كارت Welcome Day</span></div>'+(polls.map(function(q){
+  var tot=0,mx=0;q.options.forEach(function(o){var n=q.res[o.id]||0;tot+=n;if(n>mx)mx=n});
+  var cl=q.status==='closed';
+  return '<div class="card"><div class="it" style="border:0;padding:0"><div class="gr"><b>'+esc(q.question)+'</b> <span class="tag '+(cl?'red':'ok')+'">'+(cl?'مقفول':'شغال')+'</span><small>إجمالي الأصوات: '+tot+(q.slug?' • '+esc(q.slug):'')+'</small></div><div class="ac"><button data-a="plt" data-id="'+q.id+'">'+(cl?'افتحه':'اقفله')+'</button><button data-a="ple" data-id="'+q.id+'">تعديل</button><button data-a="plr" data-id="'+q.id+'">تصفير الأصوات</button><button class="d" data-a="pld" data-id="'+q.id+'">حذف</button></div></div>'
+  +q.options.map(function(o){var n=q.res[o.id]||0,pc=tot?Math.round(n*100/tot):0;return '<div style="position:relative;margin-top:8px;padding:8px 10px;border:1px solid var(--line,#ddd);border-radius:10px;overflow:hidden;display:flex;gap:8px;align-items:center;justify-content:space-between"><i style="position:absolute;inset:0 0 0 auto;width:'+pc+'%;background:rgba(200,150,46,.25)"></i><span style="position:relative"><b>'+esc(o.label)+'</b>'+(o.place?' <small>'+esc(o.place)+'</small>':'')+(n&&n===mx?' 🏆':'')+'</span><span style="position:relative;display:flex;gap:6px;align-items:center"><b>'+n+' ('+pc+'%)</b><button data-a="poe" data-id="'+o.id+'" data-p="'+q.id+'">تعديل</button><button class="d" data-a="pod" data-id="'+o.id+'">حذف</button></span></div>'}).join('')
+  +'<div class="bar" style="margin-top:10px"><button data-a="pon" data-id="'+q.id+'">＋ إضافة اختيار</button></div></div>'}).join('')||'<p class="em">مفيش تصويتات. شغّل update-4.sql أو أضف تصويت جديد.</p>')}
+function plF(q){q=q||{};
+ return '<h3 style="margin-top:0">'+(q.id?'✏️ تعديل التصويت':'🗳️ تصويت جديد')+'</h3><form id="plf" data-id="'+(q.id||'')+'"><label class="f">السؤال<input name="question" required value="'+ea(q.question)+'"></label><label class="f">وصف قصير<input name="description" value="'+ea(q.description)+'"></label><label>الحالة<select name="status"><option value="open"'+(q.status!=='closed'?' selected':'')+'>شغال</option><option value="closed"'+(q.status==='closed'?' selected':'')+'>مقفول</option></select></label><label>يقفل تلقائي في <small>(اختياري)</small><input name="closes" type="date" value="'+ea(q.closes_at?String(q.closes_at).slice(0,10):'')+'"></label><div class="f"><button class="p" type="submit">حفظ</button> <button type="button" data-a="cl">إلغاء</button></div></form>'}
+function poF(o,pid){o=o||{};
+ return '<h3 style="margin-top:0">'+(o.id?'✏️ تعديل الاختيار':'＋ اختيار جديد')+'</h3><form id="pof" data-id="'+(o.id||'')+'" data-p="'+(pid||o.poll_id||'')+'"><label class="f">الاسم (مثلاً: دير ...)<input name="label" required value="'+ea(o.label)+'"></label><label class="f">المكان<input name="place" value="'+ea(o.place)+'"></label><div class="f"><button class="p" type="submit">حفظ</button> <button type="button" data-a="cl">إلغاء</button></div></form>'}
+document.addEventListener('click',async function(e){
+ var b=e.target.closest('button');if(!b||!b.dataset.a)return;var D=b.dataset,a=D.a,id=D.id;
+ if(a.charAt(0)!=='p'||['pln','ple','plt','plr','pld','pon','poe','pod'].indexOf(a)<0)return;
+ var q=polls.find(function(x){return x.id===id});
+ try{
+ if(a==='pln')openD(plF());else if(a==='ple')openD(plF(q));
+ else if(a==='pon')openD(poF(null,id));
+ else if(a==='poe'){var oo=null;polls.forEach(function(x){x.options.forEach(function(o){if(o.id===id)oo=o})});openD(poF(oo))}
+ else if(a==='plt'){var r=await sb.from('polls').update({status:q.status==='closed'?'open':'closed'}).eq('id',id);if(r.error)throw r.error;await loadPolls();var qr=await sb.from('quiz_results').select('*').order('created_at',{ascending:false}).limit(2000);miss5=!!qr.error;qres=qr.data||[];draw()}
+ else if(a==='plr'){if(!confirm('تصفير كل الأصوات؟ مش هينفع ترجعها.'))return;var r2=await sb.from('poll_votes').delete().eq('poll_id',id);if(r2.error)throw r2.error;await loadPolls();draw()}
+ else if(a==='pld'){if(!confirm('حذف التصويت وكل أصواته؟'))return;var r3=await sb.from('polls').delete().eq('id',id);if(r3.error)throw r3.error;await loadPolls();draw()}
+ else if(a==='pod'){if(!confirm('حذف الاختيار وأصواته؟'))return;var r4=await sb.from('poll_options').delete().eq('id',id);if(r4.error)throw r4.error;await loadPolls();draw()}
+ }catch(err){alert(err.message||err)}
+});
+document.addEventListener('submit',async function(e){
+ var f=e.target;if(f.id!=='plf'&&f.id!=='pof')return;e.preventDefault();
+ var id=f.dataset.id,g=function(k){return f.elements[k].value.trim()},btn=f.querySelector('[type=submit]');btn.disabled=true;btn.textContent='جاري الحفظ...';
+ try{var r;
+  if(f.id==='plf'){var row={question:g('question'),description:g('description')||null,status:g('status'),closes_at:g('closes')?new Date(g('closes')+'T23:59:59').toISOString():null};
+   r=id?await sb.from('polls').update(row).eq('id',id):await sb.from('polls').insert(row)}
+  else{var pid=f.dataset.p,cnt=(polls.find(function(x){return x.id===pid})||{options:[]}).options.length;
+   var ro={label:g('label'),place:g('place')||null};
+   r=id?await sb.from('poll_options').update(ro).eq('id',id):await sb.from('poll_options').insert(Object.assign(ro,{poll_id:pid,sort:cnt+1}))}
+  if(r.error)throw r.error;
+  DL.close();await loadPolls();draw();
+ }catch(err){alert('فشل الحفظ: '+(err.message||err));btn.disabled=false;btn.textContent='حفظ'}
+});
+
+function qrBlock(){
+ if(miss5)return '<h3>🏅 نتايج مسابقة سفر التثنية</h3><p class="em">شغّل ملف update-5.sql في Supabase عشان نتايج المسابقة تتحفظ.</p>';
+ var P={mcq:'اختيار من متعدد',tf:'صح وغلط'};
+ return '<h3>🏅 نتايج مسابقة سفر التثنية ('+qres.length+')</h3>'+['mcq','tf'].map(function(k){
+  var l=qres.filter(function(x){return x.part===k}).sort(function(a,b){return b.score-a.score||(a.seconds||9e9)-(b.seconds||9e9)});
+  return '<div class="card"><b>'+P[k]+' — '+l.length+' مشارك</b>'+(l.length?'<table style="width:100%;margin-top:8px"><tr><th>#</th><th>الاسم</th><th>الدرجة</th><th>الوقت</th><th></th></tr>'+l.map(function(x,i){return '<tr><td>'+(i+1)+(i===0?' 🥇':i===1?' 🥈':i===2?' 🥉':'')+'</td><td>'+esc(x.name)+'</td><td><b>'+x.score+'/'+x.total+'</b></td><td>'+(x.seconds==null?'':Math.floor(x.seconds/60)+':'+('0'+x.seconds%60).slice(-2))+'</td><td><button class="d" data-a="qrd" data-id="'+x.id+'">حذف</button></td></tr>'}).join('')+'</table>':'<p class="em">لسه مفيش نتايج</p>')+'</div>'}).join('')}
+document.addEventListener('click',async function(e){
+ var b=e.target.closest('button');if(!b||b.dataset.a!=='qrd')return;
+ if(!confirm('حذف النتيجة دي؟'))return;
+ var r=await sb.from('quiz_results').delete().eq('id',b.dataset.id);
+ if(r.error){alert(r.error.message);return}
+ qres=qres.filter(function(x){return x.id!==b.dataset.id});draw()});
+
 function nk(s){return (s||'').trim().replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/\s+/g,' ')}
 function bdi(m){if(!m.birth_date)return null;var p=m.birth_date.split('-'),mo=+p[1],d=+p[2],t=new Date(),y=t.getFullYear(),td=new Date(y,t.getMonth(),t.getDate()),n=new Date(y,mo-1,d);if(n<td)n=new Date(y+1,mo-1,d);return{mo:mo,d:d,days:Math.round((n-td)/864e5),age:n.getFullYear()-(+p[0])}}
 function wa(p,t){return 'https://wa.me/'+String(p||'').replace(/\D/g,'').replace(/^0/,'20')+(t?'?text='+encodeURIComponent(t):'')}
@@ -191,7 +254,7 @@ function grpTab(key,cur,attr){var g=groups(key),ks=Object.keys(g);
 function allTab(){var ys=Object.keys(groups('year'));return '<div class="bar"><input id="q" placeholder="ابحث بالاسم أو الهاتف أو القسم" value="'+esc(st.q)+'"><select id="fy"><option value="">كل الفرق</option>'+ys.map(function(k){var v=groups('year')[k].l;return '<option'+(st.fy===v?' selected':'')+'>'+esc(v)+'</option>'}).join('')+'</select><select id="fs"><option value="">كل الحالات</option><option value="new"'+(st.fs==='new'?' selected':'')+'>جديد</option><option value="accepted"'+(st.fs==='accepted'?' selected':'')+'>تم القبول</option></select><button class="g" id="csv">تصدير Excel</button></div><div id="tb">'+tbl(view())+'</div>'}
 function view(){var q=st.q.trim().toLowerCase();return all.filter(function(m){return(!st.fy||m.year===st.fy)&&(!st.fs||m.status===st.fs)&&(!q||[m.full_name,m.phone,m.department].join(' ').toLowerCase().indexOf(q)>-1)})}
 function draw(){ban();$('tabs').innerHTML=TABS.map(function(t){var n=t[0]==='pr'?prayers.filter(function(p){return p.status==='new'}).length:0;return '<button data-tab="'+t[0]+'" class="'+(st.tab===t[0]?'on':'')+'">'+t[1]+(n?'<span class="badge">'+n+'</span>':'')+'</button>'}).join('');
- $('main').innerHTML={over:over,bd:bdTab,yr:function(){return grpTab('year',st.y,'y')},dp:function(){return grpTab('department',st.d,'d')},all:allTab,fu:fuTab,sg:sgTab,pr:prTab,ev:evTab,cp:cpTab,ar:arTab}[st.tab]()}
+ $('main').innerHTML={over:over,bd:bdTab,yr:function(){return grpTab('year',st.y,'y')},dp:function(){return grpTab('department',st.d,'d')},all:allTab,fu:fuTab,sg:sgTab,pr:prTab,ev:evTab,cp:cpTab,ar:arTab,pl:plTab}[st.tab]()}
 async function boot(){var s=(await sb.auth.getSession()).data.session;$('login').hidden=!!s;$('app').hidden=!s;if(s)load()}
 async function load(){var r=await sb.from('members').select('*').order('created_at',{ascending:false}).limit(1000);
  if(r.error){$('main').innerHTML='<p class="em">تعذر تحميل البيانات: '+esc(r.error.message)+'</p>';return}
@@ -200,7 +263,7 @@ async function load(){var r=await sb.from('members').select('*').order('created_
  var n=await sb.from('notes').select('*').order('created_at',{ascending:false}).limit(5000),g=await sb.from('suggestions').select('*').order('created_at',{ascending:false}).limit(500);
  miss=!!(n.error||g.error);notes=n.data||[];sugs=g.data||[];
  var x=await Promise.all([sb.from('events').select('*').order('event_date'),sb.from('competitions').select('*').order('created_at',{ascending:false}),sb.from('archive_items').select('*').order('year',{ascending:false}).order('created_at',{ascending:false}),sb.from('prayers').select('*').order('created_at',{ascending:false}).limit(1000)]);
- miss3=!!(x[0].error||x[1].error||x[2].error||x[3].error);events=x[0].data||[];comps=x[1].data||[];arch=x[2].data||[];prayers=x[3].data||[];draw()}
+ miss3=!!(x[0].error||x[1].error||x[2].error||x[3].error);events=x[0].data||[];comps=x[1].data||[];arch=x[2].data||[];prayers=x[3].data||[];await loadPolls();draw()}
 $('go').onclick=async function(){var r=await sb.auth.signInWithPassword({email:$('em').value.trim(),password:$('pw').value});if(r.error){$('err').textContent='الإيميل أو كلمة المرور غلط';return}boot()};
 $('out').onclick=async function(){await sb.auth.signOut();boot()};$('rf').onclick=load;
 document.addEventListener('visibilitychange',function(){if(!document.hidden&&!$('app').hidden)load()});
