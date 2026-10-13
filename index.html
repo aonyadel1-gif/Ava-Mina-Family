@@ -300,7 +300,7 @@ p{margin:0}
 .btn{position:relative;overflow:hidden}
 .btn .rp{position:absolute;border-radius:50%;background:rgba(255,255,255,.45);transform:scale(0);animation:rp .6s ease-out forwards;pointer-events:none}
 @keyframes rp{to{transform:scale(1);opacity:0}}
-@media(prefers-reduced-motion:reduce){#pt{display:none}}
+html.rm #pt{display:none}
 .cdw{background:var(--hero);color:var(--hero-ink);border-radius:22px;padding:20px 16px;text-align:center;display:grid;gap:12px;margin-bottom:16px;box-shadow:var(--shadow)}
 .cdw .cdt{font-family:var(--fh);font-size:clamp(18px,3vw,24px)}
 .cdw .cdt b{color:var(--hero-gold)}
@@ -331,8 +331,10 @@ html[data-theme=dark] #glow{background:radial-gradient(circle,rgba(232,176,74,.1
 #ft img{transition:transform .6s cubic-bezier(.2,.8,.2,1)}
 #ft:hover img{transform:scale(1.02)}
 @media(min-width:900px){.links a:after{content:"";position:absolute;inset-inline:11px;bottom:3px;height:2px;border-radius:2px;background:var(--gold);transform:scaleX(0);transition:transform .3s}.links a:hover:after,.links a.on:after{transform:scaleX(1)}}
-@media(hover:none){#glow{display:none}}
-@media(prefers-reduced-motion:reduce){#splash,#glow{display:none}.btn:after{display:none}.sh h2.shine{animation:none;color:inherit;-webkit-text-fill-color:currentColor;background:none}}
+
+html.rm #splash,html.rm #glow{display:none}
+html.rm .btn:after{display:none}
+html.rm .sh h2.shine{animation:none;color:inherit;-webkit-text-fill-color:currentColor;background:none}
 .qlock{display:grid;gap:4px;text-align:center;padding:18px;border:2px dashed var(--line);border-radius:16px;background:var(--bg2)}
 .qlock b{font-family:var(--fh);font-size:22px;color:var(--red)}.qlock span{color:var(--mute);font-weight:600}
 .mq{overflow:hidden;direction:ltr;padding:14px 0;background:var(--hero);color:var(--hero-gold);border-block:2px solid var(--gold);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
@@ -350,7 +352,16 @@ html[data-theme=dark] #glow{background:radial-gradient(circle,rgba(232,176,74,.1
 .vcard:before{content:"";position:absolute;inset:-2px;border-radius:inherit;padding:2px;background:conic-gradient(from var(--ang,0deg),transparent 0 70%,var(--gold) 85%,transparent);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:ang 6s linear infinite;pointer-events:none}
 @property --ang{syntax:"<angle>";inherits:false;initial-value:0deg}
 @keyframes ang{to{--ang:360deg}}
-@media(prefers-reduced-motion:reduce){.mq-t,.orb,.vcard:before{animation:none}}
+html.rm .mq-t,html.rm .orb,html.rm .vcard:before{animation:none}
+html.rm .rv{opacity:1;transform:none}
+.btn:active,.fchip:active,.qo:active{transform:scale(.97)}
+.ev:active,.cp:active,.leader:active,.poll .popt:active{transform:scale(.985)}
+@media(hover:none){
+  html.js .rv:nth-child(odd){transform:translate(16px,14px)}
+  html.js .rv:nth-child(even){transform:translate(-16px,14px)}
+  html.js .rv.in{transform:none}
+}
+#tg{display:none}
 .evs{display:grid;gap:14px}
 .ev{display:grid;grid-template-columns:auto 1fr;gap:18px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;align-items:start;transition:transform .25s,box-shadow .25s,border-color .25s}
 .ev:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
@@ -487,12 +498,10 @@ footer p{opacity:.85}
 /* ---------- reveal ---------- */
 html.js .rv{opacity:.35;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
 html.js .rv.in{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
-  html.js .rv{opacity:1;transform:none}
-  .w>span,.ch{opacity:1!important;transform:none!important;filter:none!important}
-  html.js .hero .lead{visibility:visible!important}
-}
+html.rm *,html.rm *::before,html.rm *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+html.rm.js .rv{opacity:1;transform:none}
+html.rm .w>span,html.rm .ch{opacity:1!important;transform:none!important;filter:none!important}
+html.rm.js .hero .lead{visibility:visible!important}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
@@ -795,7 +804,8 @@ function AR(n){return String(n).replace(/\d/g,function(d){return '٠١٢٣٤٥٦
 function safeUrl(u){return /^https?:\/\//i.test(u||'')?u:''}
 function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
 de.classList.add('js');
-var RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var RMSYS=matchMedia('(prefers-reduced-motion: reduce)').matches,RM=RMSYS&&store('ava_motion')!=='1';
+if(RM)de.classList.add('rm');
 de.style.setProperty('--cover','url("'+COVER+'")');
 $$('[data-logo]').forEach(function(i){i.src=LOGO});
 $$('[data-cover]').forEach(function(i){i.src=COVER});
@@ -1117,7 +1127,7 @@ function qHome(){
   '<div class="qstats"><div><b>٣٠</b><span>سؤال</span></div><div><b>١٥</b><span>اختيار من متعدد</span></div><div><b>١٥</b><span>صح وغلط</span></div><div><b>١</b><span>محاولة واحدة</span></div></div>'+
   '<ol class="qsteps"><li><b>اكتب اسمك</b><span>اسمك الأول والتاني على الأقل</span></li><li><b>جاوب براحتك</b><span>تقدر ترجع وتغيّر إجابتك قبل التسليم</span></li><li><b>سلّم الامتحان</b><span>مفيش تصحيح أثناء الحل، والامتحان مرة واحدة بس</span></li><li><b>شوف نتيجتك</b><span>درجتك وكل الإجابات الصح والغلط والتصحيح في الآخر</span></li></ol>'+
   (QOPEN?'<div class="qform"><label class="fld" for="qn">اسمك بالكامل<input class="qn" id="qn" maxlength="80" autocomplete="name" value="'+esc(nm)+'" placeholder="الاسم الثلاثي"></label>'+
-  '<button class="btn gold" type="button" data-qgo="1">ابدأ الامتحان</button></div><p class="msg" id="qm"></p>':'<div class="qlock"><b>المسابقة مقفولة دلوقتي</b><span>هنفتحها قريباً، خليك متابعنا وذاكر سفر التثنية كويس</span></div>');
+  '<button class="btn gold" type="button" data-qgo="1">ابدأ الامتحان</button></div><p class="msg" id="qm"></p>':'<div class="qlock"><b>المسابقة مقفولة دلوقتي</b><span>هنفتحها قريباً، خليك متابعنا وذاكر سفر التثنية كويس</span>'+(QWHY?'<small style="opacity:.6;margin-top:6px">('+esc(QWHY)+')</small>':'')+'</div>');
 }
 async function qStart(btn){
   var n=($('#qn').value||'').trim(),m=$('#qm');
@@ -1188,14 +1198,21 @@ function qReview(d,again){
   $('#quiz').innerHTML=h;
 }
 
+var QWHY='';
 async function loadQuizState(){
-  var sb=sbClient();if(!sb)return;
+  var sb=sbClient();
+  if(!sb){QWHY='الموقع مش مربوط بقاعدة البيانات (راجع config.js)';return}
   try{
     var r=await sb.from('polls').select('status,closes_at').eq('slug','quiz-deuteronomy').maybeSingle();
-    if(r.error||!r.data)return;
-    var o=r.data.status==='open'&&!(r.data.closes_at&&new Date(r.data.closes_at)<=new Date());
+    var why='';
+    if(r.error)why='مشكلة في قراءة الحالة: '+(r.error.message||r.error.code);
+    else if(!r.data)why='مسابقة التثنية مش موجودة في قاعدة البيانات، شغّل all-updates.sql';
+    else if(r.data.status!=='open')why='الحالة في الأدمن لسه "مقفول"، افتحها من تبويب التصويت';
+    else if(r.data.closes_at&&new Date(r.data.closes_at)<=new Date())why='ميعاد القفل التلقائي عدّى';
+    var o=!why;QWHY=why;
     if(o!==QOPEN){QOPEN=o;if(!qs&&!qDone())qHome()}
-  }catch(e){}
+    else if(!qs&&!qDone()&&!QOPEN)qHome();
+  }catch(e){QWHY='خطأ في الاتصال'}
 }
 
 document.addEventListener('click',function(e){
@@ -1210,7 +1227,7 @@ document.addEventListener('click',function(e){
     $$('#qrev .qc').forEach(function(c){c.hidden=(b.dataset.qf==='bad'&&c.dataset.ok==='1')});
   }
 });
-qHome();loadQuizState();
+qHome();loadQuizState();setInterval(function(){if(!document.hidden)loadQuizState()},30000);
 
 /* ---------- لمسات حركة إضافية ---------- */
 (function(){
@@ -1299,7 +1316,7 @@ function startCountdown(rows){
     var y=scrollY;if(y<hero.offsetHeight){hi.style.transform='translateY('+(y*.12).toFixed(1)+'px)';hi.style.opacity=(1-y/(hero.offsetHeight*1.1)).toFixed(2)}py=false})},{passive:true});
   if(!fine)return;
   /* توهج ذهبي ناعم يتبع الماوس */
-  var gl=$('#glow'),gx=0,gy=0,gp=false;
+  var gl=$('#glow'),gx=0,gy=0,gp=false;gl.style.display='block';
   addEventListener('pointermove',function(e){gx=e.clientX;gy=e.clientY;gl.style.opacity=1;if(!gp){gp=true;requestAnimationFrame(function(){gl.style.transform='translate('+gx+'px,'+gy+'px)';gp=false})}},{passive:true});
   document.addEventListener('pointerleave',function(){gl.style.opacity=0});
   /* أزرار مغناطيسية */
@@ -1317,6 +1334,33 @@ function startCountdown(rows){
     var r=c.getBoundingClientRect(),px=(e.clientX-r.left)/r.width-.5,py2=(e.clientY-r.top)/r.height-.5;
     c.classList.add('t3');c.style.transform='perspective(900px) rotateX('+(-py2*5).toFixed(2)+'deg) rotateY('+(px*5).toFixed(2)+'deg) translateY(-3px)';
   },{passive:true});
+})();
+
+/* ---------- تأثيرات اللمس + زرار تشغيل الحركات ---------- */
+(function(){
+  var ft=$('footer');
+  if(RMSYS&&ft){
+    var b=document.createElement('button');b.type='button';b.className='btn ghost sm';
+    b.textContent=RM?'شغّل الحركات والتأثيرات':'اقفل الحركات والتأثيرات';
+    b.addEventListener('click',function(){store('ava_motion',RM?'1':'0');location.reload()});
+    ft.appendChild(b);
+  }
+  if(RM||!matchMedia('(hover:none)').matches)return;
+  /* توهج ذهبي يتبع الإصبع */
+  var gl=$('#glow'),hide;
+  gl.style.display='block';
+  function mv(e){var t=e.touches?e.touches[0]:e;gl.style.opacity=1;gl.style.transform='translate('+t.clientX+'px,'+t.clientY+'px)';clearTimeout(hide);hide=setTimeout(function(){gl.style.opacity=0},900)}
+  addEventListener('touchstart',mv,{passive:true});addEventListener('touchmove',mv,{passive:true});
+  /* ميل الكروت مع اللمس */
+  var cur=null;
+  function tl(e){var c=e.target.closest&&e.target.closest('.ev,.cp,.leader');if(!c)return;var t=e.touches[0],r=c.getBoundingClientRect(),px=(t.clientX-r.left)/r.width-.5,py=(t.clientY-r.top)/r.height-.5;cur=c;c.style.transform='perspective(800px) rotateX('+(-py*7).toFixed(1)+'deg) rotateY('+(px*7).toFixed(1)+'deg) scale(.985)'}
+  addEventListener('touchstart',tl,{passive:true});
+  addEventListener('touchend',function(){if(cur){cur.style.transform='';cur=null}},{passive:true});
+  addEventListener('touchcancel',function(){if(cur){cur.style.transform='';cur=null}},{passive:true});
+  /* ميل اللوجو مع ميل الموبايل */
+  var tl2=$('#tilt');
+  if(tl2&&window.DeviceOrientationEvent&&typeof DeviceOrientationEvent.requestPermission!=='function')
+    addEventListener('deviceorientation',function(e){if(e.gamma==null)return;var x=Math.max(-12,Math.min(12,e.gamma/3)),y=Math.max(-12,Math.min(12,(e.beta-45)/3));tl2.style.transform='perspective(700px) rotateY('+x.toFixed(1)+'deg) rotateX('+(-y).toFixed(1)+'deg)'},{passive:true});
 })();
 
 /* ---------- confetti لكارت Welcome Day ---------- */
