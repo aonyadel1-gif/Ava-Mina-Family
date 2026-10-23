@@ -47,7 +47,12 @@ p{margin:0}
 [hidden]{display:none!important}
 .wrap{width:100%;max-width:1120px;margin-inline:auto;padding-inline:16px}
 @media(min-width:720px){.wrap{padding-inline:28px}}
-.sec{padding-block:76px;scroll-margin-top:68px}
+.sec{padding-block:76px;scroll-margin-top:calc(var(--navh,72px) + 14px)}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.sw{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.08em}
+.sh .sc.shine{background:linear-gradient(100deg,var(--ink) 35%,var(--gold) 50%,var(--ink) 65%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:shine 1.8s ease .2s 1 both}
+.sc{display:inline-block;will-change:transform}
 .alt{background:var(--bg2)}
 
 /* ---------- header / nav ---------- */
@@ -462,7 +467,6 @@ html.lite .nav{background:var(--bg)}
 html.lite .scrim{background:rgba(6,12,28,.7)}
 html.lite .tilt{transition:none}
 html.lite .btn:active,html.lite .ev:active,html.lite .cp:active,html.lite .popt:active,html.lite .qo:active,html.lite .rh:active{transform:scale(.97);transition:transform .08s}
-.sec:not(#home){content-visibility:auto;contain-intrinsic-size:auto 640px}
 .steps .s{display:flex;align-items:center;gap:8px;color:var(--mute);font-weight:600}
 .steps .s b{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--bg2);border:1px solid var(--line);font-family:var(--fh)}
 .steps .s.on{color:var(--ink)}
@@ -695,7 +699,7 @@ html.rm.js .hero .lead{visibility:visible!important}
         <h3 class="fgt span2">👋 عرّفنا بنفسك</h3>
         <label class="fld span2" for="j-n">الاسم بالكامل<input id="j-n" name="n" required minlength="3" autocomplete="name"></label>
         <label class="fld" for="j-p"><span>رقم الهاتف <small>(١١ رقم)</small></span><input id="j-p" name="p" type="tel" required inputmode="numeric" maxlength="11" pattern="01[0-9]{9}" autocomplete="tel" placeholder="01XXXXXXXXX" dir="ltr" style="text-align:right"></label>
-        <label class="fld" for="j-e"><span>الإيميل <small>(اختياري)</small></span><input id="j-e" name="e" type="email" autocomplete="email" dir="ltr" style="text-align:right"></label>
+        <label class="fld" for="j-e"><span>الإيميل</span><input id="j-e" name="e" type="email" required autocomplete="email" dir="ltr" style="text-align:right"></label>
         <div class="fld" id="dobw"><span>تاريخ الميلاد</span><div class="dob"><select id="bd" aria-label="اليوم"></select><select id="bm" aria-label="الشهر"></select><select id="by" aria-label="السنة"></select></div><input type="hidden" id="j-b" name="b"></div>
         <label class="fld" for="j-dn">الطائفة<select id="j-dn" name="dn" required><option value="">اختار</option><option>أرثوذكس</option><option>كاثوليك</option><option>إنجيلي</option></select></label>
         <label class="fld" for="j-g">المحافظة<select id="j-g" name="g" required><option value="">اختار المحافظة</option><option>القاهرة</option><option>الجيزة</option><option>الإسكندرية</option><option>القليوبية</option><option>الشرقية</option><option>الدقهلية</option><option>الغربية</option><option>المنوفية</option><option>البحيرة</option><option>كفر الشيخ</option><option>دمياط</option><option>بورسعيد</option><option>الإسماعيلية</option><option>السويس</option><option>شمال سيناء</option><option>جنوب سيناء</option><option>الفيوم</option><option>بني سويف</option><option>المنيا</option><option>أسيوط</option><option>سوهاج</option><option>قنا</option><option>الأقصر</option><option>أسوان</option><option>البحر الأحمر</option><option>الوادي الجديد</option><option>مطروح</option></select></label>
@@ -711,9 +715,9 @@ html.rm.js .hero .lead{visibility:visible!important}
         <label class="fld" for="j-y">الفرقة<select id="j-y" name="y" required><option value="">اختار</option><option>الأولى</option><option>الثانية</option><option>الثالثة</option><option>الرابعة</option></select></label>
         <label class="fld" for="j-d">القسم<select id="j-d" name="d" required><option value="">اختار</option><option>نظم معلومات الأعمال (BIS)</option><option>محاسبة والتمويل دولي (IAF)</option><option>الأسواق والمنشآت المالية (FMI)</option></select></label>
         <label class="fld" for="j-s">الشعبة<select id="j-s" name="s2" required><option value="">اختار</option><option>عربي</option><option>إنجليزي</option></select></label>
-        <label class="fld" for="j-j">سنة الانضمام للأسرة<input id="j-j" name="j" type="number" min="2015" max="2035" placeholder="2026" inputmode="numeric"></label>
+        <label class="fld" for="j-j">سنة الانضمام للأسرة<input id="j-j" name="j" type="number" required min="2015" max="2035" placeholder="2026" inputmode="numeric"></label>
         <label class="fld span2" for="j-x">شاركت قبل كده في خدمة أو لجنة؟<select id="j-x" name="x"><option>لا</option><option>نعم</option></select></label>
-        <label class="fld span2" for="j-sk"><span>مهارات أو مواهب <small>(تصميم، تصوير، ألحان، رياضة وغيرها)</small></span><input id="j-sk" name="s"></label>
+        <label class="fld span2" for="j-sk"><span>مهارات أو مواهب <small>(تصميم، تصوير، ألحان، رياضة وغيرها — لو مفيش اكتب "لا يوجد")</small></span><input id="j-sk" name="s" required></label>
       </fieldset>
 
       <fieldset class="two" data-step="3" hidden>
@@ -861,7 +865,7 @@ $$('[data-secretary]').forEach(function(i){i.src=SECRETARY});
 /* ---------- Supabase ---------- */
 var SB=null;
 function sbClient(){
-  if(!SB&&CONFIG.supabaseUrl&&CONFIG.supabaseKey&&window.supabase){SB=window.supabase.createClient(CONFIG.supabaseUrl,CONFIG.supabaseKey)}
+  if(!SB&&CONFIG.supabaseUrl&&CONFIG.supabaseKey&&window.supabase){SB=window.supabase.createClient(CONFIG.supabaseUrl,CONFIG.supabaseKey,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}})}
   return SB;
 }
 function uuid(){
@@ -1352,7 +1356,7 @@ function startCountdown(rows){
   observe($$('#crew li'));
   $$('.sh h2').forEach(function(h){
     if(!('IntersectionObserver' in window))return;
-    var o=new IntersectionObserver(function(en){if(en[0].isIntersecting){h.classList.add('shine');o.disconnect()}},{threshold:.6});o.observe(h);
+    var o=new IntersectionObserver(function(en){if(en[0].isIntersecting){(h.dataset.split?h.querySelectorAll('.sc'):[h]).forEach(function(x){x.classList.add('shine')});o.disconnect()}},{threshold:.6});o.observe(h);
   });
   var fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
   /* بارالاكس خفيف للهيرو */
@@ -1445,7 +1449,7 @@ var DOB=(function(){
   var Y=new Date().getFullYear();t='<option value="">السنة</option>';for(i=Y-15;i>=Y-40;i--)t+='<option value="'+i+'">'+AR(i)+'</option>';y.innerHTML=t;
   function sync(){
     var dv=d.value,mv=m.value,yv=y.value,n=(dv?1:0)+(mv?1:0)+(yv?1:0);y.setCustomValidity('');h.value='';
-    if(n===0)return;
+    if(n===0){y.setCustomValidity('اختار تاريخ الميلاد (يوم وشهر وسنة)');return}
     if(n<3){y.setCustomValidity('كمّل تاريخ الميلاد: اليوم والشهر والسنة');return}
     var dt=new Date(+yv,+mv-1,+dv);
     if(dt.getMonth()!==+mv-1){y.setCustomValidity('التاريخ ده مش موجود، راجع اليوم والشهر');return}
@@ -1487,6 +1491,7 @@ jrBuild();
 function stepValid(n){
   var els=$$('fieldset[data-step="'+n+'"] input,fieldset[data-step="'+n+'"] select',jf);
   for(var i=0;i<els.length;i++){if(!els[i].checkValidity()){els[i].reportValidity();return false}}
+  if(n===1&&!picFile){say($('#jm'),'لازم تضيف صورتك الشخصية الأول قبل ما تكمل','bad');$('#pic').focus();return false}
   return true;
 }
 $('#jn').addEventListener('click',function(){if(stepValid(step)){setStep(step+1);jf.scrollIntoView({behavior:'smooth',block:'start'})}});
@@ -1518,17 +1523,22 @@ jf.addEventListener('submit',async function(e){
   var sb=sbClient();
   for(var w=0;!sb&&w<16;w++){await new Promise(function(r){setTimeout(r,250)});sb=sbClient()}
   if(!sb){say(msg,'الموقع مش متصل بقاعدة البيانات دلوقتي، جرّب تاني بعد شوية أو كلّم أمين الأسرة','bad');btn.disabled=false;return}
+  try{var dq=await sb.rpc('member_exists',{p_phone:v('p'),p_name:v('n'),p_birth:v('b')||null});
+    if(!dq.error&&dq.data===true){say(msg,'انت متسجل في الأسرة قبل كده، مش محتاج تسجل تاني. لو عايز تعدّل بياناتك كلّم أمين الأسرة','bad');btn.disabled=false;return}
+  }catch(e){}
+  var stage='';
   try{
-    var id=uuid(),path=null;
+    var id=uuid(),path=null;stage='photo';
     if(picFile){path=id+'.jpg';var u=await sb.storage.from('member-photos').upload(path,picFile,{contentType:'image/jpeg'});if(u.error)throw u.error}
     var nh=jf.elements.nh.checked;
     var row0={id:id,full_name:v('n'),phone:v('p'),email:v('e')||null,year:v('y'),department:v('d'),section:v('s2'),housing_name:nh?'لا يوجد سكن':v('h1'),housing_desc:nh?null:v('h2'),landlord_name:nh?null:v('ln'),landlord_phone:nh?null:v('lp'),governorate:v('g'),district:v('m'),village:v('v'),denomination:v('dn'),confessor_name:v('cn'),confessor_phone:v('cp'),guardian_type:v('gt'),guardian_phone:v('gp'),rules_read_secs:JR_SECS,birth_date:v('b')||null,joined_year:v('j')?+v('j'):null,skills:v('s')||null,prev_service:v('x')==='نعم',photo_path:path,agreed:true};
-    var r=await sb.from('members').insert(row0);
+    stage='data';var r=await sb.from('members').insert(row0);
     if(r.error)throw r.error;
     jf.reset();DOB();jf.elements.nh.dispatchEvent(new Event('change'));jf.elements.g.dispatchEvent(new Event('change'));jrBuild();picFile=null;prev.hidden=true;setStep(1);jf.hidden=true;$('#done').hidden=false;$('#done').scrollIntoView({behavior:'smooth',block:'center'});
   }catch(err){
+    if(err&&err.code==='23505'){say(msg,'انت متسجل في الأسرة قبل كده، مش محتاج تسجل تاني','bad');btn.disabled=false;return}
     var em=String((err&&(err.message||err.error_description))||err||'');
-    say(msg,'التسجيل ماتحفظش: '+em.slice(0,140)+(/column|schema/i.test(em)?' (لازم الأمين يشغّل update-10.sql في Supabase)':' — جرّب تاني أو كلّم أمين الأسرة'),'bad');
+    say(msg,'التسجيل ماتحفظش ('+(stage==='photo'?'رفع الصورة':'حفظ البيانات')+'): '+em.slice(0,140)+(/row-level|policy/i.test(em)?' (لازم الأمين يشغّل update-11.sql في Supabase)':'')+(/column|schema/i.test(em)?' (لازم الأمين يشغّل update-10.sql في Supabase)':' — جرّب تاني أو كلّم أمين الأسرة'),'bad');
   }
   btn.disabled=false;
 });
@@ -1618,6 +1628,47 @@ $$('[data-share]').forEach(function(b){
   });
 });
 })();
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" onerror="this.onerror=null;this.src='gsap.min.js'"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" onerror="this.onerror=null;this.src='ScrollTrigger.min.js'"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js" onerror="this.onerror=null;this.src='lenis.min.js'"></script>
+<script>
+addEventListener('load',function(){
+  var de=document.documentElement;
+  function navOff(){return (parseFloat(getComputedStyle(de).getPropertyValue('--navh'))||72)+14}
+  function setNavH(){var n=document.querySelector('.nav');if(n)de.style.setProperty('--navh',n.offsetHeight+'px')}
+  setNavH();addEventListener('resize',setNavH);
+  /* الروابط الداخلية: تنزل للقسم بالظبط تحت الشريط، وتصحح لو الصور اتحمّلت وغيّرت الطول */
+  function goTo(el,n){
+    var y=el.getBoundingClientRect().top+scrollY-navOff();
+    var fix=function(){if(Math.abs(el.getBoundingClientRect().top-navOff())>3&&n<4)goTo(el,n+1)};
+    if(window.__lenis){window.__lenis.scrollTo(y,{duration:n?.3:1.2,onComplete:fix})}
+    else{window.scrollTo({top:y,behavior:n?'auto':'smooth'});setTimeout(fix,n?300:1600)}
+  }
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a)return;
+    var h=a.getAttribute('href');if(!h||h.length<2)return;
+    var el=document.getElementById(h.slice(1));if(!el)return;
+    e.preventDefault();goTo(el,0);history.replaceState(null,'',h);
+  });
+  if(de.classList.contains('rm')||!window.gsap)return;
+  if(window.ScrollTrigger)gsap.registerPlugin(ScrollTrigger);
+  /* SplitText: كلمات عناوين الأقسام بتطلع كلمة كلمة لما توصلها */
+  document.querySelectorAll('.sh h2').forEach(function(h){
+    if(h.children.length||h.dataset.split)return;
+    var t=h.textContent.trim();h.dataset.split='1';h.setAttribute('aria-label',t);
+    h.innerHTML=t.split(/\s+/).map(function(w){return '<span class="sw" aria-hidden="true"><span class="sc">'+w+'</span></span>'}).join(' ');
+    gsap.from(h.querySelectorAll('.sc'),{yPercent:110,opacity:0,duration:.8,ease:'power3.out',stagger:.07,
+      scrollTrigger:{trigger:h,start:'top 88%',once:true}});
+  });
+  /* Lenis: سكرول ناعم على الكمبيوتر بس (الموبايل بيستخدم السكرول الأصلي) */
+  if(!window.Lenis||matchMedia('(hover:none)').matches)return;
+  var lenis=new Lenis({duration:1.15,smoothWheel:true,syncTouch:false});
+  window.__lenis=lenis;
+  if(window.ScrollTrigger)lenis.on('scroll',ScrollTrigger.update);
+  gsap.ticker.add(function(t){lenis.raf(t*1000)});
+  gsap.ticker.lagSmoothing(0);
+});
 </script>
 </body>
 </html>
