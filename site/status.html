@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>فحص اتصال الموقع</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" onerror="document.write('<script src=\'supabase.js\'><\/script>')"></script>
+<script>if(!window.supabase)document.write('<script src="https://unpkg.com/@supabase/supabase-js@2"><\/script>')</script>
+<script src="config.js"></script>
+<style>
+body{font-family:system-ui,'Segoe UI',Tahoma,Arial,sans-serif;background:#f5f0e4;color:#17203a;margin:0;padding:16px;line-height:1.7}
+h1{font-size:22px;margin:0 0 6px}p.s{margin:0 0 16px;color:#566079}
+.r{background:#fffdf7;border:1px solid #dccfb2;border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.r b{display:block}.ok{border-color:#1d7a3e}.bad{border-color:#b3342b;background:#fff4f2}.w{border-color:#c8962e}
+.r small{display:block;color:#566079;direction:ltr;text-align:right;word-break:break-all}
+.fix{color:#b3342b;font-weight:600;margin-top:4px}
+#v{font-size:18px;font-weight:700;padding:14px;border-radius:14px;margin-top:14px;background:#0c1d3f;color:#fff}
+</style></head><body>
+<h1>🔎 فحص اتصال الموقع بقاعدة البيانات</h1>
+<p class="s">الصفحة دي بتفحص كل خطوة وبتقولك المشكلة فين بالظبط. صوّرها وابعتها لو احتجت مساعدة (المفتاح بيظهر ناقص عشان الأمان).</p>
+<div id="out"></div><div id="v">جاري الفحص...</div>
+<script>
+var out=document.getElementById('out'),bad=0,first='';
+function add(cls,title,detail,fix){if(cls==='bad'){bad++;if(!first)first=fix||title}out.insertAdjacentHTML('beforeend','<div class="r '+cls+'"><b>'+(cls==='ok'?'✅ ':cls==='bad'?'❌ ':'⚠️ ')+title+'</b>'+(detail?'<small>'+String(detail).replace(/</g,'&lt;')+'</small>':'')+(fix?'<div class="fix">'+fix+'</div>':'')+'</div>')}
+(async function(){
+ var C=window.AVA_CONFIG;
+ if(!C){add('bad','ملف config.js مش بيتحمّل أو مش موجود','','ارفع config.js على GitHub في نفس مكان index.html، واكتب فيه الرابط والمفتاح');}
+ else{
+  var u=(C.url||'').trim(),k=(C.key||'').trim();
+  if(!u||!k)add('bad','config.js موجود بس فاضي','url="'+u+'"  key="'+(k?k.slice(0,10)+'...':'')+'"','افتح config.js على GitHub (✏️ Edit) واكتب فيه رابط المشروع والمفتاح، ثم Commit');
+  else if(!/^https:\/\/[a-z0-9]+\.supabase\.co$/.test(u))add('bad','الرابط في config.js شكله غلط',u,'لازم يكون بالشكل https://xxxx.supabase.co بس، من غير / في الآخر ومن غير rest/v1');
+  else add('ok','config.js فيه الرابط والمفتاح',u+'\nkey: '+k.slice(0,12)+'...('+k.length+' حرف)');
+  if(/service_role/i.test(k)||k.split('.').length===3&&/"role":"service_role"/.test(atob(k.split('.')[1]||'')))add('bad','المفتاح ده service_role وده خطر','','استخدم المفتاح anon/publishable بس');
+ }
+ if(!window.supabase||!window.supabase.createClient){add('bad','مكتبة Supabase ماتحمّلتش','','النت عندك بيمنع الموقع اللي بيحمّلها. ارفع ملف supabase.js على GitHub جنب index.html');}
+ else add('ok','مكتبة Supabase اتحمّلت');
+ if(bad){fin();return}
+ var sb;try{sb=window.supabase.createClient(C.url.trim(),C.key.trim());add('ok','اتعمل اتصال بالمشروع')}catch(e){add('bad','فشل إنشاء الاتصال',e.message,'راجع الرابط والمفتاح في config.js');fin();return}
+ async function q(name,fn,fix){try{var r=await fn();if(r.error)add('bad',name,(r.error.code||'')+' '+(r.error.message||''),fix);else return r.data}catch(e){add('bad',name,e.message,fix)}}
+ var p=await q('قراءة جدول التصويت (polls)',function(){return sb.from('polls').select('slug,status')},'لو الرسالة فيها "does not exist" شغّل all-updates.sql. لو فيها "permission" شغّل سطور polls_read اللي بعتهالك');
+ if(p){
+  if(!p.length)add('bad','جدول polls فاضي أو ممنوع القراءة منه','[] (مفيش صفوف)','شغّل all-updates.sql، ولو اتشغّل قبل كده شغّل سطور: create policy polls_read ... اللي بعتهالك');
+  else{
+   var m={};p.forEach(function(x){m[x.slug]=x.status});
+   add(m['welcome-day']?'ok':'bad','تصويت Welcome Day','الحالة: '+(m['welcome-day']||'مش موجود'),m['welcome-day']?'':'شغّل all-updates.sql');
+   if(!m['quiz-deuteronomy'])add('bad','مسابقة سفر التثنية مش موجودة في القاعدة','','شغّل all-updates.sql (جزء update-8)');
+   else add(m['quiz-deuteronomy']==='open'?'ok':'w','مسابقة سفر التثنية','الحالة: '+m['quiz-deuteronomy'],m['quiz-deuteronomy']==='open'?'':'مقفولة، افتحها من لوحة الأدمن ← 🗳️ التصويت');
+  }
+ }
+ var o=await q('قراءة اختيارات التصويت (poll_options)',function(){return sb.from('poll_options').select('id')},'شغّل all-updates.sql');
+ if(o)add(o.length?'ok':'bad','اختيارات التصويت: '+o.length,'',o.length?'':'مفيش اختيارات، شغّل all-updates.sql');
+ var r=await q('نتايج التصويت (poll_results)',function(){return sb.rpc('poll_results',{p_poll:'00000000-0000-0000-0000-000000000000'})},'شغّل all-updates.sql');
+ if(r)add('ok','دالة النتايج شغّالة');
+ var s=await q('إعدادات الموقع (site_settings)',function(){return sb.from('site_settings').select('key')},'شغّل all-updates.sql (جزء update-9)');
+ if(s)add('ok','إعدادات الموقع متاحة ('+s.length+')');
+ fin();
+ function fin(){var v=document.getElementById('v');v.textContent=bad?'❌ المشكلة: '+first:'✅ كل حاجة تمام. لو الموقع لسه مش شغال، حدّث الصفحة من تبويب خفي (Incognito)'}
+})();
+</script></body></html>
