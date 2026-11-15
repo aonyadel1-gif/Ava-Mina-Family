@@ -7,6 +7,11 @@
 <meta name="description" content="أسرة آڤا مينا، أسرة جامعيين علوم مالية وإدارية بسوهاج، تسجيل الأعضاء، فعاليات، مسابقات، وأرشيف الأسرة">
 <meta name="theme-color" content="#0c1d3f">
 <link rel="manifest" href="manifest.json">
+<meta name="robots" content="index,follow">
+<meta property="og:site_name" content="أسرة آڤا مينا">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="أسرة آڤا مينا - Ava Mina Family">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"أسرة آڤا مينا","alternateName":"Ava Mina Family","description":"أسرة جامعيين علوم مالية وإدارية بسوهاج: تسجيل الأعضاء، فعاليات، مسابقات، وأرشيف الأسرة","areaServed":"سوهاج","inLanguage":"ar-EG"}</script>
 <link rel="apple-touch-icon" href="icon-192.png">
 <meta property="og:type" content="website"><meta property="og:locale" content="ar_EG"><meta property="og:title" content="أسرة آڤا مينا - Ava Mina Family"><meta property="og:description" content="أسرة جامعيين علوم مالية وإدارية بسوهاج">
 <script>document.documentElement.classList.add("js")</script>
@@ -764,6 +769,79 @@ html.rm .btn.gold::after,html.rm .btn.pri::after{display:none}
 .wkh{width:100%;text-align:center;margin:0;font-size:14px;color:var(--mute);font-weight:700}
 .dq-stat{margin:8px 0 0;font-size:15px;color:var(--mute);text-align:center}
 .dq-stat b{color:var(--goldt)}
+@media (hover:none){
+  .ev:hover,.cp:hover{transform:none}
+  .cp:hover .cpi img,.ar:hover img,.leader:hover .ring img{transform:none}
+  .leader:hover .ring{box-shadow:none}
+  .leader:hover .ring::after{inset:20px}
+}
+@keyframes shIn{from{opacity:0}to{opacity:1}}
+.sheet{position:fixed;inset:0;z-index:300;background:rgba(6,12,28,.6);display:grid;place-items:center;padding:18px;animation:shIn .25s ease-out}
+.sheet[hidden]{display:none}
+.sheet-box{position:relative;width:min(460px,100%);max-height:86vh;overflow:auto;background:var(--card);color:var(--ink);border-radius:22px;padding:24px 22px;box-shadow:var(--shadow)}
+.sheet-x{position:absolute;top:10px;inset-inline-end:10px;width:40px;height:40px;border-radius:50%;border:0;background:var(--bg2);color:var(--ink);font-size:22px;line-height:1;cursor:pointer}
+.sheet .cp p,.sheet .ev p,.sheet .leader p{display:block;-webkit-line-clamp:unset;max-height:none;overflow:visible}
+.sheet .rv,.sheet .spot{opacity:1!important;transform:none!important}
+.ev,.cp,.leader{cursor:pointer}
+@keyframes shimmer{from{background-position:120% 0}to{background-position:-120% 0}}
+.sk{height:120px;border-radius:18px;background:linear-gradient(90deg,rgba(128,128,128,.12) 25%,rgba(128,128,128,.24) 50%,rgba(128,128,128,.12) 75%);background-size:200% 100%;animation:shimmer 1.4s linear infinite}
+.qt{max-width:720px;margin:26px auto;text-align:center;padding:22px 24px;border-radius:20px;background:var(--card);border:1px solid rgba(128,128,128,.22);transition:opacity .3s,transform .3s}
+.qt[hidden]{display:none}
+.qt.qt-out{opacity:0;transform:translateY(6px)}
+.qt-t{font-size:20px;line-height:1.9;margin:0 0 8px}
+.qt-n{margin:0;color:var(--goldt);font-weight:700}
+.wel{font-size:22px;font-weight:800;color:var(--goldt);margin:0 0 8px;text-align:center}
+@media (prefers-reduced-motion:reduce){.sk{animation:none}.qt{transition:none}}
+section[hidden]{display:none!important}
+.fs{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.fs>div{background:var(--card);border-radius:18px;padding:20px;border:1px solid rgba(128,128,128,.2)}
+.fs b{color:var(--goldt)}
+.fs p{margin:8px 0 0;color:var(--mute);line-height:1.8}
+.faq{max-width:760px;margin:24px auto 0}
+.faq details{background:var(--card);border-radius:14px;padding:14px 18px;margin:0 0 10px;border:1px solid rgba(128,128,128,.2)}
+.faq summary{cursor:pointer;font-weight:700}
+.faq p{margin:10px 0 0;color:var(--mute);line-height:1.8}
+.au-i{display:flex;gap:12px;align-items:center;padding:14px;border-radius:16px;background:var(--card);border:1px solid rgba(128,128,128,.2);margin:0 0 10px;max-width:720px;margin-inline:auto}
+.au-b{width:46px;height:46px;border-radius:50%;border:0;background:var(--hero-gold);color:var(--ongold);font-size:16px;cursor:pointer;flex:none}
+.au-m{display:grid;gap:2px;min-width:0}
+.au-m b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.au-m span{font-size:13px;color:var(--mute)}
+.rcs{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:0 0 18px}
+.rc{border:1px solid rgba(128,128,128,.3);background:var(--card);color:inherit;border-radius:999px;padding:8px 14px;font:inherit;font-size:14px;cursor:pointer}
+.rc.on{background:var(--hero-gold);color:var(--ongold);border-color:transparent}
+.rl{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));max-width:980px;margin-inline:auto}
+.rci{background:var(--card);border-radius:16px;padding:18px;border:1px solid rgba(128,128,128,.2);display:grid;gap:8px;align-content:start}
+.rci b{line-height:1.5}
+.rci p{margin:0;color:var(--mute);line-height:1.8;font-size:14px}
+.rk{font-size:12px;color:var(--goldt)}
+.rb{justify-self:start;margin-top:4px;font-weight:700;color:var(--goldt)}
+.intro{position:fixed;inset:0;z-index:300;background:rgba(7,20,47,.62);display:grid;place-items:center;padding:18px;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.intro-box{background:var(--card);color:var(--ink);border-radius:22px;padding:24px 22px;max-width:420px;width:100%;border:1px solid rgba(232,176,74,.5);box-shadow:0 20px 50px rgba(0,0,0,.35);max-height:90vh;overflow:auto}
+.intro-box h2{margin:0 0 10px;font-size:24px;color:var(--goldt)}
+.intro-box p{margin:6px 0;line-height:1.8}
+.intro-box ul{padding-inline-start:20px;margin:6px 0;line-height:1.9}
+.intro-n{color:var(--mute);font-size:14px}
+.intro-a{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+.bdl{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.bdc{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:10px 18px;font-weight:700;color:var(--goldt)}
+html.fs1 p,html.fs1 li,html.fs1 .sub,html.fs1 label,html.fs1 summary,html.fs1 .fs p,html.fs1 .faq p,html.fs1 .rci p,html.fs1 .card p{font-size:1.14em!important;line-height:1.85}
+html.fs2 p,html.fs2 li,html.fs2 .sub,html.fs2 label,html.fs2 summary,html.fs2 .fs p,html.fs2 .faq p,html.fs2 .rci p,html.fs2 .card p{font-size:1.3em!important;line-height:1.9}
+.frms{display:grid;gap:16px;max-width:720px;margin-inline:auto;grid-template-columns:minmax(0,1fr)}
+.frms>*,.frmform,.frmfield{min-width:0}
+.frmcard{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px}
+.frmcard h3{margin:0 0 6px;color:var(--goldt)}
+.frmdesc{color:var(--mute);margin:0 0 12px;line-height:1.8}
+.frmform{display:grid;gap:12px}
+.frmfield{display:grid;gap:6px}
+.frmfield b{font-size:15px}
+.frmfield input,.frmfield select,.frmfield textarea{box-sizing:border-box;max-width:100%;font:inherit;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
+.frmchk{display:grid;gap:6px}
+.frmchk input[type=checkbox]{width:auto;padding:0;margin:0;flex:none}
+.frmchk label{display:flex;gap:8px;align-items:center}
+.frmreq{color:var(--red)}
+.frmmsg{margin:0;color:var(--mute);min-height:1.2em}
+.frmgrp{display:grid;gap:6px}
+.frmstars .frmchk{font-weight:600}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" onerror="document.write('<script src=&quot;supabase.js&quot;><\/script>')"></script>
 <script>if(!window.supabase)document.write('<script src="https://unpkg.com/@supabase/supabase-js@2"><\/script>')</script>
@@ -783,7 +861,7 @@ html.rm .btn.gold::after,html.rm .btn.pri::after{display:none}
       <a href="#rules">القواعد</a>
       <a href="#events">الفعاليات</a>
       <a href="#competitions">المسابقات</a>
-      <a href="#daily">سؤال اليوم</a>
+      <a href="#first">أول مرة؟</a><a href="#audio">الصوتيات</a><a href="#resources">المكتبة</a><a href="#daily">سؤال اليوم</a>
       <a href="#archive">الأرشيف</a>
       <a href="#gallery">الصور</a>
       <a href="#voice">صلاة واقتراحات</a>
@@ -842,13 +920,15 @@ html.rm .btn.gold::after,html.rm .btn.pri::after{display:none}
     <p id="vt"></p>
     <div class="vr" id="vr"></div>
     <button class="more" type="button" id="vcp">نسخ الآية</button>
+    <button class="more" type="button" id="vsh">شارك الآية كصورة</button>
   </div>
 </div>
 
 <div class="mq" aria-hidden="true"><div class="mq-t"><span>محبة</span><span>خدمة</span><span>صلاة</span><span>شركة</span><span>فرح</span><span>عطاء</span><span>إيمان</span><span>بركة</span><span>محبة</span><span>خدمة</span><span>صلاة</span><span>شركة</span><span>فرح</span><span>عطاء</span><span>إيمان</span><span>بركة</span><span>محبة</span><span>خدمة</span><span>صلاة</span><span>شركة</span><span>فرح</span><span>عطاء</span><span>إيمان</span><span>بركة</span><span>محبة</span><span>خدمة</span><span>صلاة</span><span>شركة</span><span>فرح</span><span>عطاء</span><span>إيمان</span><span>بركة</span></div></div>
+<div class="qt" id="qt" aria-live="polite" hidden></div>
 <section class="sec" id="about">
   <div class="wrap">
-    <header class="sh"><h2>عن الأسرة</h2><p class="sub">أسرة بتجمع طلاب الكلية في جو روحي واجتماعي مليان محبة</p></header>
+    <header class="sh"><h2 data-t="sec_about_h">عن الأسرة</h2><p class="sub" data-t="sec_about_p">أسرة بتجمع طلاب الكلية في جو روحي واجتماعي مليان محبة</p></header>
     <div class="about">
       <figure class="cover rv"><img data-cover alt="غلاف أسرة جامعيين علوم مالية وإدارية بسوهاج" loading="lazy"><figcaption>برعاية مطرانية الأقباط الأرثوذكس بأخميم وساقلته</figcaption></figure>
       <dl class="facts">
@@ -865,7 +945,7 @@ html.rm .btn.gold::after,html.rm .btn.pri::after{display:none}
 
 <section class="sec alt" id="servants">
   <div class="wrap">
-    <header class="sh"><h2>خدام الأسرة</h2><p class="sub">الراعي والخدام اللي معانا في كل خطوة</p></header>
+    <header class="sh"><h2 data-t="sec_servants_h">خدام الأسرة</h2><p class="sub" data-t="sec_servants_p">الراعي والخدام اللي معانا في كل خطوة</p></header>
     <div class="leaders">
       <article class="leader rv spot"><div class="ring"><img data-father alt="Father David William" loading="lazy"></div><div><span class="role">أب الأسرة والراعي</span><h3 dir="ltr">Father : David William</h3><p>كاهن كنيسة مارمينا بالحواويش، الكوثر</p></div></article>
       <article class="leader rv spot"><div class="ring"><img data-secretary alt="أمين الأسرة" loading="lazy"></div><div><span class="role">أمين الأسرة</span><h3 dir="ltr">Aony Adel</h3></div></article>
@@ -878,7 +958,7 @@ html.rm .btn.gold::after,html.rm .btn.pri::after{display:none}
 
 <section class="sec" id="rules">
   <div class="wrap">
-    <header class="sh"><h2>قواعد الأسرة</h2><p class="sub">قواعد بنتفق عليها عشان يفضل الوسط مريح للكل، اضغط على أي قاعدة تقراها</p></header>
+    <header class="sh"><h2 data-t="sec_rules_h">قواعد الأسرة</h2><p class="sub" data-t="sec_rules_p">قواعد بنتفق عليها عشان يفضل الوسط مريح للكل، اضغط على أي قاعدة تقراها</p></header>
     <div class="rules" id="rulesList"></div>
     <div class="commit rv">
       <h3>الالتزام بالقواعد</h3>
@@ -891,7 +971,7 @@ html.rm .btn.gold::after,html.rm .btn.pri::after{display:none}
 
 <section class="sec alt" id="events">
   <div class="wrap">
-    <header class="sh"><h2>فعاليات الأسرة</h2><p class="sub">الاجتماعات والرحلات والكرنفالات بتظهر هنا، وبتختفي لوحدها بعد ما تخلص</p></header>
+    <header class="sh"><h2 data-t="sec_events_h">فعاليات الأسرة</h2><p class="sub" data-t="sec_events_p">الاجتماعات والرحلات والكرنفالات بتظهر هنا، وبتختفي لوحدها بعد ما تخلص</p></header>
     <div class="soon rv">
       <div class="conf" id="conf" aria-hidden="true"></div>
       <span class="tagc">قريباً</span>
@@ -902,34 +982,73 @@ html.rm .btn.gold::after,html.rm .btn.pri::after{display:none}
     </div>
     <section class="poll rv" id="poll" aria-live="polite"><p class="psub">جاري تحميل التصويت</p></section>
     <div class="wk" id="wk" aria-live="polite"></div>
-    <div class="evs" id="evs" aria-live="polite"></div>
+    <div class="evs" id="evs" aria-live="polite"><div class="sk"></div><div class="sk"></div><div class="sk"></div></div>
   </div>
 </section>
 
 <section class="sec" id="competitions">
   <div class="wrap">
-    <header class="sh"><h2>مسابقات الأسرة</h2><p class="sub">شارك واكسب، وخلّي روح التنافس الحلو تكبر</p></header>
+    <header class="sh"><h2 data-t="sec_competitions_h">مسابقات الأسرة</h2><p class="sub" data-t="sec_competitions_p">شارك واكسب، وخلّي روح التنافس الحلو تكبر</p></header>
     <section class="quiz rv" id="quiz" aria-live="polite"></section>
     <div class="filters" id="cpf" role="group" aria-label="تصفية المسابقات" hidden>
       <button class="fchip" type="button" data-f="all" aria-pressed="true">الكل</button>
       <button class="fchip" type="button" data-f="open" aria-pressed="false">مفتوحة</button>
       <button class="fchip" type="button" data-f="closed" aria-pressed="false">انتهت</button>
     </div>
-    <div class="cps" id="cps" aria-live="polite"></div>
+    <div class="cps" id="cps" aria-live="polite"><div class="sk"></div><div class="sk"></div></div>
   </div>
 </section>
 
 
+<section class="sec" id="bday" hidden>
+  <div class="wrap"><header class="sh"><h2 data-t="sec_bday_h">🎂 النهارده عيد ميلاد</h2><p class="sub" data-t="sec_bday_p">كل سنة وانتو طيبين</p></header><div class="bdl" id="bdl"></div></div>
+</section>
+<section class="sec" id="first">
+  <div class="wrap">
+    <header class="sh"><h2 data-t="sec_first_h">أول مرة تزورنا؟</h2><p class="sub" data-t="sec_first_p">خطوات بسيطة تبدأ بيها، ومعاك إجابات أهم الأسئلة</p></header>
+    <div class="fs">
+      <div><b>1. سجّل بياناتك</b><p>املا نموذج التسجيل مرة واحدة، وده بيخلينا نتابعك ونتواصل معاك.</p></div>
+      <div><b>2. انضم للجروبات</b><p>بعد التسجيل هتلاقي روابط جروب الأسرة العام وجروب فرقتك على واتساب.</p></div>
+      <div><b>3. تابع الأجندة</b><p>الفعاليات والاجتماعات بتظهر في أجندة الأسبوع، وتقدر تضيفها لتقويمك.</p></div>
+      <div><b>4. شارك في سؤال اليوم</b><p>كل يوم سؤال جديد. جاوب في 30 ثانية واجمع نقط.</p></div>
+    </div>
+    <p class="sub" style="text-align:center;margin:18px 0">هتلاقي هنا: فعاليات، ترانيم وعظات، افتقاد، ومسابقات.</p>
+    <div class="faq">
+      <details><summary>هل التسجيل لازم؟</summary><p>مش لازم، بس التسجيل بيخلينا نتابعك ونبعتلك الفعاليات والتذكيرات.</p></details>
+      <details><summary>بياناتي في أمان؟</summary><p>البيانات بتتحفظ في قاعدة بيانات محمية، والوصول ليها للأمناء بس.</p></details>
+      <details><summary>عايز أعدّل بياناتي؟</summary><p>كلّم الأمين، وهو يعدّلها لك.</p></details>
+      <details><summary>أنا متسجل قبل كده؟</summary><p>لو اتسجلت قبل كده، الموقع هيقولك، ومتحتاجش تسجل تاني.</p></details>
+    </div>
+  </div>
+</section>
+<section class="sec alt" id="audio" hidden>
+  <div class="wrap">
+    <header class="sh"><h2 data-t="sec_audio_h">مكتبة الصوتيات</h2><p class="sub" data-t="sec_audio_p">ترانيم وعظات مسجلة، اسمعها في أي وقت</p></header>
+    <div id="au" aria-live="polite"></div>
+  </div>
+</section>
+<section class="sec" id="resources" hidden>
+  <div class="wrap">
+    <header class="sh"><h2 data-t="sec_resources_h">المكتبة</h2><p class="sub" data-t="sec_resources_p">مذكرات، ملفات، كورسات، ومحتوى روحي ومفيد</p></header>
+    <div id="rs"><div class="rcs" role="tablist"></div><div class="rl" aria-live="polite"></div></div>
+  </div>
+</section>
+<section class="sec" id="forms" hidden>
+  <div class="wrap">
+    <header class="sh"><h2 data-t="sec_forms_h">نماذج الأسرة</h2><p class="sub" data-t="sec_forms_p">فورمات بتجمع بيانات، املاها لو محتاجها</p></header>
+    <div id="frms" class="frms"></div>
+  </div>
+</section>
 <section class="sec alt" id="daily">
   <div class="wrap">
-    <header class="sh"><h2>سؤال اليوم</h2><p class="sub">سؤال جديد كل يوم. عندك 30 ثانية بس من لحظة ما تفتحه، والنقط بتتحسب للي يجاوب صح</p></header>
+    <header class="sh"><h2 data-t="sec_daily_h">سؤال اليوم</h2><p class="sub" data-t="sec_daily_p">سؤال جديد كل يوم. عندك 30 ثانية بس من لحظة ما تفتحه، والنقط بتتحسب للي يجاوب صح</p></header>
     <div class="dq" id="dq" aria-live="polite"></div>
   </div>
 </section>
 
 <section class="sec alt" id="archive">
   <div class="wrap">
-    <header class="sh"><h2>أرشيف الأسرة</h2><p class="sub">ذكريات الأسرة سنة بسنة، اضغط على أي صورة تكبّرها</p></header>
+    <header class="sh"><h2 data-t="sec_archive_h">أرشيف الأسرة</h2><p class="sub" data-t="sec_archive_p">ذكريات الأسرة سنة بسنة، اضغط على أي صورة تكبّرها</p></header>
     <div class="filters" id="arf" role="group" aria-label="تصفية الأرشيف بالسنة" hidden></div>
     <div class="arch" id="arch" aria-live="polite"></div>
   </div>
@@ -937,7 +1056,7 @@ html.rm .btn.gold::after,html.rm .btn.pri::after{display:none}
 
 <section class="sec" id="gallery">
   <div class="wrap">
-    <header class="sh"><h2>صور الأسرة</h2><p class="sub">لحظات من اجتماعاتنا ورحلاتنا وأيام الأسرة</p></header>
+    <header class="sh"><h2 data-t="sec_gallery_h">صور الأسرة</h2><p class="sub" data-t="sec_gallery_p">لحظات من اجتماعاتنا ورحلاتنا وأيام الأسرة</p></header>
     <figure class="ft" id="ft"></figure>
     <div class="mas" id="mas"></div>
   </div>
@@ -946,7 +1065,7 @@ html.rm .btn.gold::after,html.rm .btn.pri::after{display:none}
 
 <section class="sec alt" id="join">
   <div class="wrap">
-    <header class="sh"><h2>تسجيل عضو</h2><p class="sub">خطوتين بس وتبقى واحد مننا</p></header>
+    <header class="sh"><h2 data-t="sec_join_h">تسجيل عضو</h2><p class="sub" data-t="sec_join_p">خطوتين بس وتبقى واحد مننا</p></header>
 
     <form class="fcard" id="jf" novalidate>
       <div class="steps" aria-hidden="true"><span class="s on cur" data-s="1"><b>١</b><em>التعارف</em></span><span class="s" data-s="2"><b>٢</b><em>الدراسة</em></span><span class="s" data-s="3"><b>٣</b><em>السكن</em></span><span class="s" data-s="4"><b>٤</b><em>الأهل والكنيسة</em></span><span class="s" data-s="5"><b>٥</b><em>القواعد</em></span></div>
@@ -1027,7 +1146,7 @@ html.rm .btn.gold::after,html.rm .btn.pri::after{display:none}
 
 <section class="sec" id="voice">
   <div class="wrap">
-    <header class="sh"><h2>صلاة واقتراحات</h2><p class="sub">محتاج صلاة، أو عندك فكرة لتطوير الأسرة؟ اكتبها هنا</p></header>
+    <header class="sh"><h2 data-t="sec_voice_h">صلاة واقتراحات</h2><p class="sub" data-t="sec_voice_p">محتاج صلاة، أو عندك فكرة لتطوير الأسرة؟ اكتبها هنا</p></header>
     <div class="seg" role="tablist" aria-label="اختار النوع">
       <button type="button" role="tab" id="t-pr" aria-selected="true" aria-controls="p-pr">طلب صلاة</button>
       <button type="button" role="tab" id="t-sg" aria-selected="false" aria-controls="p-sg" tabindex="-1">صندوق الاقتراحات</button>
@@ -1054,7 +1173,7 @@ html.rm .btn.gold::after,html.rm .btn.pri::after{display:none}
 
 <section class="sec alt" id="contact">
   <div class="wrap">
-    <header class="sh"><h2>تواصل معنا</h2><p class="sub">إحنا موجودين دايماً</p></header>
+    <header class="sh"><h2 data-t="sec_contact_h">تواصل معنا</h2><p class="sub" data-t="sec_contact_p">إحنا موجودين دايماً</p></header>
     <div class="contacts" id="contacts"></div>
   </div>
 </section>
@@ -1332,6 +1451,149 @@ function renderArchive(){
 $('#arf').addEventListener('click',function(e){var b=e.target.closest('[data-y]');if(!b)return;arYear=b.dataset.y;renderArchive()});
 $('#arch').addEventListener('click',function(e){var b=e.target.closest('[data-k]');if(!b)return;openLB(this._items,+b.dataset.k)});
 
+  /* المكتبة: مذكرات وPDF وكورسات ومحتوى روحي وفيديوهات */
+  var RES_CATS={notes:'مذكرات وملخصات',pdf:'ملفات PDF',courses:'كورسات تعليمية',spiritual:'محتوى روحي ودراسي',videos:'فيديوهات ومصادر مفيدة'};
+  var RES_LIST=[],RES_CUR='all';
+  function paintRes(){
+    var box=$('#rs');if(!box)return;
+    var cats=Object.keys(RES_CATS).filter(function(k){return RES_LIST.some(function(r){return r.category===k})});
+    box.querySelector('.rcs').innerHTML=['all'].concat(cats).map(function(k){
+      return '<button type="button" class="rc'+(RES_CUR===k?' on':'')+'" data-rc="'+k+'">'+(k==='all'?'الكل':RES_CATS[k])+'</button>';
+    }).join('');
+    var items=RES_LIST.filter(function(r){return RES_CUR==='all'||r.category===RES_CUR});
+    box.querySelector('.rl').innerHTML=items.map(function(r){
+      var href=r.path?media(r.path):(r.url&&/^https:\/\//.test(r.url)?r.url:'');
+      var btn=href?'<a class="rb" href="'+esc(href)+'" target="_blank" rel="noopener">'+(r.path?'فتح الملف':'فتح الرابط')+'</a>':'';
+      return '<article class="rci"><span class="rk">'+esc(RES_CATS[r.category]||'')+'</span><b>'+esc(r.title)+'</b>'+(r.description?'<p>'+esc(r.description)+'</p>':'')+btn+'</article>';
+    }).join('')||'<p class="em">مفيش حاجات في القسم ده لسه.</p>';
+  }
+  function renderRes(list){
+    var sec=$('#resources');if(!sec)return;
+    RES_LIST=list||[];
+    sec.hidden=!RES_LIST.length;
+    if(RES_LIST.length)paintRes();
+  }
+  document.addEventListener('click',function(e){
+    var b=e.target.closest&&e.target.closest('#rs [data-rc]');if(!b)return;
+    RES_CUR=b.dataset.rc;paintRes();
+  });
+  /* مكتبة الصوتيات: مشغّل واحد بيشتغل بزرار صغير لكل مقطع */
+  var AU_LIST=[],AU_EL=null;
+  function fmtDur(s){s=Math.max(0,Math.round(+s||0));var r=s%60;return Math.floor(s/60)+':'+(r<10?'0':'')+r}
+  function paintAu(){
+    var box=$('#au');if(!box)return;
+    var cur=AU_EL&&!AU_EL.paused?AU_EL.dataset.id:null;
+    box.querySelectorAll('.au-b').forEach(function(b){
+      var on=b.dataset.au===cur;
+      b.textContent=on?'❚❚':'▶';
+      b.setAttribute('aria-label',(on?'إيقاف ':'تشغيل ')+b.dataset.t);
+    });
+  }
+  function renderAudio(list){
+    var sec=$('#audio'),box=$('#au');if(!sec||!box)return;
+    AU_LIST=list||[];
+    sec.hidden=!AU_LIST.length;
+    if(!AU_LIST.length){box.innerHTML='';return}
+    box.innerHTML=AU_LIST.map(function(a){
+      return '<div class="au-i"><button class="au-b" type="button" data-au="'+esc(a.id)+'" data-t="'+esc(a.title)+'">▶</button><div class="au-m"><b>'+esc(a.title)+'</b><span>'+esc(a.kind)+(a.speaker?' · '+esc(a.speaker):'')+' · '+fmtDur(a.duration_sec)+'</span></div></div>';
+    }).join('');
+    paintAu();
+  }
+  document.addEventListener('click',function(e){
+    var b=e.target.closest&&e.target.closest('#au [data-au]');if(!b)return;
+    if(!AU_EL){
+      AU_EL=new Audio();AU_EL.preload='none';
+      AU_EL.addEventListener('play',paintAu);AU_EL.addEventListener('pause',paintAu);AU_EL.addEventListener('ended',paintAu);
+    }
+    var item=AU_LIST.find(function(a){return String(a.id)===b.dataset.au});if(!item)return;
+    if(AU_EL.dataset.id===String(item.id)&&!AU_EL.paused){AU_EL.pause();return}
+    var h=$('#hymn');if(h&&!h.paused)h.pause();
+    AU_EL.dataset.id=String(item.id);
+    AU_EL.src=media(item.path);
+    AU_EL.play().catch(function(){});
+  });
+/* النماذج اللي الأدمن بيعملها (بتظهر بس لو الأدمن فعّلها) */
+var FORM_DEFS={};
+function frmCtl(q){
+  var id=esc(q.id),opts=q.options||[];
+  var rd=function(v,lbl){return '<label class="frmchk"><input type="radio" name="'+id+'" value="'+esc(v)+'"> '+esc(lbl)+'</label>'};
+  switch(q.type){
+    case 'long': return '<textarea name="'+id+'" rows="3" maxlength="2000"></textarea>';
+    case 'email': return '<input name="'+id+'" type="email" maxlength="200" dir="ltr">';
+    case 'phone': return '<input name="'+id+'" type="tel" maxlength="20" dir="ltr">';
+    case 'number': return '<input name="'+id+'" type="number" dir="ltr">';
+    case 'date': return '<input name="'+id+'" type="date">';
+    case 'choice': return '<select name="'+id+'"><option value="">اختار</option>'+opts.map(function(o){return '<option>'+esc(o)+'</option>'}).join('')+'</select>';
+    case 'radio': return '<div class="frmgrp">'+opts.map(function(o){return rd(o,o)}).join('')+'</div>';
+    case 'multi': return '<div class="frmgrp">'+opts.map(function(o){return '<label class="frmchk"><input type="checkbox" name="'+id+'" value="'+esc(o)+'"> '+esc(o)+'</label>'}).join('')+'</div>';
+    case 'yesno': return '<div class="frmgrp">'+rd('صح','✅ صح')+rd('غلط','❌ غلط')+'</div>';
+    case 'rating': return '<div class="frmgrp">'+[1,2,3,4,5].map(function(n){return rd(String(n),n+' ⭐')}).join('')+'</div>';
+    case 'image': return '<input name="'+id+'" type="file" accept="image/*">';
+    case 'file': return '<input name="'+id+'" type="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">';
+    default: return '<input name="'+id+'" type="text" maxlength="200">';
+  }
+}
+function renderForms(list){
+  var sec=document.getElementById('forms'),box=document.getElementById('frms');
+  if(!sec||!box)return;
+  var shown=(list||[]).filter(function(f){return f.show_on_site===true});
+  if(!shown.length)return;
+  sec.hidden=false;
+  box.innerHTML=shown.map(function(f){
+    var fields=Array.isArray(f.fields)?f.fields:[];
+    FORM_DEFS[f.id]=fields;
+    var inner=fields.map(function(q){
+      var tag=(q.type==='multi'||q.type==='radio'||q.type==='yesno'||q.type==='rating')?'div':'label';
+      return '<'+tag+' class="frmfield"><b>'+esc(q.label)+(q.required?' <span class="frmreq">*</span>':'')+'</b>'+frmCtl(q)+'</'+tag+'>';
+    }).join('');
+    return '<article class="frmcard"><h3>'+esc(f.title)+'</h3>'+(f.description?'<p class="frmdesc">'+esc(f.description)+'</p>':'')+
+      '<form class="frmform" data-fid="'+esc(f.id)+'" novalidate>'+inner+'<p class="frmmsg" role="status"></p><button class="btn gold" type="submit">إرسال</button></form></article>';
+  }).join('');
+}
+document.addEventListener('submit',async function(e){
+  var fm=e.target;
+  if(!fm.classList||!fm.classList.contains('frmform'))return;
+  e.preventDefault();
+  var msg=fm.querySelector('.frmmsg'),btn=fm.querySelector('button');
+  var fd=new FormData(fm),answers={},files=[],bad='';
+  var defs=FORM_DEFS[fm.dataset.fid]||[];
+  for(var i=0;i<defs.length;i++){
+    var q=defs[i];
+    if(q.type==='image'||q.type==='file'){
+      var f=fd.get(q.id),has=!!(f&&f.size>0);
+      if(q.required&&!has){bad='ارفع: '+q.label;break}
+      if(has){
+        if(f.size>5*1024*1024){bad='الملف كبير في: '+q.label+' (الحد 5 ميجا)';break}
+        if(q.type==='image'&&!/^image\//.test(f.type)){bad='ارفع صورة في: '+q.label;break}
+        files.push({id:q.id,file:f});
+      }
+      continue;
+    }
+    var vals=fd.getAll(q.id).map(function(x){return String(x).trim()}).filter(Boolean);
+    if(q.required&&!vals.length){bad='اكتب أو اختار: '+q.label;break}
+    if(q.type==='email'&&vals.length&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(vals[0])){bad='الإيميل مش صح في: '+q.label;break}
+    if(q.type==='phone'&&vals.length&&!/^[0-9+\s-]{6,20}$/.test(vals[0])){bad='رقم التليفون مش صح في: '+q.label;break}
+    if(q.type==='number'&&vals.length&&isNaN(+vals[0])){bad='الرقم مش صح في: '+q.label;break}
+    answers[q.id]=q.type==='multi'?vals:(vals[0]||'');
+  }
+  if(bad){msg.textContent=bad;return}
+  btn.disabled=true;msg.textContent='جاري الإرسال...';
+  try{
+    var cl=sbClient();
+    for(var j=0;j<files.length;j++){
+      var it=files[j],ext=(it.file.name.split('.').pop()||'bin').toLowerCase().replace(/[^a-z0-9]/g,'')||'bin';
+      var path='forms/'+crypto.randomUUID()+'.'+ext;
+      var up=await cl.storage.from('member-photos').upload(path,it.file,{contentType:it.file.type||'application/octet-stream'});
+      if(up.error)throw up.error;
+      answers[it.id]={path:path,name:it.file.name};
+    }
+    var r=await cl.from('form_responses').insert({form_id:fm.dataset.fid,answers:answers});
+    if(r.error)throw r.error;
+    fm.reset();msg.textContent='تم إرسال ردك، شكراً ✓';
+  }catch(err){msg.textContent='ماتبعتش: '+((err&&err.message)||err)}
+  finally{btn.disabled=false}
+});
+
 async function loadDynamic(){
   var sb=sbClient();
   if(!sb){renderEvents([]);renderComps();renderArchive();return}
@@ -1339,11 +1601,17 @@ async function loadDynamic(){
     var r=await Promise.all([
       sb.from('events').select('*').order('event_date'),
       sb.from('competitions').select('*').order('created_at',{ascending:false}),
-      sb.from('archive_items').select('*').order('year',{ascending:false}).order('created_at',{ascending:false})
+      sb.from('archive_items').select('*').order('year',{ascending:false}).order('created_at',{ascending:false}),
+      sb.from('member_quotes').select('*').order('created_at',{ascending:false}),
+      sb.from('audio_items').select('*').order('created_at',{ascending:false}),
+      sb.from('resource_items').select('*').order('created_at',{ascending:false})
     ]);
     renderEvents(r[0].error?[]:r[0].data);
     COMPS=r[1].error?[]:r[1].data;renderComps();
     ARCH=r[2].error?[]:r[2].data;renderArchive();
+    renderQuotes(r[3].error?[]:r[3].data);
+    renderAudio(r[4].error?[]:r[4].data);
+    renderRes(r[5].error?[]:r[5].data);
   }catch(e){renderEvents([]);renderComps();renderArchive()}
 }
 loadDynamic();
@@ -1623,6 +1891,122 @@ function startCountdown(rows){
     else alert('افتح قايمة المشاركة في سفاري، واختار "إضافة إلى الشاشة الرئيسية"');
   });
   addEventListener('appinstalled',function(){bt.style.display='none'});
+  /* كلام من الأعضاء: بيتبدل كل 7 ثواني */
+  function renderQuotes(list){
+    var box=$('#qt');if(!box||!list||!list.length)return;
+    var i=0;
+    function show(){var q=list[i%list.length];box.innerHTML='<p class="qt-t">«'+esc(q.text)+'»</p><p class="qt-n">— '+esc(q.name)+'</p>';box.hidden=false;i++}
+    show();
+    if(list.length>1&&!(de.classList.contains('rm'))) setInterval(function(){
+      box.classList.add('qt-out');setTimeout(function(){show();box.classList.remove('qt-out')},300);
+    },7000);
+  }
+  /* رسالة الترحيب بعد التسجيل */
+  function greet(n){
+    var d=$('#done');if(!d)return;
+    var p=d.querySelector('.wel');
+    if(!p){p=document.createElement('p');p.className='wel';d.insertBefore(p,d.firstChild)}
+    p.textContent='أهلاً يا '+(n||'')+' ❤️ اتسجلت في الأسرة';
+  }
+  /* شارك الآية كصورة (واتساب وغيره) */
+  (function(){
+    var btn=$('#vsh');if(!btn)return;
+    var d=new Date(),nn=Math.floor((d-new Date(d.getFullYear(),0,0))/864e5),v=VERSES[nn%VERSES.length],t=scripture(v[0]).replace(/\n/g,' ');
+    function wrap(ctx,text,maxW){
+      var words=text.split(/\s+/),lines=[],cur='';
+      words.forEach(function(w){var test=cur?cur+' '+w:w;if(ctx.measureText(test).width>maxW&&cur){lines.push(cur);cur=w}else cur=test});
+      if(cur)lines.push(cur);return lines;
+    }
+    btn.addEventListener('click',async function(){
+      var old=btn.textContent;btn.disabled=true;btn.textContent='جاري التجهيز...';
+      try{
+        try{await document.fonts.load('700 56px Amiri')}catch(e){}
+        var c=document.createElement('canvas');c.width=1080;c.height=1350;var x=c.getContext('2d');
+        var logo=await new Promise(function(res){var im=new Image();im.onload=function(){res(im)};im.onerror=function(){res(null)};im.src=LOGO});
+        var bgImg=await new Promise(function(res){var im=new Image();im.onload=function(){res(im)};im.onerror=function(){res(null)};im.src='img/mina-bg.jpg'});
+        try{await document.fonts.load('700 52px "Cormorant Garamond"')}catch(e){}
+        function rr(a,b,w,h,r){x.beginPath();x.moveTo(a+r,b);x.arcTo(a+w,b,a+w,b+h,r);x.arcTo(a+w,b+h,a,b+h,r);x.arcTo(a,b+h,a,b,r);x.arcTo(a,b,a+w,b,r);x.closePath()}
+        function cross(cx,cy,sz){x.beginPath();x.moveTo(cx,cy-sz);x.lineTo(cx,cy+sz);x.moveTo(cx-sz*.6,cy-sz*.35);x.lineTo(cx+sz*.6,cy-sz*.35);x.stroke()}
+        function paintCard(lg,bg){
+          x.setTransform(1,0,0,1,0,0);x.globalAlpha=1;
+          if(bg){
+            var sc=Math.max(1080/bg.width,1350/bg.height),bw=bg.width*sc,bh=bg.height*sc;
+            x.drawImage(bg,(1080-bw)/2,(1350-bh)/2,bw,bh);
+            var og=x.createLinearGradient(0,0,0,1350);og.addColorStop(0,'rgba(7,20,47,.35)');og.addColorStop(.45,'rgba(7,20,47,.2)');og.addColorStop(1,'rgba(7,20,47,.88)');
+            x.fillStyle=og;x.fillRect(0,0,1080,1350);
+          }else{
+            var g=x.createRadialGradient(540,380,80,540,675,1000);g.addColorStop(0,'#1d4c9a');g.addColorStop(.55,'#0f2a5c');g.addColorStop(1,'#07142f');
+            x.fillStyle=g;x.fillRect(0,0,1080,1350);
+          }
+          /* نقش صليب خفيف */
+          x.save();x.globalAlpha=.08;x.strokeStyle='#e8b04a';x.lineWidth=3;
+          for(var yy=40;yy<1350;yy+=110){for(var xx=(Math.round(yy/110)%2?40:95);xx<1080;xx+=110){cross(xx,yy,12)}}
+          x.restore();
+          /* الإطار الذهبي */
+          x.strokeStyle='#e8b04a';x.lineWidth=6;rr(40,40,1000,1270,40);x.stroke();
+          x.lineWidth=2;x.globalAlpha=.6;rr(62,62,956,1226,28);x.stroke();x.globalAlpha=1;
+          /* اللوجو في الركن العلوي (بعيد عن وش القديس) */
+          var LX=170,LY=175,LR=80;
+          x.fillStyle='#e8b04a';x.beginPath();x.arc(LX,LY,LR+10,0,Math.PI*2);x.fill();
+          x.fillStyle='#0f2a5c';x.beginPath();x.arc(LX,LY,LR,0,Math.PI*2);x.fill();
+          if(lg){var ls=Math.max((LR*2-8)/lg.width,(LR*2-8)/lg.height),lw=lg.width*ls,lh1=lg.height*ls;x.save();x.beginPath();x.arc(LX,LY,LR-4,0,Math.PI*2);x.clip();x.drawImage(lg,LX-lw/2,LY-lh1/2,lw,lh1);x.restore()}
+          /* لوح الآية */
+          x.fillStyle='rgba(7,20,47,.74)';rr(110,430,860,530,36);x.fill();
+          x.strokeStyle='#e8b04a';x.lineWidth=3;rr(110,430,860,530,36);x.stroke();
+          x.textAlign='center';x.textBaseline='middle';
+          x.fillStyle='#e8b04a';x.font='700 46px Amiri, serif';x.fillText('آية اليوم',540,490);
+          x.strokeStyle='#e8b04a';x.lineWidth=3;x.globalAlpha=.8;
+          x.beginPath();x.moveTo(270,540);x.lineTo(490,540);x.moveTo(590,540);x.lineTo(810,540);x.stroke();x.globalAlpha=1;
+          cross(540,540,13);
+          var lines=[],fs,lineH;
+          for(fs=72;fs>=38;fs-=4){x.font='700 '+fs+'px Amiri, serif';lines=wrap(x,'«'+t+'»',760);lineH=fs*1.55;if(lines.length*lineH<=280)break}
+          x.fillStyle='#f7f2e6';x.font='700 '+fs+'px Amiri, serif';
+          var y0=735-(lines.length-1)*lineH/2;
+          lines.forEach(function(l,i){x.fillText(l,540,y0+i*lineH)});
+          x.fillStyle='#e8b04a';x.font='700 40px Amiri, serif';x.direction='rtl';x.fillText(v[1],540,905);x.direction='ltr';
+          /* التذييل */
+          x.strokeStyle='#e8b04a';x.lineWidth=2;x.globalAlpha=.7;
+          x.beginPath();x.moveTo(380,1030);x.lineTo(490,1030);x.moveTo(590,1030);x.lineTo(700,1030);x.stroke();x.globalAlpha=1;
+          cross(540,1030,11);
+          x.fillStyle='#f7f2e6';x.font='700 64px "Cormorant Garamond", serif';x.fillText('Ava Mina Family',540,1118);
+          x.fillStyle='#e8b04a';x.font='700 34px Amiri, serif';x.fillText('أسرة آڤا مينا · سوهاج',540,1186);
+        }
+        paintCard(logo,bgImg);
+        /* لو الصور من مصدر مختلف الكانفاس بيتقفل؛ نرسم من غير الصور */
+        try{x.getImageData(0,0,1,1)}catch(e){c.width=1080;c.height=1350;paintCard(null,null)}
+        c.toBlob(async function(blob){
+          if(!blob){alert('ماقدرتش أجهز الصورة دلوقتي، جرّب تاني');return}
+          var file=new File([blob],'ava-mina-verse.png',{type:'image/png'});
+          if(navigator.canShare&&navigator.canShare({files:[file]})){
+            try{await navigator.share({files:[file],title:'آية اليوم'});return}catch(e){if(e&&e.name==='AbortError')return}
+          }
+          var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ava-mina-verse.png';
+          document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},2000);
+        },'image/png');
+      }catch(e){alert('ماقدرتش أجهز الصورة دلوقتي، جرّب تاني')}
+      finally{btn.disabled=false;btn.textContent=old}
+    });
+  })();
+  /* نافذة التفاصيل الصغيرة: الكروت بتفتح تفاصيلها لما تتضغط */
+  (function(){
+    var sh=document.createElement('div');sh.className='sheet';sh.hidden=true;
+    sh.innerHTML='<div class="sheet-box" role="dialog" aria-modal="true"><button class="sheet-x" type="button" aria-label="قفل">×</button><div class="sheet-in"></div></div>';
+    document.body.appendChild(sh);
+    var box=sh.querySelector('.sheet-in');
+    function close(){sh.hidden=true;document.body.style.overflow=''}
+    function open(el){
+      box.innerHTML=el.innerHTML;
+      sh.hidden=false;document.body.style.overflow='hidden';
+      sh.querySelector('.sheet-x').focus();
+    }
+    sh.addEventListener('click',function(e){if(e.target===sh||e.target.closest('.sheet-x'))close()});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!sh.hidden)close()});
+    document.addEventListener('click',function(e){
+      if(e.target.closest('a,button,input,select,textarea,label,.sheet'))return;
+      var c=e.target.closest('#evs .ev, #cps .cp, .leaders .leader, #crew .leader');
+      if(c)open(c);
+    });
+  })();
   if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))navigator.serviceWorker.register('sw.js').catch(function(){});
 })();
 
@@ -1667,6 +2051,20 @@ function startCountdown(rows){
   },{passive:true});
 })();
 
+/* ---------- حجم الخط (بيتحفظ في المتصفح) ---------- */
+(function(){
+  var ft=$('footer');if(!ft)return;
+  var fs=parseInt(store('ava_fs')||'0',10)||0;
+  var root=document.documentElement;
+  var apply=function(){root.classList.toggle('fs1',fs===1);root.classList.toggle('fs2',fs===2)};
+  apply();
+  var b=document.createElement('button');b.type='button';b.className='btn ghost sm';
+  var lab=function(){b.textContent='حجم الخط: '+(fs===0?'عادي':fs===1?'كبير':'كبير جداً')};
+  lab();
+  b.addEventListener('click',function(){fs=(fs+1)%3;store('ava_fs',String(fs));apply();lab()});
+  ft.appendChild(b);
+})();
+
 /* ---------- تأثيرات اللمس + زرار تشغيل الحركات ---------- */
 (function(){
   var ft=$('footer');
@@ -1697,9 +2095,16 @@ function normGender(x){
   try{
     var r=await sb.from('site_settings').select('key,value');if(r.error||!r.data)return;
     var S={};r.data.forEach(function(x){S[x.key]=x.value||''});
+    document.querySelectorAll('[data-t]').forEach(function(el){var tv=S['t_'+el.getAttribute('data-t')];if(tv&&tv.trim())el.textContent=tv.trim()});
     if(S.welcome_show==='0'){var w=$('.soon');if(w)w.hidden=true}
+    var SP={lent:'violet',easter:'papyrus',christmas:'sage'};var uPal=null;try{uPal=localStorage.getItem('avaPal')}catch(e){}
+    if(S.season&&SP[S.season]&&!uPal)de.setAttribute('data-pal',SP[S.season]);
+    /* صورة الغلاف: صورة الموسم من الأدمن، ولو مفيش بنستخدم الصورة الافتراضية أو اللي حددها الأدمن */
+    var CK='cover_'+(['lent','easter','christmas'].indexOf(S.season)>=0?S.season:'');
+    var cvp=S[CK]||S.cover_;
+    if(cvp){var cvu=media(cvp);de.style.setProperty('--cover','url("'+cvu+'")');$$('[data-cover]').forEach(function(i){i.src=cvu})}
     /* إخفاء الأقسام اللي الأمين أخفاها من لوحة الأدمن */
-    ['about','servants','rules','events','competitions','daily','archive','gallery','join','voice','contact'].forEach(function(id){
+    ['about','servants','rules','events','competitions','daily','archive','gallery','join','voice','contact','first','audio','resources'].forEach(function(id){
       if(S['hide_'+id]==='1'){var el=document.getElementById(id);if(el)el.hidden=true;var lk=document.querySelector('.links a[href="#'+id+'"]');if(lk)lk.hidden=true}});
     if(S.hide_hymn==='1'){var hideHy=function(){var hy=document.getElementById('hy'),ha=document.getElementById('hymn');if(hy)hy.hidden=true;if(ha)ha.pause()};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',hideHy);else hideHy()}
     var t=(S.announce_text||'').trim();
@@ -1709,6 +2114,33 @@ function normGender(x){
       a.innerHTML=(l?'<a href="'+esc(l)+'" target="_blank" rel="noopener">'+esc(t)+'</a>':esc(t))+'<button type="button" aria-label="إغلاق">×</button>';
       a.querySelector('button').addEventListener('click',function(){store('ava_ann',t);a.remove()});
       document.body.insertBefore(a,document.body.firstChild);
+    }
+    try{
+      var bdr=await sb.rpc('birthdays_today');
+      if(!bdr.error&&bdr.data&&bdr.data.length){
+        var bs=document.getElementById('bday'),bl=document.getElementById('bdl');
+        if(bs&&bl){bs.hidden=false;bdr.data.forEach(function(rw){var sp=document.createElement('span');sp.className='bdc';sp.textContent='🎈 '+(rw.first_name||'');bl.appendChild(sp)})}
+      }
+    }catch(e){}
+    try{
+      var fr=await sb.from('forms').select('id,title,description,fields,show_on_site').eq('active',true);
+      if(!fr.error&&fr.data)renderForms(fr.data);
+    }catch(e){}
+    if(store('ava_intro')!=='1'){
+      setTimeout(function(){
+        var ov=document.createElement('div');ov.className='intro';ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-labelledby','introT');
+        ov.innerHTML='<div class="intro-box"><h2 id="introT">أهلاً بيك في أسرة آڤا مينا 🙏</h2>'+
+          '<p><b>التسجيل كعضو مهم جداً</b>، عشان:</p>'+
+          '<ul><li>نتابعك ونطمّن عليك في أي وقت</li><li>توصلك الفعاليات والاجتماعات والتذكيرات</li><li>تتضم لجروب الأسرة وجروب فرقتك على واتساب</li><li>تشارك في سؤال اليوم وتجمع نقط</li></ul>'+
+          '<p class="intro-n">التسجيل بياخد دقيقة، وبياناتك بتتحفظ بأمان ومحدش غير الأمناء بيشوفها.</p>'+
+          '<div class="intro-a"><a class="btn gold" href="#join" data-intro>سجّل دلوقتي</a><button type="button" class="btn ghost" data-intro>بعدين</button></div></div>';
+        document.body.appendChild(ov);
+        var onKey=function(e){if(e.key==='Escape')closeIntro()};
+        var closeIntro=function(){store('ava_intro','1');ov.remove();document.removeEventListener('keydown',onKey)};
+        ov.addEventListener('click',function(e){if(e.target===ov||e.target.hasAttribute('data-intro'))closeIntro()});
+        document.addEventListener('keydown',onKey);
+        var first=ov.querySelector('a');if(first)first.focus();
+      },1400);
     }
   }catch(e){}
 })();
@@ -1837,7 +2269,7 @@ jf.addEventListener('submit',async function(e){
     var row0={id:id,gender:gd,full_name:v('n'),phone:v('p'),email:v('e')||null,year:v('y'),department:v('d'),section:v('s2'),housing_name:nh?'لا يوجد سكن':v('h1'),housing_desc:nh?null:v('h2'),landlord_name:nh?null:v('ln'),landlord_phone:nh?null:v('lp'),governorate:v('g'),district:v('m'),village:v('v'),denomination:v('dn'),confessor_name:v('cn'),confessor_phone:v('cp'),guardian_type:v('gt'),guardian_phone:v('gp'),rules_read_secs:JR_SECS,birth_date:v('b')||null,joined_year:v('j')?+v('j'):null,skills:v('s')||null,prev_service:v('x')==='نعم',photo_path:path,agreed:true};
     stage='data';var r=await sb.from('members').insert(row0);
     if(r.error)throw r.error;
-    showGroups(v('y'));jf.reset();DOB();jf.elements.nh.dispatchEvent(new Event('change'));jf.elements.g.dispatchEvent(new Event('change'));jrBuild();picFile=null;prev.hidden=true;setStep(1);jf.hidden=true;$('#done').hidden=false;$('#done').scrollIntoView({behavior:'smooth',block:'center'});
+    showGroups(v('y'));jf.reset();DOB();jf.elements.nh.dispatchEvent(new Event('change'));jf.elements.g.dispatchEvent(new Event('change'));jrBuild();picFile=null;prev.hidden=true;setStep(1);jf.hidden=true;$('#done').hidden=false;greet(v('n'));$('#done').scrollIntoView({behavior:'smooth',block:'center'});
   }catch(err){
     if(err&&err.code==='23505'){say(msg,'انت متسجل في الأسرة قبل كده، مش محتاج تسجل تاني','bad');btn.disabled=false;return}
     var em=String((err&&(err.message||err.error_description))||err||'');
@@ -2110,7 +2542,7 @@ addEventListener('load',function(){
 });
 </script>
 <audio id="hymn" preload="none" src="hymn.mp3"></audio>
-<button class="hy" id="hy" type="button" aria-pressed="false"></button>
+<button class="hy" id="hy" type="button" aria-pressed="false" aria-label="تشغيل الترنيمة"></button>
 <script>
 (function(){
   var de=document.documentElement,a=document.getElementById('hymn'),b=document.getElementById('hy');if(!a||!b)return;
