@@ -76,7 +76,7 @@ function esc(s){var d=document.createElement('div');d.textContent=s==null?'':s;r
 var MN=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
 var DEPTS=['نظم معلومات الأعمال (BIS)','محاسبة والتمويل دولي (IAF)','الأسواق والمنشآت المالية (FMI)'];
 var YO=['الأولى','الثانية','الثالثة','الرابعة'];
-var TABS=[['over','📊 نظرة عامة'],['bd','🎂 أعياد الميلاد'],['yr','🎓 الفرق'],['dp','🏛️ الأقسام'],['fu','🤝 الافتقاد'],['all','👥 كل الأعضاء'],['sg','💡 الاقتراحات'],['pr','🙏 طلبات الصلاة'],['ev','📅 الفعاليات'],['cp','🏆 المسابقات'],['ar','🗂️ الأرشيف'],['pl','🗳️ التصويت'],['ph','📸 الصور بالشهور'],['stf','🛡️ الأمناء'],['dq','🧠 سؤال اليوم'],['lk','🔗 روابط للمشاركة'],['gr','🎓 المتخرجين والسجل'],['set','⚙️ التحكم في الموقع'],['txt','✏️ نصوص الموقع'],['frm','📝 النماذج']];
+var TABS=[['over','📊 نظرة عامة'],['bd','🎂 أعياد الميلاد'],['bp','🖼️ بوسترات الأعياد'],['yr','🎓 الفرق'],['dp','🏛️ الأقسام'],['fu','🤝 الافتقاد'],['all','👥 كل الأعضاء'],['sg','💡 الاقتراحات'],['pr','🙏 طلبات الصلاة'],['ev','📅 الفعاليات'],['cp','🏆 المسابقات'],['ar','🗂️ الأرشيف'],['pl','🗳️ التصويت'],['ph','📸 الصور بالشهور'],['stf','🛡️ الأمناء'],['dq','🧠 سؤال اليوم'],['lk','🔗 روابط للمشاركة'],['gr','🎓 المتخرجين والسجل'],['set','⚙️ التحكم في الموقع'],['txt','✏️ نصوص الموقع'],['frm','📝 النماذج']];
 var st={tab:'over',y:'',d:'',mode:'cal',q:'',fy:'',fs:'',fd:30,pf:'new'},notes=[],sugs=[],miss=false,events=[],comps=[],arch=[],prayers=[],miss3=false,polls=[],staffs=[],settings={},miss6=false,miss4=false,qres=[],miss5=false,DL=document.getElementById('dlg');
 function ea(s){return esc(s).replace(/"/g,'&quot;')}
 function greet(m){return 'كل سنة وانت طيب يا '+m.full_name.split(' ')[0]+' ❤️\nربنا يفرّح قلبك ويبارك حياتك ويحفظك قريب منه.\nأسرة آڤا مينا'}
@@ -379,6 +379,64 @@ function bdList(){return all.map(function(m){return{m:m,b:bdi(m)}}).filter(funct
 function groups(key){var g={};all.forEach(function(m){var k=nk(m[key]);if(!k)return;(g[k]=g[k]||{l:m[key].trim(),n:[]}).n.push(m)});return g}
 function over(){var b=bdList().sort(function(a,c){return a.b.days-c.b.days}),y=groups('year');
  return '<div class="stats"><div class="card st"><b>'+all.length+'</b>إجمالي الأعضاء</div><div class="card st"><b>'+all.filter(function(m){return m.status==='new'}).length+'</b>طلبات جديدة</div><div class="card st"><b>'+b.filter(function(x){return x.b.days===0}).length+'</b>أعياد ميلاد النهاردة</div><div class="card st"><b>'+needs(30).length+'</b>محتاجين افتقاد (+30 يوم)</div><div class="card st"><b>'+prayers.filter(function(p){return p.status==='new'}).length+'</b>طلبات صلاة جديدة</div><div class="card st"><b>'+events.filter(function(e){return (e.end_date||e.event_date)>=today()}).length+'</b>فعاليات قادمة</div>'+Object.keys(y).map(function(k){return '<div class="card st"><b>'+y[k].n.length+'</b>الفرقة '+esc(y[k].l)+'</div>'}).join('')+'</div><h3>🎂 أقرب أعياد الميلاد</h3>'+(b.slice(0,5).map(bdCard).join('')||'<p class="em">لسه مفيش تواريخ ميلاد.</p>')}
+
+/* ---- بوسترات أعياد الميلاد ---- */
+var bpRows=null,bpBusy=false;
+async function bpLoad(){var r=await sb.from('birthday_posts').select('*');if(r.error){alert('تعذر تحميل البوسترات: '+r.error.message);bpRows=[]}else bpRows=r.data||[];draw()}
+async function bpResize(url){
+  var r=await fetch(url);if(!r.ok)throw new Error('مقدرتش أحمّل صورة العضو');
+  var bmp=await createImageBitmap(await r.blob());
+  var s=Math.min(1,900/Math.max(bmp.width,bmp.height)),c=document.createElement('canvas');
+  c.width=Math.round(bmp.width*s);c.height=Math.round(bmp.height*s);
+  c.getContext('2d').drawImage(bmp,0,0,c.width,c.height);
+  return await new Promise(function(res,rej){c.toBlob(function(b){b?res(b):rej(new Error('الصورة مش مقروءة'))},'image/jpeg',0.9)});
+}
+function bpTab(){
+  if(bpRows===null){bpLoad();return '<p class="em">بتحمل...</p>'}
+  var by={};bpRows.forEach(function(r){by[r.member_id]=r});
+  var show=settings.hide_bday!=='1';
+  var l=bdList().filter(function(x){return x.b.days<=7||by[x.m.id]}).sort(function(a,c){return a.b.days-c.b.days});
+  var h='<h3 style="margin-top:0">🖼️ بوسترات أعياد الميلاد</h3>'
+   +'<div class="card" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span>'+(show?'✅ القسم ظاهر على الموقع':'🙈 القسم مخفي على الموقع')+'</span><button data-go="set">تغيير الإظهار من إعدادات الموقع</button></div>'
+   +'<p class="em">البوستر بيتعمل من صورة العضو داخل الإطار، وبيظهر في الموقع يوم عيده بس. الصفحة دي بتعرض اللي عيدهم خلال 7 أيام أو ليهم بوستر.</p>';
+  if(!l.length)h+='<p class="em">مفيش أعياد قريبة ولا بوسترات متسجلة.</p>';
+  l.forEach(function(x){
+    var p=by[x.m.id],m=x.m;
+    h+='<div class="card bd'+(x.b.days===0?' today':'')+'"><div class="dt">'+x.b.d+'/'+x.b.mo+'</div>'+ava(m)
+     +'<div><b>'+esc(m.full_name)+'</b><small>'+(x.b.days===0?'🎉 النهاردة':'بعد '+x.b.days+' يوم')+' • '+(p?(p.hidden?'البوستر مخفي':'البوستر متسجل'):'مفيش بوستر')+'</small></div>'
+     +'<div class="bar">'+(m.photo_path?'<button data-bp="make" data-id="'+m.id+'">'+(p?'تحديث الصورة':'إنشاء البوستر')+'</button>':'<small>ضيف صورة للعضو الأول</small>')
+     +(p?'<button data-bp="hide" data-id="'+m.id+'">'+(p.hidden?'إظهار':'إخفاء')+'</button><button data-bp="del" data-id="'+m.id+'">حذف</button>':'')+'</div></div>';
+  });
+  return h;
+}
+document.addEventListener('click',async function(e){
+  var b=e.target.closest('[data-bp]');if(!b||bpBusy)return;
+  var id=b.dataset.id,act=b.dataset.bp,m=all.find(function(x){return x.id===id});
+  if(!m)return;
+  var p=(bpRows||[]).find(function(r){return r.member_id===id});
+  bpBusy=true;
+  try{
+    if(act==='make'){
+      b.disabled=true;b.textContent='بنجهز...';
+      var s=await sb.storage.from('member-photos').createSignedUrl(m.photo_path,600);
+      if(s.error||!s.data)throw new Error('مقدرتش أقرا صورة العضو');
+      var blob=await bpResize(s.data.signedUrl);
+      var path='birthday/'+id+'.jpg';
+      var up=await sb.storage.from('site-media').upload(path,blob,{upsert:true,contentType:'image/jpeg'});
+      if(up.error)throw up.error;
+      var r1=await sb.from('birthday_posts').upsert({member_id:id,photo_path:path,hidden:p?p.hidden:false},{onConflict:'member_id'});
+      if(r1.error)throw r1.error;
+    }else if(act==='hide'){
+      var r2=await sb.from('birthday_posts').update({hidden:!p.hidden}).eq('member_id',id);if(r2.error)throw r2.error;
+    }else if(act==='del'){
+      if(!confirm('حذف البوستر ده؟'))return;
+      await sb.storage.from('site-media').remove([p.photo_path]);
+      var r3=await sb.from('birthday_posts').delete().eq('member_id',id);if(r3.error)throw r3.error;
+    }
+    await bpLoad();
+  }catch(err){alert('حصلت مشكلة: '+(err.message||err))}
+  finally{bpBusy=false}
+});
 function bdTab(){var l=bdList(),no=all.length-l.length;
  if(st.mode==='near')l.sort(function(a,c){return a.b.days-c.b.days});else l.sort(function(a,c){return a.b.mo-c.b.mo||a.b.d-c.b.d||a.m.full_name.localeCompare(c.m.full_name,'ar')});
  var h='<div class="bar"><button data-mode="cal" class="'+(st.mode==='cal'?'on':'')+'">ترتيب التقويم (1/1 ← 31/12)</button><button data-mode="near" class="'+(st.mode==='near'?'on':'')+'">الأقرب أولاً</button></div>',last=0;
@@ -392,7 +450,7 @@ function grpTab(key,cur,attr){var g=groups(key),ks=Object.keys(g);
 function allTab(){var ys=Object.keys(groups('year'));return '<div class="bar"><input id="q" placeholder="ابحث بالاسم أو الهاتف أو القسم" value="'+esc(st.q)+'"><select id="fy"><option value="">كل الفرق</option>'+ys.map(function(k){var v=groups('year')[k].l;return '<option'+(st.fy===v?' selected':'')+'>'+esc(v)+'</option>'}).join('')+'</select><select id="fs"><option value="">كل الحالات</option><option value="new"'+(st.fs==='new'?' selected':'')+'>جديد</option><option value="accepted"'+(st.fs==='accepted'?' selected':'')+'>تم القبول</option></select><button class="g" id="csv">تصدير Excel</button></div><div id="tb">'+tbl(view())+'</div>'}
 function view(){var q=st.q.trim().toLowerCase();return all.filter(function(m){return(!st.fy||m.year===st.fy)&&(!st.fs||m.status===st.fs)&&(!q||[m.full_name,m.phone,m.department,m.section,m.housing_name,m.governorate,m.district,m.village,m.denomination,m.confessor_name].join(' ').toLowerCase().indexOf(q)>-1)})}
 function draw(){ban();$('tabs').innerHTML=TABS.map(function(t){var n=t[0]==='pr'?prayers.filter(function(p){return p.status==='new'}).length:0;return '<button data-tab="'+t[0]+'" class="'+(st.tab===t[0]?'on':'')+'">'+t[1]+(n?'<span class="badge">'+n+'</span>':'')+'</button>'}).join('');
- $('main').innerHTML={over:over,bd:bdTab,yr:function(){return grpTab('year',st.y,'y')},dp:function(){return grpTab('department',st.d,'d')},all:allTab,fu:fuTab,sg:sgTab,pr:prTab,ev:evTab,cp:cpTab,ar:arTab,pl:plTab,ph:phTab,stf:stfTab,dq:dqTabAdmin,lk:lkTab,gr:grTab,set:setTab,txt:txtTab,frm:frmTab}[st.tab]()}
+ $('main').innerHTML={over:over,bd:bdTab,bp:bpTab,yr:function(){return grpTab('year',st.y,'y')},dp:function(){return grpTab('department',st.d,'d')},all:allTab,fu:fuTab,sg:sgTab,pr:prTab,ev:evTab,cp:cpTab,ar:arTab,pl:plTab,ph:phTab,stf:stfTab,dq:dqTabAdmin,lk:lkTab,gr:grTab,set:setTab,txt:txtTab,frm:frmTab}[st.tab]()}
 async function boot(){var s=(await sb.auth.getSession()).data.session;window.__me=(s&&s.user&&s.user.email)||'';$('login').hidden=!!s;$('app').hidden=!s;if(s)load()}
 async function load(){var r=await sb.from('members').select('*').order('created_at',{ascending:false}).limit(1000);
  if(r.error){$('main').innerHTML='<p class="em">تعذر تحميل البيانات: '+esc(r.error.message)+'</p>';return}
@@ -889,7 +947,7 @@ function grTab(){
 }
 
 /* ---- إظهار/إخفاء الأقسام من الموقع ---- */
-var HIDE_ITEMS=[['about','عن الأسرة'],['servants','الخدام'],['rules','القواعد'],['events','الفعاليات'],['competitions','المسابقات'],['daily','سؤال اليوم'],['archive','الأرشيف'],['gallery','الصور'],['join','تسجيل عضو'],['voice','صلاة واقتراحات'],['contact','تواصل'],['first','أول مرة؟'],['audio','مكتبة الصوتيات'],['resources','المكتبة'],['hymn','الترنيمة 🎵 (زرار التشغيل)']];
+var HIDE_ITEMS=[['about','عن الأسرة'],['servants','الخدام'],['rules','القواعد'],['events','الفعاليات'],['competitions','المسابقات'],['daily','سؤال اليوم'],['archive','الأرشيف'],['gallery','الصور'],['join','تسجيل عضو'],['voice','صلاة واقتراحات'],['contact','تواصل'],['first','أول مرة؟'],['audio','مكتبة الصوتيات'],['resources','المكتبة'],['bday','🎂 بوستر أعياد الميلاد على الموقع'],['forms','📝 النماذج على الموقع'],['hymn','الترنيمة 🎵 (زرار التشغيل)']];
 function hideBlock(){return '<h3>👁️ إظهار وإخفاء أقسام الموقع</h3><form id="hidef" class="card" style="display:grid;gap:8px;grid-template-columns:1fr 1fr">'+HIDE_ITEMS.map(function(x){var off=settings['hide_'+x[0]]==='1';return '<label style="display:flex;gap:8px;align-items:center;font-weight:600"><input type="checkbox" name="'+x[0]+'"'+(off?'':' checked')+'> '+x[1]+'</label>'}).join('')+'<div style="grid-column:1/-1"><button class="p" type="submit">حفظ الإظهار</button> <small id="hidem"></small><p class="hint" style="margin:6px 0 0">الأقسام اللي بتتشال عليها علامة بتظهر للزوار. اللي مش متعلم بيتخفي.</p></div></form>'}
 document.addEventListener('submit',async function(e){
   var f=e.target;if(f.id!=='hidef')return;e.preventDefault();
