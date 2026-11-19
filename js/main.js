@@ -185,8 +185,10 @@ function renderWeek(rows){
   var wk=rows.filter(function(e){var n=until(e.event_date);return n>=0&&n<=7});
   if(!wk.length){box.innerHTML='';return}
   box.innerHTML='<p class="wkh">أجندة الأسبوع ده</p>'+wk.map(function(e){
-    return '<span class="wkc"><b>'+esc(e.title)+'</b>'+esc(inDays(until(e.event_date)))+'</span>'}).join('');
+    return '<span class="wkc"><b>'+esc(TX(e,'title'))+'</b>'+esc(inDays(until(e.event_date)))+'</span>'}).join('');
 }
+function TX(o,f){var en=document.documentElement.lang==='en';var v=(en&&o)?o[f+'_en']:null;return (v&&String(v).trim())?String(v).trim():(o?o[f]:'')}
+function DT(s){return (document.documentElement.lang==='en'&&window.AVA_EN_EXTRA&&window.AVA_EN_EXTRA[s])||s}
 function renderEvents(list){
   var box=$('#evs');
   var rows=(list||[]).filter(function(e){return until(e.end_date||e.event_date)>=0}).sort(function(a,b){return a.event_date.localeCompare(b.event_date)});
@@ -197,11 +199,11 @@ function renderEvents(list){
     var multi=e.end_date&&e.end_date!==e.event_date,q=multi?e.end_date.split('-').map(Number):null;
     var n=until(e.event_date),pill=n<0?'شغّالة دلوقتي':inDays(n);
     var dayTxt=AR(p[2]),sm=multi?'لحد '+AR(q[2])+(q[1]!==p[1]?' '+MN[q[1]-1]:''):wd;
-    var cal='https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(e.title)+'&dates='+e.event_date.replace(/-/g,'')+'/'+dayAfter(e.end_date||e.event_date)+'&details='+encodeURIComponent(e.details||'')+'&location='+encodeURIComponent(e.place||'');
+    var cal='https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(TX(e,'title'))+'&dates='+e.event_date.replace(/-/g,'')+'/'+dayAfter(e.end_date||e.event_date)+'&details='+encodeURIComponent(TX(e,'details')||'')+'&location='+encodeURIComponent(TX(e,'place')||'');
     return '<article class="ev spot'+(i===0?' next':'')+'"><div class="date"><b>'+dayTxt+'</b><span>'+MN[p[1]-1]+'</span><small>'+sm+'</small></div>'+
-      '<div class="evb"><div class="evt"><h3>'+esc(e.title)+'</h3><span class="chip">'+esc(KINDS[e.kind]||KINDS.other)+'</span><span class="chip in">'+pill+'</span>'+(i===0?'<span class="chip ok">الفعالية الجاية</span>':'')+'</div>'+
-      ((e.event_time||e.place)?'<div class="meta">'+(e.event_time?'<span>الميعاد: <b>'+esc(e.event_time)+'</b></span>':'')+(e.place?'<span>المكان: <b>'+esc(e.place)+'</b></span>':'')+'</div>':'')+
-      (e.details?'<p class="det">'+esc(e.details)+'</p>':'')+
+      '<div class="evb"><div class="evt"><h3>'+esc(TX(e,'title'))+'</h3><span class="chip">'+esc(DT(KINDS[e.kind]||KINDS.other))+'</span><span class="chip in">'+pill+'</span>'+(i===0?'<span class="chip ok">الفعالية الجاية</span>':'')+'</div>'+
+      ((e.event_time||TX(e,'place'))?'<div class="meta">'+(e.event_time?'<span>الميعاد: <b>'+esc(e.event_time)+'</b></span>':'')+(TX(e,'place')?'<span>المكان: <b>'+esc(TX(e,'place'))+'</b></span>':'')+'</div>':'')+
+      (TX(e,'details')?'<p class="det">'+esc(TX(e,'details'))+'</p>':'')+
       '<a class="btn line sm" href="'+cal+'" target="_blank" rel="noopener">أضف للتقويم</a></div></article>';
   }).join('');
   observe($$('.ev',box));
@@ -219,8 +221,8 @@ function renderComps(){
   if(!rows.length){box.innerHTML=emptyBox(I_TROPHY,'مفيش مسابقات هنا','جرّب تغيّر التصفية من فوق');return}
   box.innerHTML=rows.map(function(c,i){
     var closed=compClosed(c),link=safeUrl(c.link),left=(c.deadline&&!closed)?until(c.deadline):null;
-    return '<article class="cp spot"><div class="cpi">'+(c.image_path?'<img src="'+media(c.image_path)+'" alt="'+esc(c.title)+'" loading="lazy">':I_TROPHY)+'<span class="chip '+(closed?'red':'ok')+'">'+(closed?'انتهت':'مفتوحة')+'</span></div>'+
-      '<div class="cpb"><h3>'+esc(c.title)+'</h3>'+(c.description?'<p class="cpd" id="cd'+i+'">'+esc(c.description)+'</p>'+(c.description.length>120?'<button class="more" type="button" data-more="cd'+i+'">اقرأ المزيد</button>':''):'')+
+    return '<article class="cp spot"><div class="cpi">'+(c.image_path?'<img src="'+media(c.image_path)+'" alt="'+esc(TX(c,'title'))+'" loading="lazy">':I_TROPHY)+'<span class="chip '+(closed?'red':'ok')+'">'+(closed?'انتهت':'مفتوحة')+'</span></div>'+
+      '<div class="cpb"><h3>'+esc(TX(c,'title'))+'</h3>'+(TX(c,'description')?'<p class="cpd" id="cd'+i+'">'+esc(TX(c,'description'))+'</p>'+(TX(c,'description').length>120?'<button class="more" type="button" data-more="cd'+i+'">اقرأ المزيد</button>':''):'')+
       ((c.prize||c.deadline)?'<dl class="cpm">'+(c.prize?'<div><dt>الجايزة</dt><dd>'+esc(c.prize)+'</dd></div>':'')+(c.deadline?'<div><dt>آخر موعد</dt><dd>'+longDate(c.deadline)+(left!==null?' ('+(left===0?'النهاردة':'باقي '+AR(left)+' يوم')+')':'')+'</dd></div>':'')+'</dl>':'')+
       (closed&&c.winners?'<div class="win">الفائزين: '+esc(c.winners)+'</div>':'')+
       (!closed&&link?'<a class="btn gold sm" href="'+esc(link)+'" target="_blank" rel="noopener">شارك دلوقتي</a>':'')+'</div></article>';
@@ -239,10 +241,10 @@ function renderArchive(){
   var years=[];ARCH.forEach(function(a){if(years.indexOf(a.year)<0)years.push(a.year)});years.sort(function(a,b){return b-a});
   f.innerHTML=['all'].concat(years).map(function(y){return '<button class="fchip" type="button" data-y="'+y+'" aria-pressed="'+(String(y)===String(arYear))+'">'+(y==='all'?'كل السنين':AR(y))+'</button>'}).join('');
   var rows=ARCH.filter(function(a){return arYear==='all'||String(a.year)===String(arYear)});
-  var imgs=rows.filter(function(a){return a.image_path}).map(function(a){return{src:media(a.image_path),title:a.title,desc:(a.description||'')+(a.description?' • ':'')+AR(a.year)}});
+  var imgs=rows.filter(function(a){return a.image_path}).map(function(a){return{src:media(a.image_path),title:TX(a,'title'),desc:(TX(a,'description')||'')+(TX(a,'description')?' • ':'')+AR(a.year)}});
   var k=0;
   box.innerHTML=rows.map(function(a){
-    var inner='<div class="im">'+(a.image_path?'<img src="'+media(a.image_path)+'" alt="'+esc(a.title)+'" loading="lazy">':I_IMG)+'</div><div class="tx"><span>'+AR(a.year)+'</span><b>'+esc(a.title)+'</b>'+(a.description&&!a.image_path?'<small>'+esc(a.description)+'</small>':'')+'</div>';
+    var inner='<div class="im">'+(a.image_path?'<img src="'+media(a.image_path)+'" alt="'+esc(TX(a,'title'))+'" loading="lazy">':I_IMG)+'</div><div class="tx"><span>'+AR(a.year)+'</span><b>'+esc(TX(a,'title'))+'</b>'+(TX(a,'description')&&!a.image_path?'<small>'+esc(TX(a,'description'))+'</small>':'')+'</div>';
     return a.image_path?'<button class="ar spot" type="button" data-k="'+(k++)+'">'+inner+'</button>':'<div class="ar spot" style="cursor:default">'+inner+'</div>';
   }).join('');
   box._items=imgs;
@@ -258,14 +260,14 @@ $('#arch').addEventListener('click',function(e){var b=e.target.closest('[data-k]
     var box=$('#rs');if(!box)return;
     var cats=Object.keys(RES_CATS).filter(function(k){return RES_LIST.some(function(r){return r.category===k})});
     box.querySelector('.rcs').innerHTML=['all'].concat(cats).map(function(k){
-      return '<button type="button" class="rc'+(RES_CUR===k?' on':'')+'" data-rc="'+k+'">'+(k==='all'?'الكل':RES_CATS[k])+'</button>';
+      return '<button type="button" class="rc'+(RES_CUR===k?' on':'')+'" data-rc="'+k+'">'+(k==='all'?DT('الكل'):DT(RES_CATS[k]))+'</button>';
     }).join('');
     var items=RES_LIST.filter(function(r){return RES_CUR==='all'||r.category===RES_CUR});
     box.querySelector('.rl').innerHTML=items.map(function(r){
       var href=r.path?media(r.path):(r.url&&/^https:\/\//.test(r.url)?r.url:'');
-      var btn=href?'<a class="rb" href="'+esc(href)+'" target="_blank" rel="noopener">'+(r.path?'فتح الملف':'فتح الرابط')+'</a>':'';
-      return '<article class="rci"><span class="rk">'+esc(RES_CATS[r.category]||'')+'</span><b>'+esc(r.title)+'</b>'+(r.description?'<p>'+esc(r.description)+'</p>':'')+btn+'</article>';
-    }).join('')||'<p class="em">مفيش حاجات في القسم ده لسه.</p>';
+      var btn=href?'<a class="rb" href="'+esc(href)+'" target="_blank" rel="noopener">'+(r.path?DT('فتح الملف'):DT('فتح الرابط'))+'</a>':'';
+      return '<article class="rci"><span class="rk">'+esc(DT(RES_CATS[r.category]||''))+'</span><b>'+esc(TX(r,'title'))+'</b>'+(TX(r,'description')?'<p>'+esc(TX(r,'description'))+'</p>':'')+btn+'</article>';
+    }).join('')||'<p class="em">'+DT('مفيش حاجات في القسم ده لسه.')+'</p>';
   }
   function renderRes(list){
     var sec=$('#resources');if(!sec)return;
@@ -295,7 +297,7 @@ $('#arch').addEventListener('click',function(e){var b=e.target.closest('[data-k]
     sec.hidden=!AU_LIST.length;
     if(!AU_LIST.length){box.innerHTML='';return}
     box.innerHTML=AU_LIST.map(function(a){
-      return '<div class="au-i"><button class="au-b" type="button" data-au="'+esc(a.id)+'" data-t="'+esc(a.title)+'">▶</button><div class="au-m"><b>'+esc(a.title)+'</b><span>'+esc(a.kind)+(a.speaker?' · '+esc(a.speaker):'')+' · '+fmtDur(a.duration_sec)+'</span></div></div>';
+      return '<div class="au-i"><button class="au-b" type="button" data-au="'+esc(a.id)+'" data-t="'+esc(TX(a,'title'))+'">▶</button><div class="au-m"><b>'+esc(TX(a,'title'))+'</b><span>'+esc(a.kind)+(a.speaker?' · '+esc(a.speaker):'')+' · '+fmtDur(a.duration_sec)+'</span></div></div>';
     }).join('');
     paintAu();
   }
@@ -424,27 +426,41 @@ function bdShare(blob,name,msg){
   var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='birthday-'+name+'.png';document.body.appendChild(a);a.click();a.remove();
   try{navigator.clipboard.writeText(msg).then(function(){toast('اتحفظت الصورة واتنسخ الكلام، ابعتهم على السوشيال ميديا')},function(){toast('اتحفظت الصورة، ابعتها على السوشيال ميديا')})}catch(e){toast('اتحفظت الصورة')}
 }
+// البوسترات بتظهر بس للأعضاء اللي الأمين سمح لهم (بعد تسجيل الدخول)
+async function loadBday(){
+  var box=document.getElementById('bdl'),sec=document.getElementById('bday');
+  if(!box||!sec)return;
+  box.textContent='';sec.hidden=true;
+  if(S.hide_bday==='1')return;
+  try{
+    var r=await sb.rpc('my_birthday_posters');
+    if(!r.error&&r.data&&r.data.length)renderBday(r.data.filter(function(x){return x.photo_path}));
+  }catch(e){}
+}
+document.addEventListener('ava:me',function(){loadBday()});
 function renderBday(rows){
   var box=document.getElementById('bdl'),sec=document.getElementById('bday');
   if(!box||!sec)return;
-  bdImg('img/birthday-frame.webp').then(function(frame){
-    rows.forEach(function(rw){
-      var url=sb.storage.from('site-media').getPublicUrl(rw.photo_path).data.publicUrl;
-      var name=(rw.full_name||'').trim(),msg=bdMsg(rw.gender);
-      var fig=document.createElement('figure');fig.className='bdp';
-      var im=document.createElement('img');im.className='bdimg';im.alt='بوستر عيد ميلاد '+name;
-      var cap=document.createElement('figcaption'),h=document.createElement('b'),p=document.createElement('p'),btn=document.createElement('button');
-      h.textContent='🎂 '+name;p.className='bdm';p.textContent=msg;btn.type='button';btn.className='bdsh';btn.textContent='📤 شير';
-      cap.appendChild(h);cap.appendChild(p);fig.appendChild(im);fig.appendChild(cap);fig.appendChild(btn);
-      fig.hidden=true;box.appendChild(fig);
-      bdImgX(url).then(function(photo){
-        return bdBlob(bdPaint(photo,frame)).then(function(blob){
-          im.src=URL.createObjectURL(blob);im.style.cursor='zoom-in';im.onclick=function(){bdOpen(im.src,im.alt)};btn.onclick=function(){bdShare(blob,name,msg)};
-          fig.hidden=false;sec.hidden=false;
-        });
-      }).catch(function(){});
-    });
-  }).catch(function(){});
+  rows.forEach(function(rw){
+    var name=(rw.full_name||'').trim(),msg=bdMsg(rw.gender);
+    var fig=document.createElement('figure');fig.className='bdp';
+    var im=document.createElement('img');im.className='bdimg';im.alt='بوستر عيد ميلاد '+name;
+    var cap=document.createElement('figcaption'),h=document.createElement('b'),p=document.createElement('p'),btn=document.createElement('button');
+    h.textContent='🎂 '+name;p.className='bdm';p.textContent=msg;btn.type='button';btn.className='bdsh';btn.textContent='📤 شير';
+    cap.appendChild(h);cap.appendChild(p);fig.appendChild(im);fig.appendChild(cap);fig.appendChild(btn);
+    fig.hidden=true;box.appendChild(fig);
+    sb.storage.from('birthday-private').createSignedUrl(rw.photo_path,600).then(function(s){
+      if(s.error||!s.data)throw new Error('no signed url');
+      return fetch(s.data.signedUrl);
+    }).then(function(r){
+      if(!r.ok)throw new Error('poster fetch');
+      return r.blob();
+    }).then(function(blob){
+      im.src=URL.createObjectURL(blob);im.style.cursor='zoom-in';im.onclick=function(){bdOpen(im.src,im.alt)};
+      btn.onclick=function(){bdShare(blob,name,msg)};
+      fig.hidden=false;sec.hidden=false;
+    }).catch(function(){});
+  });
 }
 var PUSH_PUB='BHqD751fxI44vFdWTu0JZy_Pzvfd157L0sQ_G8yuBHdhDBTqWgqScQHnZQvzadspsgYp8HgEqYsyFP1roEeTtBo';
 function b64ToU8(s){var p='='.repeat((4-s.length%4)%4),b=atob((s+p).replace(/-/g,'+').replace(/_/g,'/')),u=new Uint8Array(b.length);for(var i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u}
@@ -903,6 +919,25 @@ function startCountdown(rows){
   /* ===== اللغة والثيم داخل التطبيق ===== */
   var EN={"تخطي للمحتوى": "Skip to content", "الترانيم": "Hymns", "الترنيمة": "Hymn", "الرئيسية": "Home", "عن الأسرة": "About", "الخدام": "Servants", "خدام الأسرة": "Servants", "القواعد": "Rules", "قواعد الأسرة": "Family Rules", "الفعاليات": "Events", "فعاليات الأسرة": "Events", "المسابقات": "Competitions", "مسابقات الأسرة": "Competitions", "أول مرة؟": "New here?", "أول مرة تزورنا؟ 👋": "New here? 👋", "الصوتيات": "Audio", "مكتبة الصوتيات": "Audio Library", "المكتبة": "Library", "سؤال اليوم": "Question", "الأرشيف": "Archive", "أرشيف الأسرة": "Family Archive", "الصور": "Photos", "صور الأسرة": "Family Photos", "صلاة واقتراحات": "Prayer & Suggestions", "تواصل": "Contact", "تواصل معنا": "Contact us", "تسجيل عضو": "Register", "سجّل": "Register", "سجّل في الأسرة": "Join the family", "تعرّف علينا": "About us", "آية اليوم": "Verse of the day", "نسخ الآية": "Copy verse", "شارك الآية كصورة": "Share verse as image", "جامعيين علوم مالية وإدارية بسوهاج": "Finance & Admin students, Sohag", "أسرة آڤا مينا": "Ava Mina Family", "وسط مريح للكل، قايم على المحبة والخدمة والصلاة": "A comfortable place for everyone, built on love, service and prayer", "نماذج الأسرة": "Family Forms", "قريباً": "Coming soon", "الكل": "All", "مفتوحة": "Open", "انتهت": "Ended", "التعارف": "Intro", "تسجيل": "Register", "اختار": "Choose", "الاسم بالكامل": "Full name", "رقم الموبايل": "Phone number", "رقم الهاتف": "Phone number", "النوع": "Gender", "بنت": "Female", "ولد": "Male", "الإيميل": "Email", "تاريخ الميلاد": "Birth date", "المحافظة": "Governorate", "أب اعترافك وأهلك": "Confessor & family", "السكن": "Residence", "الدراسة": "Study", "الأهل والكنيسة": "Family & Church", "ابدأ التسجيل دلوقتي": "Start registration", "الالتزام بالقواعد": "Commitment to rules", "🎂 النهارده عيد ميلاد": "🎂 Birthdays today", "انتظرونا في": "Stay tuned for", "رجوع": "Back", "تحديث الآن": "Update now", "الإعدادات": "Settings", "اللغة": "Language", "الثيم": "Theme", "الترنيمة": "Hymn", "سياسة الخصوصية": "Privacy policy", "ثبّت الموقع كتطبيق على موبايلك": "Install the app on your phone", "🔔 فعّل الإشعارات اليومية": "🔔 Enable daily notifications", "🔕 إلغاء الإشعارات": "🔕 Turn off notifications", "🔔 الإشعارات مفعّلة": "🔔 Notifications on", "🔔 فعّل الإشعارات اليومية ": "🔔 Enable daily notifications", "اتلغت الإشعارات، تقدر تفعّلها في أي وقت": "Notifications turned off. You can enable them anytime", "ماقدرناش نلغي الإشعارات، جرّب تاني": "Could not turn off notifications. Try again", "لازم تسمح بالإشعارات عشان توصلك آية اليوم": "Please allow notifications to get the daily verse", "ماقدرناش نفعّل الإشعارات، جرّب تاني. لو على الآيفون لازم تضيف الموقع للشاشة الرئيسية الأول": "Could not enable notifications. On iPhone, add the site to your home screen first", "في تحديث جديد للتطبيق": "A new version is available", "أنت مش متصل بالنت، بتشوف آخر نسخة محفوظة": "You are offline. Showing the last saved version", "العربية": "العربية", "English": "English", "تركواز": "Teal", "بنفسجي": "Plum", "أخضر": "Forest", "نحاسي": "Ember"};
   function T(k){var l=document.documentElement.lang;return (l==='en'&&EN[k])?EN[k]:k}
+  function DICT(){return Object.assign({},EN,window.AVA_EN_EXTRA||{})}
+  function trNode(n,en,D){
+    var par=n.parentNode;if(!par||/^(SCRIPT|STYLE)$/.test(par.nodeName))return;
+    if(n.__ar===undefined)n.__ar=n.nodeValue;
+    var src=n.__ar,k=src.trim();
+    n.nodeValue=(en&&D[k])?src.replace(k,D[k]):src;
+  }
+  function trAttrs(root,en,D){
+    var list=(root.querySelectorAll?root.querySelectorAll('[placeholder],[aria-label],[alt],[title]'):[]);
+    Array.prototype.forEach.call(list,function(e){
+      ['placeholder','aria-label','alt','title'].forEach(function(a){
+        if(!e.hasAttribute(a))return;
+        if(!e.__ar)e.__ar={};
+        if(e.__ar[a]===undefined)e.__ar[a]=e.getAttribute(a);
+        var v=e.__ar[a].trim();
+        e.setAttribute(a,(en&&D[v])?D[v]:e.__ar[a]);
+      });
+    });
+  }
   function applyLang(l){
     var en=(l==='en');
     try{localStorage.setItem('ava_lang',en?'en':'ar')}catch(e){}
@@ -912,15 +947,30 @@ function startCountdown(rows){
     while((n=w.nextNode())){
       var par=n.parentNode;if(!par||/^(SCRIPT|STYLE)$/.test(par.nodeName))continue;
       if(n.__ar===undefined)n.__ar=n.nodeValue;
-      var src=n.__ar,k=src.trim();
-      if(en&&EN[k])n.nodeValue=src.replace(k,EN[k]);
-      else n.nodeValue=src;
+      trNode(n,en,DICT());
     }
+    trAttrs(document.body,en,DICT());
     var nd=document.querySelector('.hero h1');
     var sb2=document.querySelector('.qbar');
     if(window.__lang_done){}
     window.__lang_done=true;
   }
+  window.applyLang=applyLang;
+  window.avaReloadData=function(){try{if(typeof loadDynamic==='function')loadDynamic()}catch(e){}};
+  /* أي محتوى يتضاف بعد كده (من الدالات أو الداتا) يتترجم لو اللغة إنجليزي */
+  new MutationObserver(function(ms){
+    if(document.documentElement.lang!=='en')return;
+    var D=DICT();
+    ms.forEach(function(m){
+      Array.prototype.forEach.call(m.addedNodes,function(nd){
+        if(nd.nodeType===3){trNode(nd,true,D);return}
+        if(nd.nodeType!==1)return;
+        var w=document.createTreeWalker(nd,NodeFilter.SHOW_TEXT,null),t;
+        while((t=w.nextNode()))trNode(t,true,D);
+        trAttrs(nd,true,D);
+      });
+    });
+  }).observe(document.body,{childList:true,subtree:true});
   function setTheme(t){
     try{localStorage.setItem('ava_app_theme_v2',t)}catch(e){}
     document.documentElement.setAttribute('data-apptheme',t);
@@ -949,7 +999,7 @@ function startCountdown(rows){
     o.querySelector('[data-seg="theme"]').innerHTML=Object.keys(names).map(function(k){return '<button type="button" data-theme-set="'+k+'" class="sw-'+k+(k===cur?' on':'')+'"><i></i>'+names[k]+'</button>'}).join('');
   }
   (function(){try{var t=localStorage.getItem('ava_app_theme_v2');document.documentElement.setAttribute('data-apptheme',t||'calm')}catch(e){document.documentElement.setAttribute('data-apptheme','calm')}})();
-  try{if(localStorage.getItem('ava_lang')==='en')document.addEventListener('DOMContentLoaded',function(){applyLang('en')})}catch(e){}
+  try{if(localStorage.getItem('ava_lang')==='en')document.addEventListener('DOMContentLoaded',function(){applyLang('en');if(window.avaSyncLangBtn)window.avaSyncLangBtn()})}catch(e){}
 
   function appTab(id){
     if(!document.documentElement.classList.contains('app'))return false;
@@ -1154,10 +1204,7 @@ function normGender(x){
       document.body.insertBefore(a,document.body.firstChild);
     }
     try{pushInit()}catch(e){}
-    try{
-      var bdr=await sb.rpc('birthdays_today');
-      if(!bdr.error&&bdr.data&&bdr.data.length&&S.hide_bday!=='1')renderBday(bdr.data);
-    }catch(e){}
+    try{loadBday()}catch(e){}
     try{
       var fr=await sb.from('forms').select('id,title,description,fields,show_on_site').eq('active',true);
       if(!fr.error&&fr.data)renderForms(fr.data);
@@ -1450,7 +1497,7 @@ async function dqStart(){
     dqSave(w);DQ.who=w;dqRun(r.data);
   }catch(e){
     btn.disabled=false;
-    var em=String((e&&(e.message||e.details))||'');
+    var em=String((e&&(e.message||TX(e,'details')))||'');
     say($('#dqM'),/not_member/.test(em)?'الاسم أو الرقم ده مش مسجلين في الأسرة. اتأكد منهم زي ما سجلت بالظبط':'حصلت مشكلة في الاتصال، جرّب تاني بعد شوية','bad');
   }
 }
@@ -1509,7 +1556,7 @@ async function dqPick(i,btn){
     if(r.error)throw r.error;
     dqReveal(i,r.data,false);
   }catch(e){
-    var em=String((e&&(e.message||e.details))||'');
+    var em=String((e&&(e.message||TX(e,'details')))||'');
     if(/expired/.test(em)){dqEnd('⏱️ الوقت خلص قبل ما الإجابة توصل، ومابتتحسبش.',null);return}
     if(/already/.test(em)){dqRefresh();return}
     DQ.locked=false;$$('.dq-opt').forEach(function(b){b.disabled=false});dqTick();

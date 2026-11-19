@@ -234,16 +234,50 @@ html.app .sh-home{display:flex}
 /* الموقع: زرار الألوان (🎨) اتشال عشان الموقع والتطبيق بنفس الألوان */
 #pl,#palp{display:none!important}
 
-/* ===== الخطوط: العناوين Reem Kufi (شكل كوفي عصري)، النصوص Readex Pro، الأرقام IBM Plex Sans Arabic، الآيات Amiri ===== */
-:root{
-  --fh:'Reem Kufi','Readex Pro',Tahoma,sans-serif;
-  --fb:'Readex Pro','IBM Plex Sans Arabic',Tahoma,Arial,sans-serif;
-  --fnum:'IBM Plex Sans Arabic',Tahoma,Arial,sans-serif;
-  --fv:'Amiri','Traditional Arabic',serif;
-}
-body,button,input,textarea,select{font-family:var(--fb)}
-h1,h2,h3,h4,.sh-name,.sh-title b,footer .fe{font-family:var(--fh);font-weight:700}
-.hero h1,.hero h1 *{font-family:'Reem Kufi',var(--fh);font-weight:700}
-.date,.sh-ev-d,.chip,.cnt,.num,time,.bdn,[data-num]{font-family:var(--fnum);font-variant-numeric:lining-nums}
+/* ===== الخطوط: داخل التطبيق المثبّت بس (الموقع بيفضل بخطوطه الأصلية) ===== */
+html.app{--fh:'Reem Kufi','Readex Pro',Tahoma,sans-serif;--fb:'Readex Pro','IBM Plex Sans Arabic',Tahoma,Arial,sans-serif;--fnum:'IBM Plex Sans Arabic',Tahoma,Arial,sans-serif;--fv:'Amiri','Traditional Arabic',serif}
+html.app body,html.app button,html.app input,html.app textarea,html.app select{font-family:var(--fb)}
+html.app h1,html.app h2,html.app h3,html.app h4,html.app footer .fe{font-family:var(--fh);font-weight:700}
+html.app .hero h1,html.app .hero h1 *{font-family:'Reem Kufi',var(--fh);font-weight:700}
+html.app .date,html.app .sh-ev-d,html.app .chip,html.app .cnt,html.app .num,html.app time{font-family:var(--fnum);font-variant-numeric:lining-nums}
 html.app .sh-verse .sh-vt,html.app .vcard #vt{font-family:'Amiri',var(--fv),serif;font-weight:700;font-size:clamp(20px,5.6vw,25px);line-height:1.9}
 html.app .sh-name{font-weight:700}
+
+/* لما يكون فيه أعياد ميلاد: الكروت تبقى مضغوطة عشان آية اليوم تفضل ظاهرة كاملة */
+html.app .sh-bday{padding:8px 10px;max-height:none;overflow:visible}
+html.app .sh-bd-h{margin-bottom:6px;font-size:13px}
+html.app .sh-bd-row{display:flex;flex-wrap:wrap;gap:8px}
+html.app .sh-bd{grid-template-columns:40px 1fr auto;gap:8px;background:rgba(255,255,255,.06);border-radius:16px;padding:5px 8px 5px 5px;max-width:100%}
+html.app .sh-bd img{width:40px;height:40px;border-radius:12px}
+html.app .sh-bd-n{font-size:13px;-webkit-line-clamp:1}
+html.app .sh-bd-s{padding:5px 10px;font-size:11.5px}
+html.app .sh-verse{min-height:168px;flex:1 0 auto}
+
+/* ===== الوضع الفاتح/الغامق: مفتاح واحد للموقع والتطبيق كله ===== */
+html.app[data-theme="light"]{--hero:#F4F7FB;--hero2:#FFFFFF;--hero-ink:#0B1220;--hero-gold:#2563EB;--ongold:#FFFFFF}
+html.app[data-theme="light"] .sh-home{background:linear-gradient(170deg,#F4F7FB 0%,#E9EEF6 100%);color:#0B1220}
+html.app[data-theme="light"] .sh-verse,html.app[data-theme="light"] .sh-q,html.app[data-theme="light"] .sh-ev,html.app[data-theme="light"] .sh-bday{background:#FFFFFF;border:1px solid #D8E0EC;color:#0B1220;box-shadow:0 10px 24px -18px rgba(11,18,32,.25)}
+html.app[data-theme="light"] .sh-verse::before{background:#2563EB}
+html.app[data-theme="light"] .sh-verse::after{color:#2563EB}
+html.app[data-theme="light"] .sh-vt,html.app[data-theme="light"] .sh-name,html.app[data-theme="light"] .sh-q b,html.app[data-theme="light"] .sh-ev-b b,html.app[data-theme="light"] .sh-bd-n{color:#0B1220}
+html.app[data-theme="light"] .sh-sub,html.app[data-theme="light"] .sh-q small,html.app[data-theme="light"] .sh-ev-b small,html.app[data-theme="light"] .sh-bd-n{color:#55657F;opacity:1}
+html.app[data-theme="light"] .sh-hi,html.app[data-theme="light"] .sh-vref,html.app[data-theme="light"] .sh-cta,html.app[data-theme="light"] .sh-verse small,html.app[data-theme="light"] .sh-lbl,html.app[data-theme="light"] .sh-arr,html.app[data-theme="light"] .sh-bd-h{color:#2563EB}
+html.app[data-theme="light"] .sh-share{background:#2563EB;color:#FFFFFF}
+html.app[data-theme="light"] .sh-qi{background:linear-gradient(135deg,#2563EB,#60A5FA);color:#FFFFFF}
+html.app[data-theme="light"] .sh-ev-d{background:linear-gradient(135deg,#2563EB,#60A5FA);color:#FFFFFF}
+html.app[data-theme="light"] .sh-ph,html.app[data-theme="light"] .sh-av{background:#FFFFFF;border-color:#2563EB}
+html.app[data-theme="light"] .sh-bd-s{background:#E9EEF6;color:#0B1220}
+html.app[data-theme="light"] .qbar{background:#FFFFFF;border:1px solid #D8E0EC;box-shadow:0 12px 28px -14px rgba(11,18,32,.25)}
+html.app[data-theme="light"] .qbar a{color:#55657F}
+html.app[data-theme="light"] .qbar a.on{color:#0B1220}
+html.app[data-theme="light"] .qbar a.on i{background:#2563EB;box-shadow:none}
+html.app[data-theme="light"] .qbar a.on i .ic{color:#FFFFFF}
+html.app[data-theme="light"] .tabbar{background:#FFFFFF}
+html.app[data-theme="light"] #shelltop{background:#FFFFFF}
+html.app[data-theme="light"] .sh-av .ic,html.app[data-theme="light"] .sh-ph .ic{color:#2563EB}
+html.app[data-theme="light"] .sh-qi .ic{color:#FFFFFF}
+html.app[data-theme="light"] .sh-empty{background:#FFFFFF;color:#55657F}
+html.app[data-theme="light"] #ann{color:#0B1220}
+
+.lang-btn{font-weight:800;font-size:13px;letter-spacing:.02em}
+html[dir="ltr"] .sh-greet>div,html[dir="ltr"] .sh-name,html[dir="ltr"] .sh-sub,html[dir="ltr"] .sh-hi{text-align:left}

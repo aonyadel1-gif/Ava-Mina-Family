@@ -2,8 +2,8 @@
 // الشبكة أولاً للصفحات (آخر نسخة)، ولو النت قطع بتفتح آخر نسخة محفوظة.
 // الملفات الثابتة (صور، أيقونات) بتتفتح من الكاش فوراً وبتتحدّث في الخلفية.
 // بيانات الموقع (Supabase) مابتتحفظش أبداً.
-const V='ava-v29';
-const SHELL=['./','./index.html','./js/icons.js','./offline.html','./privacy.html','./manifest.json','./icon-192.png','./icon-512.png','./icon-maskable-512.png','./img/birthday-frame.webp','./img/96a5198fc4.webp','./css/app.css','./css/auth.css','./css/search.css','./css/app-skin.css','./css/app-shell.css','./js/app-shell.js','./js/main.js','./js/motion.js','./js/extras.js','./js/extras-2.js','./js/auth.js','./js/search.js','./js/onboarding.js','./js/monitor.js','./faq.html','./terms.html'];
+const V='ava-v34';
+const SHELL=['./','./index.html','./js/icons.js','./js/i18n-en.js','./offline.html','./privacy.html','./manifest.json','./icon-192.png','./icon-512.png','./icon-maskable-512.png','./img/birthday-frame.webp','./img/96a5198fc4.webp','./css/app.css','./css/auth.css','./css/search.css','./css/app-skin.css','./css/app-shell.css','./js/app-shell.js','./js/main.js','./js/motion.js','./js/extras.js','./js/extras-2.js','./js/auth.js','./js/search.js','./js/onboarding.js','./js/monitor.js','./faq.html','./terms.html'];
 
 self.addEventListener('install',e=>{
   e.waitUntil(caches.open(V).then(c=>c.addAll(SHELL)).catch(()=>{}));
@@ -31,12 +31,13 @@ self.addEventListener('fetch',e=>{
     );
     return;
   }
-  e.respondWith(
-    caches.match(req).then(cached=>{
-      const net=fetch(req).then(r=>{keep(req,r);return r}).catch(()=>cached);
-      return cached||net;
-    })
-  );
+  // الكود (JS/CSS/JSON) والصور: من النت الأول، والكاش بس لو النت مش موجود.
+  // كده التطبيق المثبّت ما يفضلش شغال على نسخة قديمة من الكود.
+  if(/\.(js|css|json)$/.test(url.pathname)){
+    e.respondWith(fetch(req).then(r=>{keep(req,r);return r}).catch(()=>caches.match(req)));
+    return;
+  }
+  e.respondWith(caches.match(req).then(cached=>cached||fetch(req).then(r=>{keep(req,r);return r}).catch(()=>cached)));
 });
 
 // ---- إشعارات الدفع (آية اليوم / سؤال اليوم) ----

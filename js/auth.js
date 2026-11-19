@@ -97,6 +97,20 @@
     return b;
   }
 
+  // ترجمة أخطاء Supabase المعروفة لرسائل واضحة
+  function explain(err){
+    var t = String((err && (err.message || err.error_description)) || '');
+    var l = t.toLowerCase();
+    if (/rate limit|too many|over_email_send_rate/.test(l)) return L('وصلنا للحد المسموح من الرسايل دلوقتي. استنى ساعة وجرّب تاني.', 'Email limit reached. Wait an hour and try again.');
+    if (/signups? not allowed|signup.*disabled|not allowed for otp/.test(l)) return L('التسجيل بالإيميل مقفول. الأمين لازم يفعّل Allow new users to sign up في Supabase.', 'Email sign-up is disabled. The admin must enable sign-ups in Supabase.');
+    if (/redirect|redirect_to/.test(l)) return L('رابط الرجوع مش متسجل في Supabase (Redirect URLs). الأمين لازم يضيف رابط الموقع.', 'The redirect URL is not allowed in Supabase.');
+    if (/error sending|smtp|email.*send/.test(l)) return L('الإيميل مش راضي يتبعت. الأمين لازم يراجع إعدادات SMTP في Supabase.', 'Email could not be sent. Check SMTP settings in Supabase.');
+    if (/invalid.*email|email address/.test(l)) return L('الإيميل مش صحيح، اكتبه تاني.', 'The email is not valid.');
+    if (/مالقيناش|متربط|كامل|لازم|كلّم/.test(t)) return t;
+    if (/Failed to fetch|NetworkError/i.test(t)) return L('مفيش اتصال بالنت دلوقتي.', 'No internet connection.');
+    return L('حصلت مشكلة: ' + (t || 'جرّب تاني'), 'Something went wrong: ' + (t || 'try again'));
+  }
+
   function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
 
   // الإعدادات: بتظهر للزائر والعضو
@@ -221,7 +235,8 @@
     if (act === 'dark') { var tg = document.getElementById('tg'); if (tg) tg.click(); setTimeout(render, 100); return; }
     if (act === 'push') {
       var pb = document.getElementById('pushbtn');
-      if (pb) pb.click(); else say(L('الإشعارات مش متاحة دلوقتي', 'Notifications are not available right now'), 'bad');
+      if (pb) pb.click();
+      else say(L('الإشعارات مش متاحة على المتصفح ده. على الآيفون: افتح الموقع من زرار "إضافة للشاشة الرئيسية" وافتحه من الأيقونة.', 'Notifications are not available in this browser. On iPhone, add the app to your home screen and open it from there.'), 'bad');
       setTimeout(render, 2000);
       return;
     }
@@ -255,7 +270,7 @@
         render();
       }
     } catch (err) {
-      say(L('حصلت مشكلة، جرّب تاني', 'Something went wrong. Try again'), 'bad');
+      say(explain(err), 'bad');
     }
   }
 
@@ -283,9 +298,7 @@
         render();
       }
     } catch (err) {
-      var txt = (err && err.message) || '';
-      if (/مالقيناش|متربط|كامل|لازم|كلّم/.test(txt)) say(txt, 'bad');
-      else say(L('حصلت مشكلة، جرّب تاني', 'Something went wrong. Try again'), 'bad');
+      say(explain(err), 'bad');
     } finally {
       if (btn) btn.disabled = false;
     }
