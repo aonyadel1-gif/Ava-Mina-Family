@@ -520,7 +520,7 @@ async function load(){var r=await sb.from('members').select('*').order('created_
  miss=!!(n.error||g.error);notes=n.data||[];sugs=g.data||[];
  var x=await Promise.all([sb.from('events').select('*').order('event_date'),sb.from('competitions').select('*').order('created_at',{ascending:false}),sb.from('archive_items').select('*').order('year',{ascending:false}).order('created_at',{ascending:false}),sb.from('prayers').select('*').order('created_at',{ascending:false}).limit(1000)]);
  miss3=!!(x[0].error||x[1].error||x[2].error||x[3].error);events=x[0].data||[];comps=x[1].data||[];arch=x[2].data||[];prayers=x[3].data||[];var qr0=await sb.from('quiz_results').select('*').order('score',{ascending:false});miss5=!!qr0.error;qres=qr0.data||[];await loadPolls();await loadDaily();draw()}
-$('go').onclick=async function(){var r=await sb.auth.signInWithPassword({email:$('em').value.trim(),password:$('pw').value});if(r.error){$('err').textContent='الإيميل أو كلمة المرور غلط';return}boot()};
+$('go').onclick=async function(){try{var r=await sb.auth.signInWithPassword({email:$('em').value.trim(),password:$('pw').value});if(r.error){$('err').textContent='خطأ: '+r.error.message;return}boot()}catch(e){$('err').textContent='مشكلة اتصال: '+(e.message||e)}};
 $('out').onclick=async function(){await sb.auth.signOut();boot()};$('rf').onclick=load;
 document.addEventListener('visibilitychange',function(){if(!document.hidden&&!$('app').hidden)load()});
 document.addEventListener('click',async function(e){var b=e.target.closest('button');if(!b)return;var D=b.dataset;
