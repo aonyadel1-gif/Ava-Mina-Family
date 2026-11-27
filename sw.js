@@ -2,7 +2,8 @@
 // الشبكة أولاً للصفحات (آخر نسخة)، ولو النت قطع بتفتح آخر نسخة محفوظة.
 // الملفات الثابتة (صور، أيقونات) بتتفتح من الكاش فوراً وبتتحدّث في الخلفية.
 // بيانات الموقع (Supabase) مابتتحفظش أبداً.
-const V='ava-site-v1';
+const V='ava-site-v2';
+const PFX='ava-site-',OLD='ava-v';
 const SHELL=['./','./index.html','./js/icons.js','./js/i18n-en.js','./offline.html','./privacy.html','./manifest.json','./icon-192.png','./icon-512.png','./icon-maskable-512.png','./img/birthday-frame.webp','./img/96a5198fc4.webp','./css/app.css','./css/auth.css','./css/search.css','./css/app-skin.css','./css/app-shell.css','./js/app-shell.js','./js/main.js','./js/motion.js','./js/extras.js','./js/extras-2.js','./js/auth.js','./js/search.js','./js/onboarding.js','./js/monitor.js','./faq.html','./terms.html'];
 
 self.addEventListener('install',e=>{
@@ -13,9 +14,10 @@ self.addEventListener('install',e=>{
 // التحديث بياخد مفعول لما المستخدم يضغط "تحديث الآن" من الموقع
 self.addEventListener('message',e=>{if(e.data==='SKIP_WAITING')self.skipWaiting()});
 self.addEventListener('activate',e=>{
-  e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==V).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));
+  e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==V&&(k.indexOf(PFX)===0||k.indexOf(OLD)===0)).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));
 });
 
+function own(req){return caches.open(V).then(c=>c.match(req))}
 function keep(req,res){
   if(res&&res.ok&&res.type!=='opaque')caches.open(V).then(c=>c.put(req,res.clone())).catch(()=>{});
 }
@@ -28,7 +30,7 @@ self.addEventListener('fetch',e=>{
   if(req.mode==='navigate'){
     e.respondWith(
       fetch(req).then(r=>{keep(req,r);return r}).catch(()=>
-        caches.match(req).then(m=>m||caches.match('./index.html')).then(m=>m||caches.match('./offline.html'))
+        own(req).then(m=>m||own('./index.html')).then(m=>m||own('./offline.html'))
       )
     );
     return;
@@ -36,10 +38,10 @@ self.addEventListener('fetch',e=>{
   // الكود (JS/CSS/JSON) والصور: من النت الأول، والكاش بس لو النت مش موجود.
   // كده التطبيق المثبّت ما يفضلش شغال على نسخة قديمة من الكود.
   if(/\.(js|css|json)$/.test(url.pathname)){
-    e.respondWith(fetch(req).then(r=>{keep(req,r);return r}).catch(()=>caches.match(req)));
+    e.respondWith(fetch(req).then(r=>{keep(req,r);return r}).catch(()=>own(req)));
     return;
   }
-  e.respondWith(caches.match(req).then(cached=>cached||fetch(req).then(r=>{keep(req,r);return r}).catch(()=>cached)));
+  e.respondWith(own(req).then(cached=>cached||fetch(req).then(r=>{keep(req,r);return r}).catch(()=>cached)));
 });
 
 // ---- إشعارات الدفع (آية اليوم / سؤال اليوم) ----
