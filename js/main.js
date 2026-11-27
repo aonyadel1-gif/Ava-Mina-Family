@@ -433,13 +433,15 @@ async function loadBday(){
   box.textContent='';sec.hidden=true;
   if(S.hide_bday==='1')return;
   try{
+    var sb=sbClient();if(!sb)return;
     var r=await sb.rpc('my_birthday_posters');
-    if(!r.error&&r.data&&r.data.length)renderBday(r.data.filter(function(x){return x.photo_path}));
+    if(!r.error&&r.data&&r.data.length)renderBday(r.data);
   }catch(e){}
 }
 document.addEventListener('ava:me',function(){loadBday()});
 function renderBday(rows){
   var box=document.getElementById('bdl'),sec=document.getElementById('bday');
+  var sb=sbClient();
   if(!box||!sec)return;
   rows.forEach(function(rw){
     var name=(rw.full_name||'').trim(),msg=bdMsg(rw.gender);
@@ -449,6 +451,7 @@ function renderBday(rows){
     h.textContent='🎂 '+name;p.className='bdm';p.textContent=msg;btn.type='button';btn.className='bdsh';btn.textContent='📤 شير';
     cap.appendChild(h);cap.appendChild(p);fig.appendChild(im);fig.appendChild(cap);fig.appendChild(btn);
     fig.hidden=true;box.appendChild(fig);
+    if(!rw.photo_path){im.remove();btn.remove();fig.hidden=false;sec.hidden=false;return;}
     sb.storage.from('birthday-private').createSignedUrl(rw.photo_path,600).then(function(s){
       if(s.error||!s.data)throw new Error('no signed url');
       return fetch(s.data.signedUrl);
@@ -459,7 +462,7 @@ function renderBday(rows){
       im.src=URL.createObjectURL(blob);im.style.cursor='zoom-in';im.onclick=function(){bdOpen(im.src,im.alt)};
       btn.onclick=function(){bdShare(blob,name,msg)};
       fig.hidden=false;sec.hidden=false;
-    }).catch(function(){});
+    }).catch(function(){im.remove();btn.remove();fig.hidden=false;sec.hidden=false;});
   });
 }
 var PUSH_PUB='BAWvii4WV0gSEFAEvsjAXQrtTBR4qVGhcNMOHqP-rpGfg2BnG_6ALRNhZkBCxvU5w178FyMTwL3tC1EoZ3_7nVs';
@@ -1604,4 +1607,29 @@ function dqReveal(i,d,stored){
   dqStats();
 }
 dqInit();
+// بطاقة "أهلاً بيك" + صورة العضو المسجّل (الموقع بس، التطبيق ليه شاشته)
+function memberHello(){
+  var isApp=document.documentElement.classList.contains('app');
+  var hero=document.getElementById('home');
+  if(isApp||!hero)return;
+  var me=window.avaMe,card=document.getElementById('memHi');
+  if(!me||!me.linked||!me.name){if(card)card.remove();return}
+  if(!card){
+    card=document.createElement('div');card.id='memHi';
+    card.style.cssText='display:flex;align-items:center;gap:14px;margin:14px auto;padding:12px 16px;max-width:420px;border-radius:16px;background:var(--card,#fff);border:1px solid var(--line,#ddd)';
+    hero.insertBefore(card,hero.firstChild);
+  }
+  var en=document.documentElement.lang==='en',nm=me.name.trim();
+  card.textContent='';
+  var av=document.createElement(me.photo?'img':'div');
+  av.style.cssText='width:64px;height:64px;border-radius:50%;object-fit:cover;flex:0 0 64px;display:flex;align-items:center;justify-content:center;background:var(--gold,#c9a14a);color:#fff;font-size:24px;font-weight:700';
+  if(me.photo){av.src=me.photo;av.alt=nm;av.onerror=function(){var d=document.createElement('div');d.style.cssText=av.style.cssText;d.textContent=nm.charAt(0);av.replaceWith(d)}}
+  else av.textContent=nm.charAt(0);
+  var t=document.createElement('div'),p=document.createElement('div'),b=document.createElement('b');
+  p.textContent=en?'Welcome':'أهلاً بيك';p.style.cssText='font-size:14px;color:var(--mute,#666)';
+  b.textContent=nm;b.style.fontSize='18px';
+  t.appendChild(p);t.appendChild(b);card.appendChild(av);card.appendChild(t);
+}
+document.addEventListener('ava:me',memberHello);
+memberHello();
 })();
