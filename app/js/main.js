@@ -799,7 +799,7 @@ function startCountdown(rows){
   var ft=$('footer');if(!ft)return;
   var bt=document.createElement('button');bt.type='button';bt.className='btn ghost sm inst';bt.textContent='ثبّت الموقع كتطبيق على موبايلك';ft.appendChild(bt);
   var dp=null,standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
-  if(standalone)return;
+  if(standalone)bt.remove();
   addEventListener('beforeinstallprompt',function(e){e.preventDefault();dp=e;bt.style.display='inline-flex'});
   if(/iphone|ipad|ipod/i.test(navigator.userAgent)&&!/crios|fxios/i.test(navigator.userAgent))bt.style.display='inline-flex';
   bt.addEventListener('click',async function(){
