@@ -76,7 +76,7 @@ function esc(s){var d=document.createElement('div');d.textContent=s==null?'':s;r
 var MN=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
 var DEPTS=['نظم معلومات الأعمال (BIS)','محاسبة والتمويل دولي (IAF)','الأسواق والمنشآت المالية (FMI)'];
 var YO=['الأولى','الثانية','الثالثة','الرابعة'];
-var TABS=[['over','📊 نظرة عامة'],['bd','🎂 أعياد الميلاد'],['bp','🖼️ بوسترات الأعياد'],['yr','🎓 الفرق'],['dp','🏛️ الأقسام'],['fu','🤝 الافتقاد'],['all','👥 كل الأعضاء'],['sg','💡 الاقتراحات'],['pr','🙏 طلبات الصلاة'],['ev','📅 الفعاليات'],['cp','🏆 المسابقات'],['ar','🗂️ الأرشيف'],['pl','🗳️ التصويت'],['ph','📸 الصور بالشهور'],['stf','🛡️ الأمناء'],['dq','🧠 سؤال اليوم'],['lk','🔗 روابط للمشاركة'],['gr','🎓 المتخرجين والسجل'],['set','⚙️ التحكم في الموقع'],['txt','✏️ نصوص الموقع'],['frm','📝 النماذج']];
+var TABS=[['over','📊 نظرة عامة'],['bd','🎂 أعياد الميلاد'],['bp','🖼️ بوسترات الأعياد'],['cs','🧩 أقسام مخصصة'],['yr','🎓 الفرق'],['dp','🏛️ الأقسام'],['fu','🤝 الافتقاد'],['all','👥 كل الأعضاء'],['sg','💡 الاقتراحات'],['pr','🙏 طلبات الصلاة'],['ev','📅 الفعاليات'],['cp','🏆 المسابقات'],['ar','🗂️ الأرشيف'],['pl','🗳️ التصويت'],['ph','📸 الصور بالشهور'],['stf','🛡️ الأمناء'],['dq','🧠 سؤال اليوم'],['lk','🔗 روابط للمشاركة'],['gr','🎓 المتخرجين والسجل'],['set','⚙️ التحكم في الموقع'],['txt','✏️ نصوص الموقع'],['frm','📝 النماذج']];
 var st={tab:'over',y:'',d:'',mode:'cal',q:'',fy:'',fs:'',fd:30,pf:'new'},notes=[],sugs=[],miss=false,events=[],comps=[],arch=[],prayers=[],miss3=false,polls=[],staffs=[],settings={},miss6=false,miss4=false,qres=[],miss5=false,DL=document.getElementById('dlg');
 function ea(s){return esc(s).replace(/"/g,'&quot;')}
 function greet(m){return 'كل سنة وانت طيب يا '+m.full_name.split(' ')[0]+' ❤️\nربنا يفرّح قلبك ويبارك حياتك ويحفظك قريب منه.\nأسرة آڤا مينا'}
@@ -150,18 +150,11 @@ function prTab(){if(miss3)return need3();var c={all:prayers.length,new:prayers.f
  return '<div class="bar">'+[['new','جديدة'],['prayed','تمت الصلاة'],['all','الكل']].map(function(x){return '<button data-pf="'+x[0]+'" class="'+(st.pf===x[0]?'on':'')+'">'+x[1]+' ('+c[x[0]]+')</button>'}).join('')+'</div><p class="hint">الطلبات دي بتظهر ليك ولأبونا بس، ومش بتظهر في الموقع.</p>'+(l.map(function(p){var d=p.status==='prayed';return '<div class="card it pr'+(d?' done':'')+'"><div class="gr"><b>'+(p.name?esc(p.name):'بدون اسم')+'</b> <small style="display:inline">'+dt(p.created_at)+'</small><div style="white-space:pre-wrap;margin-top:4px">'+esc(p.body)+'</div></div><div class="ac"><button data-a="prx" data-id="'+p.id+'">'+(d?'رجّعه جديد':'🙏 تمت الصلاة')+'</button><button class="d" data-a="prd" data-id="'+p.id+'">حذف</button></div></div>'}).join('')||'<p class="em">مفيش طلبات هنا.</p>')}
 
 function evF(e){e=e||{};var o=function(k,v){return '<option value="'+k+'"'+(k===(e.kind||'meeting')?' selected':'')+'>'+v+'</option>'};
- return '<h3 style="margin-top:0">'+(e.id?'✏️ تعديل فعالية':'📅 فعالية جديدة')+'</h3><form id="evf" data-id="'+(e.id||'')+'"><label class="f">العنوان<input name="title" required value="'+ea(e.title)+'" placeholder="اجتماع الأسرة الأسبوعي"></label>
-<label class="f">العنوان بالإنجليزي <small>(اختياري)</small><input name="title_en" value="'+ea(e.title_en)+'" placeholder="Family weekly meeting"></label><label>النوع<select name="kind">'+Object.keys(EK).map(function(k){return o(k,EK[k])}).join('')+'</select></label><label>التاريخ<input name="event_date" type="date" required value="'+ea(e.event_date)+'"></label><label>لحد تاريخ <small>(لو أكتر من يوم)</small><input name="end_date" type="date" value="'+ea(e.end_date)+'"></label><label>الميعاد<input name="event_time" value="'+ea(e.event_time)+'" placeholder="٦ مساءً"></label><label class="f">المكان<input name="place" value="'+ea(e.place)+'"></label>
-<label class="f">المكان بالإنجليزي <small>(اختياري)</small><input name="place_en" value="'+ea(e.place_en)+'"></label><label class="f">تفاصيل<textarea name="details" rows="3">'+esc(e.details)+'</textarea></label>
-<label class="f">التفاصيل بالإنجليزي <small>(اختياري)</small><textarea name="details_en" rows="3">'+esc(e.details_en)+'</textarea></label><div class="f"><button class="p" type="submit">حفظ</button> <button type="button" data-a="cl">إلغاء</button></div></form>'}
+ return '<h3 style="margin-top:0">'+(e.id?'✏️ تعديل فعالية':'📅 فعالية جديدة')+'</h3><form id="evf" data-id="'+(e.id||'')+'"><label class="f">العنوان<input name="title" required value="'+ea(e.title)+'" placeholder="اجتماع الأسرة الأسبوعي"></label><label class="f">العنوان بالإنجليزي <small>(اختياري)</small><input name="title_en" value="'+ea(e.title_en)+'" placeholder="Family weekly meeting"></label><label>النوع<select name="kind">'+Object.keys(EK).map(function(k){return o(k,EK[k])}).join('')+'</select></label><label>التاريخ<input name="event_date" type="date" required value="'+ea(e.event_date)+'"></label><label>لحد تاريخ <small>(لو أكتر من يوم)</small><input name="end_date" type="date" value="'+ea(e.end_date)+'"></label><label>الميعاد<input name="event_time" value="'+ea(e.event_time)+'" placeholder="٦ مساءً"></label><label class="f">المكان<input name="place" value="'+ea(e.place)+'"></label><label class="f">المكان بالإنجليزي <small>(اختياري)</small><input name="place_en" value="'+ea(e.place_en)+'"></label><label class="f">تفاصيل<textarea name="details" rows="3">'+esc(e.details)+'</textarea></label><label class="f">التفاصيل بالإنجليزي <small>(اختياري)</small><textarea name="details_en" rows="3">'+esc(e.details_en)+'</textarea></label><div class="f"><button class="p" type="submit">حفظ</button> <button type="button" data-a="cl">إلغاء</button></div></form>'}
 function cpF(c){c=c||{};
- return '<h3 style="margin-top:0">'+(c.id?'✏️ تعديل مسابقة':'🏆 مسابقة جديدة')+'</h3><form id="cpf" data-id="'+(c.id||'')+'"><label class="f">اسم المسابقة<input name="title" required value="'+ea(c.title)+'"></label>
-<label class="f">اسم المسابقة بالإنجليزي <small>(اختياري)</small><input name="title_en" value="'+ea(c.title_en)+'"></label><label class="f">الوصف والشروط<textarea name="description" rows="4">'+esc(c.description)+'</textarea></label>
-<label class="f">الوصف بالإنجليزي <small>(اختياري)</small><textarea name="description_en" rows="4">'+esc(c.description_en)+'</textarea></label><label>الجايزة<input name="prize" value="'+ea(c.prize)+'"></label><label>آخر موعد<input name="deadline" type="date" value="'+ea(c.deadline)+'"></label><label class="f">رابط المشاركة <small>(اختياري، لازم يبدأ بـ https://)</small><input name="link" type="url" value="'+ea(c.link)+'" placeholder="https://forms.gle/..."></label><label>الحالة<select name="status"><option value="open"'+(c.status!=='closed'?' selected':'')+'>مفتوحة</option><option value="closed"'+(c.status==='closed'?' selected':'')+'>انتهت</option></select></label><label>الفائزين <small>(لو انتهت)</small><input name="winners" value="'+ea(c.winners)+'"></label><label class="f">صورة المسابقة (اختياري)<input name="img" type="file" accept="image/*"></label>'+(c.image_path?'<label class="f" style="display:flex;gap:8px;align-items:center">'+th(c.image_path,'')+' <span><input type="checkbox" name="rmimg" style="width:auto"> احذف الصورة الحالية</span></label>':'')+'<div class="f"><button class="p" type="submit">حفظ</button> <button type="button" data-a="cl">إلغاء</button></div></form>'}
+ return '<h3 style="margin-top:0">'+(c.id?'✏️ تعديل مسابقة':'🏆 مسابقة جديدة')+'</h3><form id="cpf" data-id="'+(c.id||'')+'"><label class="f">اسم المسابقة<input name="title" required value="'+ea(c.title)+'"></label><label class="f">اسم المسابقة بالإنجليزي <small>(اختياري)</small><input name="title_en" value="'+ea(c.title_en)+'"></label><label class="f">الوصف والشروط<textarea name="description" rows="4">'+esc(c.description)+'</textarea></label><label class="f">الوصف بالإنجليزي <small>(اختياري)</small><textarea name="description_en" rows="4">'+esc(c.description_en)+'</textarea></label><label>الجايزة<input name="prize" value="'+ea(c.prize)+'"></label><label>آخر موعد<input name="deadline" type="date" value="'+ea(c.deadline)+'"></label><label class="f">رابط المشاركة <small>(اختياري، لازم يبدأ بـ https://)</small><input name="link" type="url" value="'+ea(c.link)+'" placeholder="https://forms.gle/..."></label><label>الحالة<select name="status"><option value="open"'+(c.status!=='closed'?' selected':'')+'>مفتوحة</option><option value="closed"'+(c.status==='closed'?' selected':'')+'>انتهت</option></select></label><label>الفائزين <small>(لو انتهت)</small><input name="winners" value="'+ea(c.winners)+'"></label><label class="f">صورة المسابقة (اختياري)<input name="img" type="file" accept="image/*"></label>'+(c.image_path?'<label class="f" style="display:flex;gap:8px;align-items:center">'+th(c.image_path,'')+' <span><input type="checkbox" name="rmimg" style="width:auto"> احذف الصورة الحالية</span></label>':'')+'<div class="f"><button class="p" type="submit">حفظ</button> <button type="button" data-a="cl">إلغاء</button></div></form>'}
 function arF(r){r=r||{};
- return '<h3 style="margin-top:0">'+(r.id?'✏️ تعديل في الأرشيف':'🗂️ إضافة للأرشيف')+'</h3><form id="arf" data-id="'+(r.id||'')+'"><label class="f">العنوان<input name="title" required value="'+ea(r.title)+'" placeholder="رحلة الدير 2025"></label>
-<label class="f">العنوان بالإنجليزي <small>(اختياري)</small><input name="title_en" value="'+ea(r.title_en)+'"></label><label>السنة<input name="year" type="number" required min="2000" max="2100" value="'+ea(r.year||new Date().getFullYear())+'"></label><label class="f">وصف قصير<textarea name="description" rows="3">'+esc(r.description)+'</textarea></label>
-<label class="f">الوصف بالإنجليزي <small>(اختياري)</small><textarea name="description_en" rows="3">'+esc(r.description_en)+'</textarea></label><label class="f">الصورة<input name="img" type="file" accept="image/*"></label>'+(r.image_path?'<label class="f" style="display:flex;gap:8px;align-items:center">'+th(r.image_path,'')+' <span>صورة حالية (اختار صورة جديدة لو عايز تغيّرها)</span></label>':'')+'<div class="f"><button class="p" type="submit">حفظ</button> <button type="button" data-a="cl">إلغاء</button></div></form>'}
+ return '<h3 style="margin-top:0">'+(r.id?'✏️ تعديل في الأرشيف':'🗂️ إضافة للأرشيف')+'</h3><form id="arf" data-id="'+(r.id||'')+'"><label class="f">العنوان<input name="title" required value="'+ea(r.title)+'" placeholder="رحلة الدير 2025"></label><label class="f">العنوان بالإنجليزي <small>(اختياري)</small><input name="title_en" value="'+ea(r.title_en)+'"></label><label>السنة<input name="year" type="number" required min="2000" max="2100" value="'+ea(r.year||new Date().getFullYear())+'"></label><label class="f">وصف قصير<textarea name="description" rows="3">'+esc(r.description)+'</textarea></label><label class="f">الوصف بالإنجليزي <small>(اختياري)</small><textarea name="description_en" rows="3">'+esc(r.description_en)+'</textarea></label><label class="f">الصورة<input name="img" type="file" accept="image/*"></label>'+(r.image_path?'<label class="f" style="display:flex;gap:8px;align-items:center">'+th(r.image_path,'')+' <span>صورة حالية (اختار صورة جديدة لو عايز تغيّرها)</span></label>':'')+'<div class="f"><button class="p" type="submit">حفظ</button> <button type="button" data-a="cl">إلغاء</button></div></form>'}
 
 function openD(h){DL.innerHTML=h;if(!DL.open)DL.showModal()}
 document.addEventListener('click',async function(e){
@@ -451,6 +444,50 @@ async function bpResize(url){
   c.getContext('2d').drawImage(bmp,0,0,c.width,c.height);
   return await new Promise(function(res,rej){c.toBlob(function(b){b?res(b):rej(new Error('الصورة مش مقروءة'))},'image/jpeg',0.9)});
 }
+
+/* ---- أقسام مخصصة: الأمين بيضيف قسم بعنوان ونص، ويظهر في الموقع والتطبيق ---- */
+function csList(){try{var v=settings.custom_sections;if(!v)return [];var a=Array.isArray(v)?v:JSON.parse(v);return Array.isArray(a)?a:[]}catch(e){return []}}
+async function csSave(list){
+  var r=await sb.from('site_settings').upsert({key:'custom_sections',value:JSON.stringify(list)},{onConflict:'key'});
+  if(r.error)throw r.error;
+  settings.custom_sections=JSON.stringify(list);
+}
+function csTab(){
+  var list=csList();
+  var h='<h3 style="margin-top:0">🧩 أقسام مخصصة</h3>'+
+    '<p class="hint" style="margin:0">أضف قسم جديد بعنوان ونص، ويظهر في الموقع والتطبيق. لتعديل عناوين الأقسام الأساسية (عن الأسرة، القواعد...) استخدم تاب "✏️ نصوص الموقع".</p>'+
+    '<form id="csF" class="card" style="display:grid;gap:8px">'+
+    '<label>العنوان <input name="title" maxlength="120" required></label>'+
+    '<label>النص <textarea name="body" rows="4" maxlength="2000"></textarea></label>'+
+    '<label>العنوان بالإنجليزي (اختياري) <input name="title_en" maxlength="120"></label>'+
+    '<label>النص بالإنجليزي (اختياري) <textarea name="body_en" rows="3" maxlength="2000"></textarea></label>'+
+    '<label><input type="checkbox" name="visible" checked> يظهر في الموقع</label>'+
+    '<div><button class="p" type="submit">إضافة القسم</button></div></form>';
+  h+=list.length?list.map(function(c,i){
+    return '<div class="card" style="display:grid;gap:6px"><b>'+esc(c.title)+'</b><small>'+(c.visible===false?'🙈 مخفي':'✅ ظاهر')+'</small>'+
+      '<p class="hint" style="margin:0;white-space:pre-line">'+esc(c.body||'')+'</p>'+
+      '<div class="bar"><button data-cs="toggle" data-i="'+i+'">'+(c.visible===false?'إظهار':'إخفاء')+'</button><button data-cs="del" data-i="'+i+'">حذف</button></div></div>';
+  }).join(''):'<p class="em">مفيش أقسام مخصصة لسه.</p>';
+  return h;
+}
+document.addEventListener('submit',async function(e){
+  if(e.target.id!=='csF')return;
+  e.preventDefault();
+  var f=e.target,g=function(n){return (f.elements[n].value||'').trim()};
+  var title=g('title');
+  if(!title){alert('اكتب العنوان');return}
+  var item={id:'cs'+Date.now().toString(36),title:title,body:g('body'),title_en:g('title_en'),body_en:g('body_en'),visible:f.elements.visible.checked};
+  try{await csSave(csList().concat([item]));alert('اتضاف القسم ✓');draw()}catch(err){alert('ماتحفظش: '+err.message)}
+});
+document.addEventListener('click',async function(e){
+  var b=e.target.closest('[data-cs]');if(!b)return;
+  var list=csList(),i=+b.dataset.i;
+  try{
+    if(b.dataset.cs==='del'){if(!confirm('حذف القسم ده؟'))return;list.splice(i,1)}
+    else if(b.dataset.cs==='toggle'){list[i].visible=(list[i].visible===false)}
+    await csSave(list);draw();
+  }catch(err){alert('ماتحفظش: '+err.message)}
+});
 function bpTab(){
   if(bpRows===null){bpLoad();return '<p class="em">بتحمل...</p>'}
   var by={};bpRows.forEach(function(r){by[r.member_id]=r});
@@ -510,7 +547,7 @@ function grpTab(key,cur,attr){var g=groups(key),ks=Object.keys(g);
 function allTab(){var ys=Object.keys(groups('year'));return '<div class="bar"><input id="q" placeholder="ابحث بالاسم أو الهاتف أو القسم" value="'+esc(st.q)+'"><select id="fy"><option value="">كل الفرق</option>'+ys.map(function(k){var v=groups('year')[k].l;return '<option'+(st.fy===v?' selected':'')+'>'+esc(v)+'</option>'}).join('')+'</select><select id="fs"><option value="">كل الحالات</option><option value="new"'+(st.fs==='new'?' selected':'')+'>جديد</option><option value="accepted"'+(st.fs==='accepted'?' selected':'')+'>تم القبول</option></select><button class="g" id="csv">تصدير Excel</button></div><div id="tb">'+tbl(view())+'</div>'}
 function view(){var q=st.q.trim().toLowerCase();return all.filter(function(m){return(!st.fy||m.year===st.fy)&&(!st.fs||m.status===st.fs)&&(!q||[m.full_name,m.phone,m.department,m.section,m.housing_name,m.governorate,m.district,m.village,m.denomination,m.confessor_name].join(' ').toLowerCase().indexOf(q)>-1)})}
 function draw(){ban();$('tabs').innerHTML=TABS.map(function(t){var n=t[0]==='pr'?prayers.filter(function(p){return p.status==='new'}).length:0;return '<button data-tab="'+t[0]+'" class="'+(st.tab===t[0]?'on':'')+'">'+t[1]+(n?'<span class="badge">'+n+'</span>':'')+'</button>'}).join('');
- $('main').innerHTML={over:over,bd:bdTab,bp:bpTab,yr:function(){return grpTab('year',st.y,'y')},dp:function(){return grpTab('department',st.d,'d')},all:allTab,fu:fuTab,sg:sgTab,pr:prTab,ev:evTab,cp:cpTab,ar:arTab,pl:plTab,ph:phTab,stf:stfTab,dq:dqTabAdmin,lk:lkTab,gr:grTab,set:setTab,txt:txtTab,frm:frmTab}[st.tab]()}
+ $('main').innerHTML={over:over,bd:bdTab,bp:bpTab,cs:csTab,yr:function(){return grpTab('year',st.y,'y')},dp:function(){return grpTab('department',st.d,'d')},all:allTab,fu:fuTab,sg:sgTab,pr:prTab,ev:evTab,cp:cpTab,ar:arTab,pl:plTab,ph:phTab,stf:stfTab,dq:dqTabAdmin,lk:lkTab,gr:grTab,set:setTab,txt:txtTab,frm:frmTab}[st.tab]()}
 async function boot(){var s=(await sb.auth.getSession()).data.session;window.__me=(s&&s.user&&s.user.email)||'';$('login').hidden=!!s;$('app').hidden=!s;if(s)load()}
 async function load(){var r=await sb.from('members').select('*').order('created_at',{ascending:false}).limit(1000);
  if(r.error){$('main').innerHTML='<p class="em">تعذر تحميل البيانات: '+esc(r.error.message)+'</p>';return}
@@ -520,7 +557,19 @@ async function load(){var r=await sb.from('members').select('*').order('created_
  miss=!!(n.error||g.error);notes=n.data||[];sugs=g.data||[];
  var x=await Promise.all([sb.from('events').select('*').order('event_date'),sb.from('competitions').select('*').order('created_at',{ascending:false}),sb.from('archive_items').select('*').order('year',{ascending:false}).order('created_at',{ascending:false}),sb.from('prayers').select('*').order('created_at',{ascending:false}).limit(1000)]);
  miss3=!!(x[0].error||x[1].error||x[2].error||x[3].error);events=x[0].data||[];comps=x[1].data||[];arch=x[2].data||[];prayers=x[3].data||[];var qr0=await sb.from('quiz_results').select('*').order('score',{ascending:false});miss5=!!qr0.error;qres=qr0.data||[];await loadPolls();await loadDaily();draw()}
-$('go').onclick=async function(){try{var r=await sb.auth.signInWithPassword({email:$('em').value.trim(),password:$('pw').value});if(r.error){$('err').textContent='خطأ: '+r.error.message;return}boot()}catch(e){$('err').textContent='مشكلة اتصال: '+(e.message||e)}};
+$('go').onclick=async function(){
+  try{
+    var r=await sb.auth.signInWithPassword({email:$('em').value.trim(),password:$('pw').value});
+    if(r.error){throw r.error}
+    boot();
+  }catch(e){
+    var m=String((e&&(e.message||e.error_description))||e||'').toLowerCase(),t='الدخول فشل: '+((e&&e.message)||'');
+    if(/invalid login/.test(m))t='الإيميل أو الباسورد غلط، أو الحساب مش موجود في Supabase (Authentication ← Users)';
+    else if(/not confirmed/.test(m))t='الحساب لسه مش متأكد: في Supabase ← Users ← الحساب ← Confirm email';
+    else if(/failed to fetch|network/.test(m))t='مفيش اتصال بالنت أو config.js مش متظبط';
+    $('err').textContent=t;
+  }
+};
 $('out').onclick=async function(){await sb.auth.signOut();boot()};$('rf').onclick=load;
 document.addEventListener('visibilitychange',function(){if(!document.hidden&&!$('app').hidden)load()});
 document.addEventListener('click',async function(e){var b=e.target.closest('button');if(!b)return;var D=b.dataset;
@@ -932,7 +981,7 @@ function backupBlock(){
   var days=last?Math.floor((Date.now()-new Date(last).getTime())/86400000):null;
   var msg=last?'آخر نسخة: '+esc(String(last).slice(0,10))+(days>30?' <b style="color:#b00">⚠️ من أكتر من 30 يوم، خد نسخة جديدة</b>':''):'<b style="color:#b00">⚠️ مفيش نسخة لسه، خد أول نسخة دلوقتي</b>';
   return '<h3>💾 نسخة احتياطية</h3><div class="card" style="display:grid;gap:8px"><p style="margin:0">'+msg+'</p>'+
-    '<div><button class="p" id="bkBtn" type="button">💾 خد نسخة احتياطية دلوقتي</button></div>'+
+    '<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="p" id="bkBtn" type="button">💾 نسخة البيانات (JSON)</button><button class="p" id="bkFull" type="button">📦 نسخة كاملة (بيانات + صور) ZIP</button></div>'+
     '<p class="hint" style="margin:0">الملف بيحتوي على بيانات الأعضاء والإجابات. احفظه في مكان آمن ومتبعتهوش لحد. صور الأعضاء مش موجودة فيه (هي في التخزين بتاع Supabase).</p></div>';
 }
 async function fetchAllRows(t){
@@ -971,7 +1020,72 @@ async function makeBackup(btn){
   }catch(e){alert('ماتصدرتش: '+e.message);return false}
   finally{btn.disabled=false;btn.textContent=old}
 }
-document.addEventListener('click',function(e){var b=e.target.closest('#bkBtn');if(b)makeBackup(b)});
+/* نسخة كاملة في ملف ZIP واحد: البيانات + كل الصور والملفات. بتشتغل من المتصفح بس، من غير أي برامج على الكمبيوتر */
+var JSZIP_URL='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+function loadJSZip(){
+  if(window.JSZip)return Promise.resolve(window.JSZip);
+  return new Promise(function(res,rej){var sc=document.createElement('script');sc.src=JSZIP_URL;sc.onload=function(){res(window.JSZip)};sc.onerror=function(){rej(new Error('مقدرتش أحمّل أداة الضغط. اتأكد من النت وجرّب تاني'))};document.head.appendChild(sc)});
+}
+async function listStorage(bucket,prefix){
+  var out=[];
+  for(var off=0;;off+=1000){
+    var r=await sb.storage.from(bucket).list(prefix||'',{limit:1000,offset:off,sortBy:{column:'name',order:'asc'}});
+    if(r.error)throw new Error(bucket+': '+r.error.message);
+    var d=r.data||[];
+    for(var i=0;i<d.length;i++){
+      var it=d[i],p=prefix?prefix+'/'+it.name:it.name;
+      if(it.id===null)out=out.concat(await listStorage(bucket,p));else out.push(p);
+    }
+    if(d.length<1000)break;
+  }
+  return out;
+}
+async function makeFullBackup(btn){
+  var old=btn.textContent;btn.disabled=true;
+  var fails=[];
+  try{
+    btn.textContent='جاري تحميل أداة الضغط...';
+    var JZ=await loadJSZip();
+    var zip=new JZ();
+    var data={app:'ava-mina',exported_at:new Date().toISOString(),tables:{},errors:{}};
+    for(var i=0;i<BK_TABLES.length;i++){
+      var t=BK_TABLES[i];btn.textContent='جاري البيانات ('+(i+1)+'/'+BK_TABLES.length+')...';
+      try{data.tables[t]=await fetchAllRows(t)}catch(e){data.errors[t]=e.message}
+    }
+    zip.file('data.json',JSON.stringify(data,null,1));
+    var buckets=['member-photos','site-media','birthday-private'];
+    var total=0,done=0;
+    var lists={};
+    for(var b=0;b<buckets.length;b++){btn.textContent='جاري جرد الملفات...';lists[buckets[b]]=await listStorage(buckets[b]);total+=lists[buckets[b]].length}
+    for(var b2=0;b2<buckets.length;b2++){
+      var bk=buckets[b2];
+      for(var k=0;k<lists[bk].length;k++){
+        var path=lists[bk][k];done++;
+        btn.textContent='جاري نسخ الصور ('+done+'/'+total+')...';
+        var dl=await sb.storage.from(bk).download(path);
+        if(dl.error||!dl.data){fails.push(bk+'/'+path);continue}
+        zip.file('storage/'+bk+'/'+path,dl.data);
+      }
+    }
+    btn.textContent='جاري تجهيز الملف...';
+    var blob=await zip.generateAsync({type:'blob',compression:'DEFLATE'});
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='ava-mina-full-backup-'+new Date().toISOString().slice(0,10)+'.zip';
+    document.body.appendChild(a);a.click();
+    setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},4000);
+    var now=new Date().toISOString();
+    var r=await sb.from('site_settings').upsert({key:'last_backup',value:now},{onConflict:'key'});
+    if(!r.error)settings.last_backup=now;
+    var msgs=[];
+    if(Object.keys(data.errors).length)msgs.push('جداول ماتصدرتش: '+Object.keys(data.errors).join('، '));
+    if(fails.length)msgs.push('ملفات ماتنسختش: '+fails.length);
+    alert('اتحفظت النسخة الكاملة ✓ ('+total+' ملف)'+(msgs.length?'\n'+msgs.join('\n'):''));
+    draw();
+  }catch(e){alert('النسخة الكاملة ماتعملتش: '+e.message)}
+  finally{btn.disabled=false;btn.textContent=old}
+}
+document.addEventListener('click',function(e){var b=e.target.closest('#bkBtn');if(b)makeBackup(b);var f=e.target.closest('#bkFull');if(f)makeFullBackup(f)});
 
 /* ---- ترقية السنة الدراسية + المتخرجين ---- */
 function acYear(d){var y=d.getFullYear(),s=d.getMonth()>=8?y:y-1;return s+'/'+(s+1)}

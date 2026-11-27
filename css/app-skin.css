@@ -1,0 +1,77 @@
+/* ===== شكل التطبيق المثبّت (Modern skin) =====
+   ملف مستقل: بيتطبق بس لما التطبيق يتفتح كتطبيق (html.app). الموقع العادي مش متأثر.
+   الألوان كلها من المتغيرات (--hero, --gold, --card...) عشان تشتغل مع الثيمات والوضع الليلي. */
+
+@keyframes skinIn{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes skinGlow{0%,100%{opacity:.55}50%{opacity:.85}}
+
+/* الخلفية: تدرج خفيف بلمسة ذهبية */
+html.app body{background:
+  radial-gradient(820px 380px at 115% -8%, color-mix(in srgb,var(--hero2) 20%,transparent), transparent 62%),
+  radial-gradient(640px 360px at -18% 32%, color-mix(in srgb,var(--gold) 13%,transparent), transparent 60%),
+  var(--bg)}
+
+/* الهيدر: زجاجي وخفيف */
+html.app .nav{background:color-mix(in srgb,var(--bg) 80%,transparent);border-bottom:0;box-shadow:0 1px 0 var(--line)}
+html.app .brand{font-family:var(--fh);font-weight:700;letter-spacing:.2px}
+html.app .brand img{box-shadow:0 0 0 2px var(--gold),0 8px 18px -8px rgba(0,0,0,.45)}
+html.app .ibtn,html.app .burger{background:var(--card);border:1px solid var(--line);box-shadow:0 2px 8px rgba(10,20,50,.06)}
+
+/* الرئيسية: الهيرو بقى كارت كبير بزوايا مستديرة */
+html.app #home,
+html.app .hero{margin:10px 12px 0;border-radius:30px;overflow:hidden;position:relative;isolation:isolate;box-shadow:0 22px 44px -22px rgba(10,20,50,.55)}
+html.app #home::after{content:"";position:absolute;inset-inline-end:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--hero-gold) 35%,transparent),transparent 65%);pointer-events:none;animation:skinGlow 6s ease-in-out infinite}
+html.app #home .hero h1{text-shadow:0 2px 14px rgba(0,0,0,.25)}
+
+/* المربعات: شبكة 3 أعمدة بكروت أنيقة */
+html.app #pl{display:none!important}
+html.app body{padding-bottom:calc(104px + env(safe-area-inset-bottom,0px))}
+html.app .tiles{grid-template-columns:repeat(4,1fr);gap:10px;padding:16px 12px 8px;background:transparent}
+html.app .sec:not(.tabhide){animation:skinIn .35s cubic-bezier(.2,.8,.2,1) both}
+html.app .tile{min-height:92px;padding:10px 4px 9px;gap:4px;border-radius:18px;background:var(--card);border:1px solid var(--line);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 12px 24px -18px rgba(10,20,50,.45);transition:transform .2s cubic-bezier(.2,.8,.2,1),box-shadow .25s,border-color .25s;animation:skinIn .55s cubic-bezier(.2,.8,.2,1) both}
+html.app .tile:hover,html.app .tile:focus-visible{transform:translateY(-3px);border-color:color-mix(in srgb,var(--gold) 55%,var(--line));box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 18px 30px -16px rgba(10,20,50,.5)}
+html.app .tile:active{transform:scale(.95)}
+html.app .tile i{width:44px;height:44px;border-radius:15px;font-size:21px;background:linear-gradient(145deg,color-mix(in srgb,var(--hero) 10%,var(--card)),color-mix(in srgb,var(--gold) 24%,var(--card)));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--gold) 30%,transparent)}
+html.app .tile b{font-size:12px;font-weight:800;color:var(--ink);line-height:1.3}
+
+/* شريط التنقل السفلي: كبسولة كحلي بعنصر ذهبي نشط */
+html.app .qbar{background:linear-gradient(135deg,var(--hero),var(--hero2));border:1px solid color-mix(in srgb,var(--gold) 32%,transparent);box-shadow:0 16px 36px -12px rgba(10,20,50,.6)}
+html.app .qbar a{color:color-mix(in srgb,var(--hero-ink) 78%,transparent);font-weight:700}
+html.app .qbar a.on{color:var(--hero-ink);background:transparent}
+html.app .qbar a.on i{background:linear-gradient(135deg,var(--hero-gold),var(--hero-gold2));box-shadow:0 8px 18px -8px var(--hero-gold);transform:translateY(-2px)}
+html.app .qbar a i{transition:transform .2s,background .25s,box-shadow .25s}
+
+/* شريط الرجوع داخل الأقسام */
+html.app .tabbar{background:color-mix(in srgb,var(--card) 88%,transparent);border-bottom:1px solid var(--line);box-shadow:0 12px 26px -20px rgba(10,20,50,.55);border-radius:0 0 22px 22px}
+html.app .tabback{background:linear-gradient(135deg,var(--hero),var(--hero2));color:var(--hero-ink);border:0;box-shadow:0 8px 16px -10px rgba(10,20,50,.6)}
+html.app .tabtitle{font-size:18px;font-weight:800}
+
+/* عناوين الأقسام: خط ذهبي صغير تحتها */
+html.app .sh h2{position:relative;padding-bottom:12px}
+html.app .sh h2::after{content:"";position:absolute;bottom:0;inset-inline-start:0;width:46px;height:4px;border-radius:4px;background:linear-gradient(90deg,var(--gold),var(--hero-gold))}
+
+/* الكروت والفورمات */
+html.app .card,html.app .fcard{border-radius:24px;box-shadow:0 14px 30px -22px rgba(10,20,50,.45)}
+
+/* الشاشات المنبثقة (حسابي، الإعدادات، البحث، الترحيب) */
+html.app .appset-box,html.app .srch-box,html.app .onb-box{border-radius:30px;padding-top:12px}
+html.app .appset-box::before,html.app .srch-box::before,html.app .onb-box::before{content:"";display:block;width:44px;height:5px;border-radius:5px;background:var(--line);margin:0 auto 4px;order:-1}
+html.app .appset-box,html.app .srch-box{box-shadow:0 -18px 48px -12px rgba(0,0,0,.35)}
+html.app .acct-row,html.app .srch-row{border-radius:18px;box-shadow:0 8px 18px -16px rgba(10,20,50,.5)}
+
+/* الأزرار الأساسية: ذهبي متدرج */
+html.app .btn.gold,html.app .acct-btn.gold,html.app .onb-box .acct-btn.gold{background:linear-gradient(135deg,var(--hero-gold),#f7d68a);color:var(--ongold);border:0;box-shadow:0 12px 22px -14px var(--hero-gold)}
+html.app .acct-btn,html.app .srch-x,html.app .appset-x{border-radius:16px}
+html.app .srch-chip.on{background:linear-gradient(135deg,var(--hero),var(--hero2));color:var(--hero-ink);border-color:transparent}
+html.app .srch-snip mark{background:linear-gradient(120deg,rgba(232,176,74,.45),rgba(232,176,74,.2));border-radius:6px}
+
+@media (prefers-reduced-motion:reduce){html.app .tile,html.app #home::after{animation:none}}
+html.rm.app .tile,html.rm.app #home::after{animation:none}
+
+/* صفوف الإعدادات: لو الأزرار مش مكانها، تنزل تحت الكلام بدل ما تضغط الكلام */
+html.app .acct-row{flex-wrap:wrap}
+html.app .acct-row>span{flex:1 1 150px}
+
+/* الهيدر مفتوح تماماً عشان محتوى الصفحة ما يبانش من ورا */
+html.app .nav{background:var(--bg)}
+html.app .tabbar{background:var(--card)}
