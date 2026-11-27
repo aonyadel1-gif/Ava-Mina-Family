@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="app">
+<head>
+<script>if(matchMedia('(display-mode: standalone)').matches||navigator.standalone===true)document.documentElement.classList.add('app')</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>أسرة آڤا مينا</title>
+<meta name="description" content="أسرة آڤا مينا، أسرة جامعيين علوم مالية وإدارية بسوهاج، تسجيل الأعضاء، فعاليات، مسابقات، وأرشيف الأسرة">
+<meta name="theme-color" content="#0c1d3f">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="آڤا مينا">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="robots" content="index,follow">
+<meta property="og:site_name" content="أسرة آڤا مينا">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="أسرة آڤا مينا - Ava Mina Family">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"أسرة آڤا مينا","alternateName":"Ava Mina Family","description":"أسرة جامعيين علوم مالية وإدارية بسوهاج: تسجيل الأعضاء، فعاليات، مسابقات، وأرشيف الأسرة","areaServed":"سوهاج","inLanguage":"ar-EG"}</script>
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta property="og:type" content="website"><meta property="og:locale" content="ar_EG"><meta property="og:title" content="أسرة آڤا مينا - Ava Mina Family"><meta property="og:description" content="أسرة جامعيين علوم مالية وإدارية بسوهاج">
+<script>document.documentElement.classList.add("js")</script>
+<link rel="icon" href="img/90fee8d7bb.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Cairo:wght@600;700;800&family=Reem+Kufi:wght@400;600;700&family=Readex+Pro:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/auth.css">
+<link rel="stylesheet" href="css/search.css">
+<link rel="stylesheet" href="css/app-skin.css">
+<link rel="stylesheet" href="css/app-shell.css">
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" onerror="document.write('<script src=&quot;supabase.js&quot;><\/script>')"></script>
+<script>if(!window.supabase)document.write('<script src="https://unpkg.com/@supabase/supabase-js@2"><\/script>')</script>
+<script src="config.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">تخطي للمحتوى</a>
+<div id="bar" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <a class="brand" href="#home" aria-label="الصفحة الرئيسية"><img data-logo alt="" width="46" height="46"><span>آڤا مينا</span></a>
+    <nav class="links" id="links" aria-label="التنقل الرئيسي">
+      <a class="m-only" href="#home">الرئيسية</a>
+      <a href="#about">عن الأسرة</a>
+      <a href="#servants">الخدام</a>
+      <a href="#rules">القواعد</a>
+      <a href="#events">الفعاليات</a>
+      <a href="#competitions">المسابقات</a>
+      <a href="#first">أول مرة؟</a><a href="#audio">الصوتيات</a><a href="#resources">المكتبة</a><a href="#daily">سؤال اليوم</a>
+      <a href="#archive">الأرشيف</a>
+      <a href="#gallery">الصور</a>
+      <a href="#voice">صلاة واقتراحات</a>
+      <a href="#contact">تواصل</a>
+      <a class="cta" href="#join">تسجيل عضو</a>
+    </nav>
+    <button class="ibtn" id="pl" type="button" aria-label="تغيير ألوان الموقع" aria-expanded="false" aria-controls="palp">🎨</button>
+    <button class="ibtn lang-btn" id="lg" type="button" aria-label="English">EN</button>
+    <button class="ibtn" id="tg" type="button" aria-label="تبديل الوضع الليلي والنهاري"></button>
+    <button class="burger" id="bg" type="button" aria-expanded="false" aria-controls="links" aria-label="فتح القائمة"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="palp" id="palp" role="dialog" aria-label="اختار لون الموقع" hidden>
+  <p class="palt">اختار لون الموقع</p>
+  <div class="pals">
+    <button type="button" data-pal="lapis"><i style="background:linear-gradient(135deg,#0c1d3f,#e8b04a)"></i>لازوردي وذهبي</button>
+    <button type="button" data-pal="papyrus"><i style="background:linear-gradient(135deg,#3a0f14,#e9c27a)"></i>أحمر بردي</button>
+    <button type="button" data-pal="sage"><i style="background:linear-gradient(135deg,#1d3b33,#d9a46a)"></i>أخضر ونحاسي</button>
+    <button type="button" data-pal="violet"><i style="background:linear-gradient(135deg,#1b1333,#d7b26d)"></i>بنفسجي هادي</button>
+    <button type="button" data-pal="teal"><i style="background:linear-gradient(135deg,#0f3d3e,#e2b869)"></i>تركواز ورملي</button>
+    <button type="button" data-pal="ink"><i style="background:linear-gradient(135deg,#222,#d8c8a2)"></i>أسود وعاجي</button>
+    <button type="button" data-pal="olive"><i style="background:linear-gradient(135deg,#2b3a1e,#e7d08a)"></i>زيتي وكريمي</button>
+    <button type="button" data-pal="slate"><i style="background:linear-gradient(135deg,#1f2328,#f0b35a)"></i>فحمي وبرتقالي</button>
+    <button type="button" data-pal="rose"><i style="background:linear-gradient(135deg,#4a1d3a,#f1cf8e)"></i>توت وذهبي</button>
+  </div>
+</div>
+<div class="scrim" id="scrim" aria-hidden="true"></div>
+
+<main id="main">
+<div id="splash" aria-hidden="true"><div class="sp"><span class="ring"></span><img data-logo alt=""></div></div>
+<div id="glow" aria-hidden="true"></div>
+<div id="sp" aria-hidden="true"><i></i></div>
+<section class="hero" id="home">
+  <span class="orb o1" aria-hidden="true"></span><span class="orb o2" aria-hidden="true"></span>
+  <div class="wrap hero-in">
+    <div class="hero-txt">
+      <p class="kick"><i aria-hidden="true"></i>جامعيين علوم مالية وإدارية بسوهاج</p>
+      <h1><span class="sr">أسرة آڤا مينا</span><span class="w" aria-hidden="true"><span style="--i:0">أسرة</span></span><span class="w" aria-hidden="true"><span style="--i:1">آڤا</span></span><span class="w" aria-hidden="true"><span style="--i:2">مينا</span></span></h1>
+      <p class="en" lang="en"><span class="sr">Ava Mina Family</span><span class="ew" aria-hidden="true"><span class="ch" style="--i:0">A</span><span class="ch" style="--i:1">v</span><span class="ch" style="--i:2">a</span></span><span class="ew" aria-hidden="true"><span class="ch" style="--i:3">M</span><span class="ch" style="--i:4">i</span><span class="ch" style="--i:5">n</span><span class="ch" style="--i:6">a</span></span><span class="ew" aria-hidden="true"><span class="ch" style="--i:7">F</span><span class="ch" style="--i:8">a</span><span class="ch" style="--i:9">m</span><span class="ch" style="--i:10">i</span><span class="ch" style="--i:11">l</span><span class="ch" style="--i:12">y</span></span></p>
+      <p class="lead" id="lead" data-text="وسط مريح للكل، قايم على المحبة والخدمة والصلاة">وسط مريح للكل، قايم على المحبة والخدمة والصلاة</p>
+      <div class="cta-row">
+        <a class="btn gold" href="#join">سجّل في الأسرة</a>
+        <a class="btn ghost" href="#about">تعرّف علينا</a>
+      </div>
+    </div>
+    <div class="halo">
+      <span class="orb" aria-hidden="true"><i></i><i></i><i></i></span><span class="orb o2" aria-hidden="true"><i></i><i></i></span><span class="r1" aria-hidden="true"></span><span class="r2" aria-hidden="true"></span>
+      <div class="tilt" id="tilt"><img data-logo alt="شعار أسرة آڤا مينا، جامعيين علوم مالية وإدارية بسوهاج" width="360" height="360"></div>
+    </div>
+  </div>
+  <svg class="wave" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 38c180 44 360 44 540 14s360-52 540-30 270 30 360 8v50H0z"/></svg>
+</section>
+
+<nav class="tiles" id="tiles" aria-label="أقسام الموقع"></nav>
+<div class="vod wrap">
+  <div class="verse spot vcard">
+    <div class="vh">آية اليوم</div>
+    <p id="vt"></p>
+    <div class="vr" id="vr"></div>
+    <button class="more" type="button" id="vcp">نسخ الآية</button>
+    <button class="more" type="button" id="vsh">شارك الآية كصورة</button>
+  </div>
+</div>
+
+<div class="mq" aria-hidden="true"><div class="mq-t"><span>محبة</span><span>خدمة</span><span>صلاة</span><span>شركة</span><span>فرح</span><span>عطاء</span><span>إيمان</span><span>بركة</span><span>محبة</span><span>خدمة</span><span>صلاة</span><span>شركة</span><span>فرح</span><span>عطاء</span><span>إيمان</span><span>بركة</span><span>محبة</span><span>خدمة</span><span>صلاة</span><span>شركة</span><span>فرح</span><span>عطاء</span><span>إيمان</span><span>بركة</span><span>محبة</span><span>خدمة</span><span>صلاة</span><span>شركة</span><span>فرح</span><span>عطاء</span><span>إيمان</span><span>بركة</span></div></div>
+<div class="qt" id="qt" aria-live="polite" hidden></div>
+<section class="sec" id="about">
+  <div class="wrap">
+    <header class="sh"><h2 data-t="sec_about_h">عن الأسرة</h2><p class="sub" data-t="sec_about_p">أسرة بتجمع طلاب الكلية في جو روحي واجتماعي مليان محبة</p></header>
+    <div class="about">
+      <figure class="cover rv"><img data-cover alt="غلاف أسرة جامعيين علوم مالية وإدارية بسوهاج" loading="lazy"><figcaption>برعاية مطرانية الأقباط الأرثوذكس بأخميم وساقلته</figcaption></figure>
+      <dl class="facts">
+        <div class="rv"><dt>مين إحنا</dt><dd>أسرة آڤا مينا <span dir="ltr">(Ava Mina Family)</span>، أسرة جامعيين بتجمع طلاب الكلية في جو روحي واجتماعي مليان محبة</dd></div>
+        <div class="rv"><dt>التخصص والمكان</dt><dd>علوم مالية وإدارية، سوهاج</dd></div>
+        <div class="rv"><dt>أب الأسرة والراعي</dt><dd>أبونا ديفيد، كاهن كنيسة مارمينا بالحواويش في الكوثر، موكّل من مطرانية أخميم وساقلته للأقباط الأرثوذكس لرعاية الأسرة</dd></div>
+        <div class="rv"><dt>أهدافنا</dt><dd>نبني علاقات محبة حقيقية، ونشجع بعض روحياً، ونكتشف مواهبنا ونخدم بيها، ونحمي بعض في أي مكان</dd></div>
+        <div class="rv"><dt>رؤيتنا</dt><dd>أسرة جامعية مترابطة، كل فرد فيها له دور، وحضوره بيفرق</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+
+<section class="sec alt" id="servants">
+  <div class="wrap">
+    <header class="sh"><h2 data-t="sec_servants_h">خدام الأسرة</h2><p class="sub" data-t="sec_servants_p">الراعي والخدام اللي معانا في كل خطوة</p></header>
+    <div class="leaders">
+      <article class="leader rv spot"><div class="ring"><img data-father alt="Father David William" loading="lazy"></div><div><span class="role">أب الأسرة والراعي</span><h3 dir="ltr">Father : David William</h3><p>كاهن كنيسة مارمينا بالحواويش، الكوثر</p></div></article>
+      <article class="leader rv spot"><div class="ring"><img data-secretary alt="أمين الأسرة" loading="lazy"></div><div><span class="role">أمين الأسرة</span><h3 dir="ltr">Aony Adel</h3></div></article>
+      <article class="leader rv spot"><div class="ring"><img data-marina alt="Marina Safwat" loading="lazy"></div><div><span class="role">أمينة الأسرة</span><h3 dir="ltr">Marina Safwat</h3></div></article>
+    </div>
+    <h3 class="sub2">الخدام</h3>
+    <ul class="crew" id="crew"></ul>
+  </div>
+</section>
+
+<section class="sec" id="rules">
+  <div class="wrap">
+    <header class="sh"><h2 data-t="sec_rules_h">قواعد الأسرة</h2><p class="sub" data-t="sec_rules_p">قواعد بنتفق عليها عشان يفضل الوسط مريح للكل، اضغط على أي قاعدة تقراها</p></header>
+    <div class="rules" id="rulesList"></div>
+    <div class="commit rv">
+      <h3>الالتزام بالقواعد</h3>
+      <p>في حال عدم التزام أي شخص داخل الأسرة بقواعد الأسرة، يقوم أب الأسرة والأمناء بعمل جلسة فردية معه لتقديم الإرشاد والتقييم الروحي، وبناءً على نتيجة التقييم يحق لأب الأسرة والأمناء اتخاذ الإجراءات المناسبة، والتي قد تشمل حرمان الشخص مؤقتاً من المشاركة في الكرنفالات أو أيام الأسرة بشكل عام</p>
+      <p class="amen">وعلى ابن الطاعة تحل البركة ❤️</p>
+    </div>
+  </div>
+</section>
+
+
+<section class="sec alt" id="events">
+  <div class="wrap">
+    <header class="sh"><h2 data-t="sec_events_h">فعاليات الأسرة</h2><p class="sub" data-t="sec_events_p">الاجتماعات والرحلات والكرنفالات بتظهر هنا، وبتختفي لوحدها بعد ما تخلص</p></header>
+    <div class="soon rv">
+      <div class="conf" id="conf" aria-hidden="true"></div>
+      <span class="tagc">قريباً</span>
+      <h3>انتظرونا في</h3>
+      <p class="wd" lang="en"><span class="sr">Welcome Day 2027</span><span class="ew" aria-hidden="true"><span class="c2" style="--i:0">W</span><span class="c2" style="--i:1">e</span><span class="c2" style="--i:2">l</span><span class="c2" style="--i:3">c</span><span class="c2" style="--i:4">o</span><span class="c2" style="--i:5">m</span><span class="c2" style="--i:6">e</span></span><span class="ew" aria-hidden="true"><span class="c2" style="--i:7">D</span><span class="c2" style="--i:8">a</span><span class="c2" style="--i:9">y</span></span><span class="ew" aria-hidden="true"><span class="c2" style="--i:10">2</span><span class="c2" style="--i:11">0</span><span class="c2" style="--i:12">2</span><span class="c2" style="--i:13">7</span></span></p>
+      <p>يوم جديد، وجوه جديدة، وعيلة بتكبر بمحبة ❤️</p>
+      <div class="pacts2" style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center"><a class="btn gold" href="#join">سجّل بياناتك من دلوقتي</a><a class="btn ghost" href="#poll">صوّت على المكان</a></div>
+    </div>
+    <section class="poll rv" id="poll" aria-live="polite"><p class="psub">جاري تحميل التصويت</p></section>
+    <div class="wk" id="wk" aria-live="polite"></div>
+    <div class="evs" id="evs" aria-live="polite"><div class="sk"></div><div class="sk"></div><div class="sk"></div></div>
+  </div>
+</section>
+
+<section class="sec" id="competitions">
+  <div class="wrap">
+    <header class="sh"><h2 data-t="sec_competitions_h">مسابقات الأسرة</h2><p class="sub" data-t="sec_competitions_p">شارك واكسب، وخلّي روح التنافس الحلو تكبر</p></header>
+    <section class="quiz rv" id="quiz" aria-live="polite"></section>
+    <div class="filters" id="cpf" role="group" aria-label="تصفية المسابقات" hidden>
+      <button class="fchip" type="button" data-f="all" aria-pressed="true">الكل</button>
+      <button class="fchip" type="button" data-f="open" aria-pressed="false">مفتوحة</button>
+      <button class="fchip" type="button" data-f="closed" aria-pressed="false">انتهت</button>
+    </div>
+    <div class="cps" id="cps" aria-live="polite"><div class="sk"></div><div class="sk"></div></div>
+  </div>
+</section>
+
+
+<section class="sec" id="bday" hidden>
+  <div class="wrap"><header class="sh"><h2 data-t="sec_bday_h">🎂 النهارده عيد ميلاد</h2><p class="sub" data-t="sec_bday_p">كل سنة وانتو طيبين</p></header><div class="bdl" id="bdl"></div></div>
+</section>
+<section class="sec" id="first">
+  <div class="wrap">
+    <header class="sh"><h2>أول مرة تزورنا؟</h2><p class="sub">التسجيل في 5 خطوات بسيطة، ومش هياخد أكتر من 5 دقايق</p></header>
+    <ol class="tl">
+      <li class="tl-s"><span class="tl-n">1</span>
+        <div class="tl-f">
+          <b>عرّفنا بنفسك</b>
+          <div class="ex"><span>الاسم بالكامل</span><code>مينا عادل جرجس</code></div>
+          <div class="ex"><span>رقم الموبايل</span><code dir="ltr">01012345678</code></div>
+          <p>وبعدها: النوع (ولد أو بنت)، الإيميل، تاريخ الميلاد، الطايفة، المحافظة والمركز والقرية، والصورة الشخصية.</p>
+        </div></li>
+      <li class="tl-s"><span class="tl-n">2</span>
+        <div class="tl-f"><b>دراستك في الكلية</b><p>الفرقة والقسم والشعبة، وسنة انضمامك للأسرة. ولو شاركت في خدمة قبل كده، اختار "نعم".</p></div></li>
+      <li class="tl-s"><span class="tl-n">3</span>
+        <div class="tl-f"><b>فين ساكن وقت الدراسة</b><p>لو ساكن في البيت، مش هتحتاج تكتب حاجة. ولو ساكن في سكن بعيد، اكتب اسم السكن ووصفه واسم صاحبه.</p></div></li>
+      <li class="tl-s"><span class="tl-n">4</span>
+        <div class="tl-f"><b>أب اعترافك وأهلك</b><p>اسم أبو اعترافك، وبيانات أهلك للطوارئ.</p></div></li>
+      <li class="tl-s"><span class="tl-n">5</span>
+        <div class="tl-f"><b>قواعد الأسرة</b><p>اقرأ القواعد واضغط موافق، وخلاص! بتتسجل وتقدر تبدأ تتابع الفعاليات والجروبات.</p></div></li>
+    </ol>
+    <div class="tl-cta"><a class="btn gold" href="#join">ابدأ التسجيل دلوقتي</a></div>
+    <div class="faq">
+      <details><summary>هل التسجيل لازم؟</summary><p>مش لازم، بس التسجيل بيخلينا نتابعك ونبعتلك الفعاليات والتذكيرات، ويوصلك رابط جروب الأسرة.</p></details>
+      <details><summary>بياناتي في أمان؟</summary><p>البيانات بتتحفظ في قاعدة بيانات محمية، والوصول ليها للأمناء بس.</p></details>
+      <details><summary>عايز أعدّل بياناتي؟</summary><p>كلّم الأمين، وهو يعدّلها لك.</p></details>
+      <details><summary>أنا متسجل قبل كده؟</summary><p>الموقع هيقولك، ومتحتاجش تسجل تاني.</p></details>
+    </div>
+  </div>
+</section>
+<section class="sec alt" id="audio" hidden>
+  <div class="wrap">
+    <header class="sh"><h2 data-t="sec_audio_h">مكتبة الصوتيات</h2><p class="sub" data-t="sec_audio_p">ترانيم وعظات مسجلة، اسمعها في أي وقت</p></header>
+    <div id="au" aria-live="polite"></div>
+  </div>
+</section>
+<section class="sec" id="resources" hidden>
+  <div class="wrap">
+    <header class="sh"><h2 data-t="sec_resources_h">المكتبة</h2><p class="sub" data-t="sec_resources_p">مذكرات، ملفات، كورسات، ومحتوى روحي ومفيد</p></header>
+    <div id="rs"><div class="rcs" role="tablist"></div><div class="rl" aria-live="polite"></div></div>
+  </div>
+</section>
+<section class="sec" id="forms" hidden>
+  <div class="wrap">
+    <header class="sh"><h2 data-t="sec_forms_h">نماذج الأسرة</h2><p class="sub" data-t="sec_forms_p">فورمات بتجمع بيانات، املاها لو محتاجها</p></header>
+    <div id="frms" class="frms"></div>
+  </div>
+</section>
+<section class="sec alt" id="daily">
+  <div class="wrap">
+    <header class="sh"><h2 data-t="sec_daily_h">سؤال اليوم</h2><p class="sub" data-t="sec_daily_p">سؤال جديد كل يوم. عندك 30 ثانية بس من لحظة ما تفتحه، والنقط بتتحسب للي يجاوب صح</p></header>
+    <div class="dq" id="dq" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="sec alt" id="archive">
+  <div class="wrap">
+    <header class="sh"><h2 data-t="sec_archive_h">أرشيف الأسرة</h2><p class="sub" data-t="sec_archive_p">ذكريات الأسرة سنة بسنة، اضغط على أي صورة تكبّرها</p></header>
+    <div class="filters" id="arf" role="group" aria-label="تصفية الأرشيف بالسنة" hidden></div>
+    <div class="arch" id="arch" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="sec" id="gallery">
+  <div class="wrap">
+    <header class="sh"><h2 data-t="sec_gallery_h">صور الأسرة</h2><p class="sub" data-t="sec_gallery_p">لحظات من اجتماعاتنا ورحلاتنا وأيام الأسرة</p></header>
+    <figure class="ft" id="ft"></figure>
+    <div class="mas" id="mas"></div>
+  </div>
+</section>
+
+
+<section class="sec alt" id="join">
+  <div class="wrap">
+    <header class="sh"><h2 data-t="sec_join_h">تسجيل عضو</h2><p class="sub" data-t="sec_join_p">خطوتين بس وتبقى واحد مننا</p></header>
+
+    <form class="fcard" id="jf" novalidate>
+      <div class="hpw" aria-hidden="true"><label>لا تملأ الخانة دي<input name="website" tabindex="-1" autocomplete="off"></label></div>
+      <div class="steps" aria-hidden="true"><span class="s on cur" data-s="1"><b>١</b><em>التعارف</em></span><span class="s" data-s="2"><b>٢</b><em>الدراسة</em></span><span class="s" data-s="3"><b>٣</b><em>السكن</em></span><span class="s" data-s="4"><b>٤</b><em>الأهل والكنيسة</em></span><span class="s" data-s="5"><b>٥</b><em>القواعد</em></span></div>
+      <div class="prog" aria-hidden="true"><b id="jp"></b></div>
+
+      <fieldset class="two" data-step="1">
+        <h3 class="fgt span2">👋 عرّفنا بنفسك</h3>
+        <label class="fld span2" for="j-n">الاسم بالكامل<input id="j-n" name="n" required minlength="3" autocomplete="name"></label>
+        <label class="fld" for="j-p"><span>رقم الهاتف <small>(١١ رقم)</small></span><input id="j-p" name="p" type="tel" required inputmode="numeric" maxlength="11" pattern="01[0-9]{9}" autocomplete="tel" placeholder="01XXXXXXXXX" dir="ltr" style="text-align:right"></label>
+        <label class="fld" for="j-gn"><span>النوع</span><select id="j-gn" name="gn" required><option value="">اختار</option><option>بنت</option><option>ولد</option></select></label>
+        <label class="fld" for="j-e"><span>الإيميل</span><input id="j-e" name="e" type="email" required autocomplete="email" dir="ltr" style="text-align:right"></label>
+        <div class="fld" id="dobw"><span>تاريخ الميلاد</span><div class="dob"><select id="bd" aria-label="اليوم"></select><select id="bm" aria-label="الشهر"></select><select id="by" aria-label="السنة"></select></div><input type="hidden" id="j-b" name="b"></div>
+        <label class="fld" for="j-dn">الطائفة<select id="j-dn" name="dn" required><option value="">اختار</option><option>أرثوذكس</option><option>كاثوليك</option><option>إنجيلي</option></select></label>
+        <label class="fld" for="j-g">المحافظة<select id="j-g" name="g" required><option value="">اختار المحافظة</option><option>القاهرة</option><option>الجيزة</option><option>الإسكندرية</option><option>القليوبية</option><option>الشرقية</option><option>الدقهلية</option><option>الغربية</option><option>المنوفية</option><option>البحيرة</option><option>كفر الشيخ</option><option>دمياط</option><option>بورسعيد</option><option>الإسماعيلية</option><option>السويس</option><option>شمال سيناء</option><option>جنوب سيناء</option><option>الفيوم</option><option>بني سويف</option><option>المنيا</option><option>أسيوط</option><option>سوهاج</option><option>قنا</option><option>الأقصر</option><option>أسوان</option><option>البحر الأحمر</option><option>الوادي الجديد</option><option>مطروح</option></select></label>
+        <label class="fld" for="j-m">المركز / الحي<select id="j-m" name="m" required disabled><option value="">اختار المحافظة الأول</option></select></label>
+        <label class="fld span2" for="j-v">القرية / المنطقة<input id="j-v" name="v" required maxlength="80" placeholder="اكتب اسم القرية أو المنطقة" list="j-vl" autocomplete="off"><datalist id="j-vl"></datalist></label>
+        <div class="fld span2"><span>صورة شخصية</span>
+          <div class="pic"><input id="pic" type="file" accept="image/*" required aria-label="صورة شخصية"><img id="prev" alt="" hidden></div>
+        </div>
+      </fieldset>
+
+      <fieldset class="two" data-step="2" hidden>
+        <h3 class="fgt span2">🎓 دراستك في الكلية</h3>
+        <label class="fld" for="j-y">الفرقة<select id="j-y" name="y" required><option value="">اختار</option><option>الأولى</option><option>الثانية</option><option>الثالثة</option><option>الرابعة</option></select></label>
+        <label class="fld" for="j-d">القسم<select id="j-d" name="d" required><option value="">اختار</option><option>نظم معلومات الأعمال (BIS)</option><option>محاسبة والتمويل دولي (IAF)</option><option>الأسواق والمنشآت المالية (FMI)</option></select></label>
+        <label class="fld" for="j-s">الشعبة<select id="j-s" name="s2" required><option value="">اختار</option><option>عربي</option><option>إنجليزي</option></select></label>
+        <label class="fld" for="j-j">سنة الانضمام للأسرة<input id="j-j" name="j" type="number" required min="2015" max="2035" placeholder="2026" inputmode="numeric"></label>
+        <label class="fld span2" for="j-x">شاركت قبل كده في خدمة أو لجنة؟<select id="j-x" name="x"><option>لا</option><option>نعم</option></select></label>
+        <label class="fld span2" for="j-sk"><span>مهارات أو مواهب <small>(تصميم، تصوير، ألحان، رياضة وغيرها — لو مفيش اكتب "لا يوجد")</small></span><input id="j-sk" name="s" required></label>
+      </fieldset>
+
+      <fieldset class="two" data-step="3" hidden>
+        <h3 class="fgt span2">🏠 فين ساكن وقت الدراسة؟</h3>
+        <label class="fld" for="j-h" data-hf>اسم السكن<input id="j-h" name="h1" maxlength="80" required placeholder="اسم السكن"></label>
+        <label class="fld" for="j-hd" data-hf>وصف السكن<input id="j-hd" name="h2" maxlength="200" required placeholder="العنوان أو أي وصف يوضحه"></label>
+        <label class="fld" for="j-ln" data-hf>اسم صاحب السكن<input id="j-ln" name="ln" maxlength="80" required placeholder="اسم صاحب السكن"></label>
+        <label class="fld" for="j-lp" data-hf><span>رقم صاحب السكن <small>(١١ رقم)</small></span><input id="j-lp" name="lp" type="tel" required inputmode="numeric" maxlength="11" pattern="01[0-9]{9}" placeholder="01XXXXXXXXX" dir="ltr" style="text-align:right"></label>
+        <label class="chk span2" for="j-nh"><input type="checkbox" id="j-nh" name="nh"> مش ساكن في سكن</label>
+      </fieldset>
+
+      <fieldset class="two" data-step="4" hidden>
+        <h3 class="fgt span2">✝️ أب اعترافك</h3>
+        <label class="fld" for="j-cn">اسم أب الاعتراف<input id="j-cn" name="cn" required maxlength="80" placeholder="أبونا ..."></label>
+        <label class="fld" for="j-cp"><span>رقم أب الاعتراف <small>(١١ رقم)</small></span><input id="j-cp" name="cp" type="tel" required inputmode="numeric" maxlength="11" pattern="01[0-9]{9}" placeholder="01XXXXXXXXX" dir="ltr" style="text-align:right"></label>
+        <h3 class="fgt span2">👨‍👩‍👦 أهلك (للطوارئ)</h3>
+        <label class="fld" for="j-gt">مين تتواصل معاه؟<select id="j-gt" name="gt" required><option value="">اختار</option><option>الأب</option><option>الأم</option></select></label>
+        <label class="fld" for="j-gp"><span>رقم ولي الأمر <small>(١١ رقم)</small></span><input id="j-gp" name="gp" type="tel" required inputmode="numeric" maxlength="11" pattern="01[0-9]{9}" placeholder="01XXXXXXXXX" dir="ltr" style="text-align:right"></label>
+      </fieldset>
+
+      <fieldset data-step="5" hidden>
+        <h3 class="fgt" style="margin-bottom:10px">📖 قواعد الأسرة</h3>
+        <p class="note" style="margin:0 0 12px">٥ قواعد قصيرة، اقراهم كلهم لآخرهم، وبعدين وافق عليهم.</p>
+        <div class="jrl-wrap" id="jrules"></div>
+        <div id="jrend" aria-hidden="true"></div>
+        <p class="note" id="jrhint" style="margin:12px 0 0;font-weight:700">⬇️ كمّل لآخر القواعد عشان تقدر توافق</p>
+        <p class="note" style="margin:14px 0 0">الالتزام بالقواعد: في حال عدم التزام أي شخص بقواعد الأسرة، يقوم أب الأسرة والأمناء بعمل جلسة فردية معه لتقديم الإرشاد والتقييم الروحي.</p>
+        <label class="chk" for="ok" style="margin-top:14px"><input type="checkbox" id="ok" name="ok" required disabled> قرأت قواعد الأسرة وأوافق عليها</label>
+      </fieldset>
+
+      <div class="jbtns">
+        <button class="btn line" type="button" id="jb" hidden>رجوع</button>
+        <button class="btn gold" type="button" id="jn">التالي</button>
+        <button class="btn gold" type="submit" id="js" hidden>إرسال التسجيل للأسرة</button>
+      </div>
+      <p class="msg" id="jm" role="status"></p>
+      <p class="note priv" id="jnote"><svg class="lk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>بياناتك في أمان، وبتظهر للأسرة بس</p>
+    </form>
+
+    <div class="panel" id="done" hidden>
+      <div class="big" aria-hidden="true">💌</div>
+      <h3>وصلنا تسجيلك!</h3>
+      <p>ربنا يبارك حياتك ❤️ خدام الأسرة هيتواصلوا معاك قريباً، وبنرحب بيك في العيلة</p>
+      <div class="grps" id="grps"></div>
+      <button class="btn pri" type="button" id="again">تسجيل عضو تاني</button>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="voice">
+  <div class="wrap">
+    <header class="sh"><h2 data-t="sec_voice_h">صلاة واقتراحات</h2><p class="sub" data-t="sec_voice_p">محتاج صلاة، أو عندك فكرة لتطوير الأسرة؟ اكتبها هنا</p></header>
+    <div class="seg" role="tablist" aria-label="اختار النوع">
+      <button type="button" role="tab" id="t-pr" aria-selected="true" aria-controls="p-pr">طلب صلاة</button>
+      <button type="button" role="tab" id="t-sg" aria-selected="false" aria-controls="p-sg" tabindex="-1">صندوق الاقتراحات</button>
+    </div>
+
+    <form class="fcard" id="p-pr" role="tabpanel" aria-labelledby="t-pr" novalidate style="display:grid;gap:16px">
+      <div class="hpw" aria-hidden="true"><label>لا تملأ الخانة دي<input name="website" tabindex="-1" autocomplete="off"></label></div>
+      <label class="fld" for="pn"><span>اسمك <small>(اختياري)</small></span><input id="pn" name="name" maxlength="80" autocomplete="name"></label>
+      <label class="chk" for="pa"><input type="checkbox" id="pa"> ابعت من غير اسم</label>
+      <label class="fld" for="pb">طلب الصلاة<textarea id="pb" name="body" rows="5" required minlength="3" maxlength="1500" placeholder="اكتب اللي محتاج نصلي من أجله"></textarea></label>
+      <div><button class="btn gold" type="submit" id="pbtn">ابعت طلب الصلاة</button></div>
+      <p class="msg" id="pm" role="status"></p>
+      <p class="note priv"><svg class="lk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>طلبك بيظهر لأبونا ديفيد وأمناء الأسرة بس</p>
+    </form>
+
+    <form class="fcard" id="p-sg" role="tabpanel" aria-labelledby="t-sg" novalidate hidden style="display:grid;gap:16px">
+      <div class="hpw" aria-hidden="true"><label>لا تملأ الخانة دي<input name="website" tabindex="-1" autocomplete="off"></label></div>
+      <label class="fld" for="sb">اقتراحك<textarea id="sb" name="body" rows="5" required minlength="3" maxlength="1000" placeholder="اكتب فكرتك أو ملاحظتك هنا"></textarea></label>
+      <div><button class="btn gold" type="submit" id="sbtn">ابعت الاقتراح</button></div>
+      <p class="msg" id="sm" role="status"></p>
+      <p class="note priv"><svg class="lk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>الاقتراحات من غير أسماء، ومحدش هيعرف إنت مين</p>
+    </form>
+  </div>
+</section>
+
+
+<section class="sec alt" id="contact">
+  <div class="wrap">
+    <header class="sh"><h2 data-t="sec_contact_h">تواصل معنا</h2><p class="sub" data-t="sec_contact_p">إحنا موجودين دايماً</p></header>
+    <div class="contacts" id="contacts"></div>
+  </div>
+</section>
+</main>
+
+<footer>
+<button type="button" class="acct-open" data-open-account>👤 حسابي · Account</button>
+<button type="button" class="acct-open" data-open-search>🔍 ابحث في الموقع · Search</button>
+<p class="fprv"><a href="privacy.html">سياسة الخصوصية</a> · <a href="terms.html">الشروط</a> · <a href="faq.html">الأسئلة الشائعة</a> · <a href="index.html#contact">الدعم</a></p>
+<div id="pushbox" class="pushbox" hidden><p>🔔 خلي آية اليوم توصلك كل يوم، وتنبيه بسؤال اليوم</p><button type="button" id="pushbtn" class="btn pri sm">🔔 فعّل الإشعارات اليومية</button><p class="note">على الآيفون: ضيف الموقع للشاشة الرئيسية الأول (زرار المشاركة ← إضافة إلى الشاشة الرئيسية)</p></div>
+    <img data-logo alt="" width="84" height="84">
+  <div class="fe">Ava Mina Family</div>
+  <p>أسرة جامعيين العلوم المالية والإدارية، سوهاج ❤️</p>
+  <button class="btn ghost sm" type="button" data-share>شارك الموقع مع صحابك</button>
+</footer>
+
+<button class="fab" id="up" type="button" aria-label="الرجوع لأعلى الصفحة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="عرض الصورة" hidden>
+  <button class="x" id="lx" type="button" aria-label="إغلاق">×</button>
+  <button class="pv" id="lp" type="button" aria-label="السابقة">‹</button>
+  <img id="li" alt="">
+  <button class="nx" id="ln" type="button" aria-label="التالية">›</button>
+  <div class="cap" id="lc"></div>
+  <div class="cnt" id="lcnt"></div>
+</div>
+
+<script src="js/icons.js"></script>
+<script src="js/monitor.js"></script>
+<script src="js/i18n-en.js"></script>
+<script src="js/main.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" onerror="this.onerror=null;this.src='gsap.min.js'"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" onerror="this.onerror=null;this.src='ScrollTrigger.min.js'"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js" onerror="this.onerror=null;this.src='lenis.min.js'"></script>
+<script src="js/motion.js"></script>
+<script src="js/extras.js"></script>
+<script src="js/extras-2.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/onboarding.js"></script>
+<script src="js/app-shell.js"></script>
+<script src="js/search.js"></script>
+<nav class="qbar" id="qbar" aria-label="أقسام سريعة">
+  <a href="#home"><i><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></i>الرئيسية</a>
+  <a href="#join"><i><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></i>سجّل</a>
+  <a href="#events"><i><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></i>الفعاليات</a>
+  <a href="#daily"><i><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></i>سؤال اليوم</a>
+  <a href="#resources"><i><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 4h6a4 4 0 0 1 4 4v12a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v12a3 3 0 0 1 3-3h7z"/></svg></i>المكتبة</a>
+  <a href="#audio"><i><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14v-2a9 9 0 0 1 18 0v2"/><rect x="3" y="14" width="4" height="7" rx="1"/><rect x="17" y="14" width="4" height="7" rx="1"/></svg></i>الصوتيات</a>
+  <a href="#more" data-more><i><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="19" cy="12" r="1.4"/></svg></i>المزيد</a>
+</nav>
+</body>
+</html>

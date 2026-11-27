@@ -1,0 +1,21 @@
+/* ===== البحث داخل الموقع ===== */
+.srch{position:fixed;inset:0;z-index:700;background:rgba(6,12,28,.55);display:none;align-items:flex-end;justify-content:center;padding:12px}
+.srch.open{display:flex}
+.srch[hidden]{display:none!important}
+.srch-box{width:100%;max-width:560px;max-height:88vh;background:var(--card);color:var(--ink);border-radius:26px;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px));box-shadow:0 -10px 40px rgba(0,0,0,.3);display:flex;flex-direction:column;gap:10px;overflow:hidden}
+.srch-hd{flex:0 0 auto;display:flex;gap:8px;align-items:center}
+.srch-in{flex:1;min-width:0;min-height:48px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:10px 14px;font:inherit;font-size:16px}
+.srch-in:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(200,150,46,.25)}
+.srch-x{flex:0 0 auto;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--bg2);color:var(--ink);font-size:24px;cursor:pointer;line-height:1}
+.srch-chips{flex:0 0 auto;display:flex;gap:8px;overflow-x:auto;padding:4px 2px 8px;scrollbar-width:none}
+.srch-chips::-webkit-scrollbar{display:none}
+.srch-chip{flex:0 0 auto;min-height:38px;border-radius:999px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 14px;font:700 14px var(--fb);cursor:pointer;white-space:nowrap}
+.srch-chip.on{background:var(--hero-gold,#38BDF8);color:var(--ongold,#0B1220);border-color:transparent}
+.srch-msg{flex:0 0 auto;margin:0;color:var(--mute);font-size:14.5px}
+.srch-list{flex:1 1 auto;overflow-y:auto;display:grid;align-content:start;gap:8px;min-height:0;padding-bottom:4px}
+.srch-row{display:grid;gap:4px;text-align:start;width:100%;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;cursor:pointer}
+.srch-row:hover,.srch-row:focus-visible{border-color:var(--gold)}
+.srch-row small{color:var(--goldt,#0369A1);font-weight:700;font-size:13px}
+.srch-snip{font-size:15px;line-height:1.7}
+.srch-snip mark{background:rgba(200,150,46,.35);color:inherit;border-radius:4px;padding:0 2px}
+.srch-flash{outline:3px solid var(--gold,#38BDF8);outline-offset:4px;border-radius:8px;transition:outline-color .6s}

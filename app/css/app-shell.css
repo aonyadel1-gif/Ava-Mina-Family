@@ -1,0 +1,283 @@
+/* ===== شاشة التطبيق المثبّت: شاشة واحدة =====
+   كل القواعد هنا بتتطبق بس في وضع التطبيق (html.app). */
+
+/* الشريط اللي فوق (مش بيظهر في الموقع العادي) */
+#shelltop{display:none}
+html.app #shelltop{display:flex;position:fixed;top:0;inset-inline:0;z-index:70;height:calc(60px + env(safe-area-inset-top,0px));padding:env(safe-area-inset-top,0px) 16px 0;align-items:center;justify-content:space-between;background:var(--bg);border-bottom:1px solid var(--line)}
+html.app .sh-title{display:flex;align-items:center;gap:10px;min-width:0}
+html.app .sh-title img{width:32px;height:32px;border-radius:50%;box-shadow:0 0 0 2px var(--gold);flex:0 0 auto}
+html.app .sh-title b{font-family:var(--fh);font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html.app .sh-av{width:44px;height:44px;border-radius:50%;border:2px solid var(--gold);background:var(--card);overflow:hidden;display:grid;place-items:center;font-size:20px;padding:0;cursor:pointer;flex:0 0 auto;box-shadow:0 8px 18px -10px rgba(10,20,50,.6)}
+html.app .sh-av img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* إخفاء كل حاجة من الموقع العادي */
+html.app .nav,html.app footer,html.app #up,html.app #tiles,html.app .skip,html.app .fprv,html.app #splash{display:none!important}
+
+/* الرئيسية: شاشة ثابتة ملهاش سكرول */
+html.app #home{position:fixed;inset:calc(60px + env(safe-area-inset-top,0px)) 0 calc(84px + env(safe-area-inset-bottom,0px)) 0;margin:0!important;border-radius:0!important;box-shadow:none!important;padding:0!important;overflow:hidden;z-index:10;background:linear-gradient(170deg,var(--hero) 0%,var(--hero2) 100%)}
+html.app #home>*:not(.sh-home){display:none!important}
+html.app #home::after{display:none}
+html.app.onhome,html.app.onhome body{overflow:hidden;height:100%}
+html.app.onhome body{padding-bottom:0!important}
+html.app:not(.onhome) body{padding-top:calc(60px + env(safe-area-inset-top,0px) + 58px)}
+html.app .tabbar{top:calc(60px + env(safe-area-inset-top,0px));border-radius:0 0 18px 18px}
+
+.sh-home{display:none;font-family:var(--fb);height:100%;flex-direction:column;gap:10px;padding:12px 16px 14px;box-sizing:border-box;color:var(--hero-ink)}
+.sh-greet{display:flex;align-items:center;gap:14px}
+.sh-ph{width:64px;height:64px;border-radius:50%;flex:0 0 auto;border:2px solid var(--hero-gold);overflow:hidden;background:rgba(255,255,255,.12);display:grid;place-items:center;font-size:28px;box-shadow:0 10px 22px -10px rgba(0,0,0,.5)}
+.sh-ph img{width:100%;height:100%;object-fit:cover;display:block}
+.sh-hi{font-size:14px;font-weight:700;color:var(--hero-gold);margin:0}
+.sh-name{font-family:var(--fb);font-weight:800;font-size:clamp(22px,6.4vw,28px);margin:2px 0 0;line-height:1.25;color:var(--hero-ink)}
+.sh-sub{font-size:12.5px;opacity:.72;margin:4px 0 0;line-height:1.5}
+
+.sh-verse,.sh-q,.sh-grid button{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.18);color:var(--hero-ink);border-radius:22px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 14px 30px -18px rgba(0,0,0,.55);font:inherit;text-align:start;cursor:pointer;transition:transform .15s}
+.sh-verse{padding:18px 20px;display:flex;flex-direction:column;justify-content:center;gap:12px;flex:1 1 auto;min-height:0;overflow:hidden;background:linear-gradient(145deg,rgba(255,255,255,.18),rgba(255,255,255,.05))}
+.sh-verse small{font-weight:800;color:var(--hero-gold);font-size:13px}
+.sh-vt{font-family:var(--fb);font-weight:700;font-size:clamp(18px,5.1vw,21px);line-height:1.8;margin:0;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.sh-cta{font-weight:800;font-size:13px;color:var(--hero-gold);margin-top:auto}
+.sh-q{display:flex;align-items:center;gap:12px;padding:9px 14px;flex:0 0 auto}
+.sh-qi{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;font-size:20px;background:linear-gradient(135deg,var(--hero-gold),var(--hero-gold2));flex:0 0 auto}
+.sh-q>span:nth-child(2){flex:1;display:grid;gap:2px;min-width:0}
+.sh-q b{font-size:16px}
+.sh-q small{opacity:.75;font-size:12.5px}
+.sh-arr{font-size:24px;color:var(--hero-gold);line-height:1}
+.sh-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;flex:0 0 auto}
+.sh-grid button{padding:12px 4px;background:linear-gradient(160deg,rgba(255,255,255,.2),rgba(255,255,255,.07));display:grid;justify-items:center;gap:6px;text-align:center}
+.sh-grid i{font-style:normal;font-size:22px;line-height:1}
+.sh-grid b{font-size:12px;font-weight:800}
+.sh-verse:active,.sh-q:active,.sh-grid button:active{transform:scale(.97)}
+.sh-verse:focus-visible,.sh-q:focus-visible,.sh-grid button:focus-visible{outline:3px solid var(--hero-gold);outline-offset:3px}
+
+/* شيت "كل الأقسام" */
+#more-sheet .appset-box{max-height:82vh;overflow:auto}
+#more-sheet .more-body{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+#more-sheet .more-body .tile{min-height:88px}
+
+@media (prefers-reduced-motion:reduce){html.app .sh-verse:active{transform:none}}
+
+#more-sheet .more-search{width:100%;min-height:50px;border-radius:16px;border:0;margin-bottom:12px;background:linear-gradient(135deg,var(--hero),var(--hero2));color:var(--hero-ink);font:800 16px var(--fb);cursor:pointer}
+
+/* شريط التنقل السفلي بسبع خانات: خط أصغر عشان الكلام ما يتقصش */
+html.app .qbar{gap:2px;padding-inline:4px}
+html.app .qbar a{font-size:10.5px;letter-spacing:0;padding-inline:0}
+
+/* ===== إضافات: زرار الصورة، أعياد الميلاد، الفعالية الجاية، التنبيه ===== */
+html.app .sh-share{min-height:46px;border-radius:18px;border:0;background:var(--hero-gold);color:var(--ongold);font:800 16px var(--fb);cursor:pointer;box-shadow:0 12px 24px -14px rgba(0,0,0,.6);flex:0 0 auto}
+html.app .sh-share:active{transform:scale(.98)}
+html.app .sh-bday{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:10px 12px;flex:0 0 auto;max-height:190px;overflow:auto}
+html.app .sh-bday[hidden]{display:none}
+html.app .sh-bd-h{display:block;font-size:14px;font-weight:800;color:var(--hero-gold);margin-bottom:6px}
+html.app .sh-bd-row{display:grid;gap:8px}
+html.app .sh-bd{display:grid;grid-template-columns:52px 1fr auto;align-items:center;gap:10px}
+html.app .sh-bd img{width:52px;height:52px;object-fit:cover;border-radius:14px;border:2px solid var(--hero-gold);cursor:pointer;background:rgba(255,255,255,.1)}
+html.app .sh-bd-n{font-size:14px;font-weight:700;line-height:1.3;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;min-width:0}
+html.app .sh-bd-s{font:800 12px var(--fb);border:0;border-radius:999px;padding:6px 12px;background:rgba(255,255,255,.2);color:var(--hero-ink);cursor:pointer;white-space:nowrap}
+html.app .sh-ev{display:flex;align-items:center;gap:12px;padding:9px 14px;flex:0 0 auto;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.18);border-radius:20px;color:var(--hero-ink);font:inherit;text-align:start;cursor:pointer}
+html.app .sh-ev[hidden]{display:none}
+html.app .sh-ev-d{width:50px;height:50px;border-radius:16px;background:linear-gradient(135deg,var(--hero-gold),var(--hero-gold2));color:var(--ongold);display:grid;place-content:center;text-align:center;flex:0 0 auto;line-height:1.1}
+html.app .sh-ev-d b{font-size:20px;font-weight:800}
+html.app .sh-ev-d small{font-size:10.5px;font-weight:700}
+html.app .sh-ev-b{display:grid;gap:2px;flex:1;min-width:0}
+html.app .sh-ev-b small{font-size:12px;opacity:.8;font-weight:700}
+html.app .sh-ev-b b{font-size:15px;font-weight:800;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+
+/* التنبيه: شريط ثابت تحت الشريط العلوي على كل الشاشات */
+html.app #ann{position:fixed;top:calc(60px + env(safe-area-inset-top,0px));inset-inline:0;z-index:69;height:52px;box-sizing:border-box;display:flex;align-items:center;padding:6px 14px;padding-inline-end:44px;background:var(--hero-gold);color:var(--ongold);font:700 13px/1.35 var(--fb);overflow:hidden;box-shadow:0 6px 16px -10px rgba(0,0,0,.5)}
+html.app #ann a{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+html.app #ann button{inset-block:0}
+html.app.has-ann #home{inset-block-start:calc(60px + env(safe-area-inset-top,0px) + 52px)}
+html.app.has-ann .tabbar{top:calc(60px + env(safe-area-inset-top,0px) + 52px)}
+html.app.has-ann:not(.onhome) body{padding-top:calc(60px + env(safe-area-inset-top,0px) + 52px + 58px)}
+
+/* ===== مقاسات متجاوبة لكل الموبايلات: الخطوط الكبيرة بتتصغر على الشاشات الصغيرة ===== */
+html.app .hero h1{font-size:clamp(34px,9vw,58px);line-height:1.2}
+html.app .hero .lead{font-size:clamp(14px,3.9vw,17px)}
+html.app .sh{margin-bottom:24px;gap:8px}
+html.app .sh h2{font-size:clamp(22px,5.8vw,30px);line-height:1.2}
+html.app .sec{padding-block:34px}
+html.app .soon .wd{font-size:clamp(30px,8.4vw,50px)}
+html.app .evt h3{font-size:clamp(17px,4.7vw,20px)}
+html.app .ev{gap:12px;padding:12px}
+html.app img,html.app video,html.app iframe{max-width:100%;height:auto}
+html.app main section,html.app main article{max-width:100%;overflow-wrap:anywhere}
+html.app .hero{min-height:0}
+@media (max-width:380px){
+  html.app .qbar a{font-size:9.5px}
+  html.app .sh-title b{font-size:15px}
+  html.app .sh-av{width:40px;height:40px}
+  html.app .sh-verse{padding:14px 16px}
+  html.app .sh-vt{font-size:17px;-webkit-line-clamp:3}
+  html.app .sh-name{font-size:22px}
+  html.app .sh-ph{width:54px;height:54px;font-size:24px}
+}
+@media (max-height:700px){
+  html.app .sh-sub{display:none}
+  html.app .sh-vt{-webkit-line-clamp:3}
+}
+html.app .soon{min-height:0;padding:22px 18px;gap:12px}
+html.app .soon .lead,html.app .soon p{font-size:clamp(14px,3.9vw,17px)}
+html.app .soon .btn,html.app .soon a.btn{padding:12px 18px;font-size:15px}
+
+/* ===== الألوان: لوحة واحدة متناسقة لكل ثيم في التطبيق =====
+   كل ثيم فيه نفس المفاتيح بالظبط: الخلفية (hero)، الدرجة التانية (hero2)،
+   الذهبي (hero-gold) والذهبي الفاتح (hero-gold2)، لون النص فوق الذهبي (ongold)،
+   ولون الأزرار والعناوين (pri). الألوان دي بتتقري من مكان واحد بس. */
+html.app{--hero-gold2:var(--hero-gold2)}
+html.app[data-apptheme="teal"]{--hero:#0f4c4c;--hero2:#1b6666;--hero-gold:#f2c46d;--hero-gold2:#fde7b0;--hero-ink:#f2f7f5;--ongold:#102020;--pri:#17585a;--gold:#c8913a;--goldt:#8a5d08}
+html.app[data-apptheme="plum"]{--hero:#3a1d4d;--hero2:#5a2f74;--hero-gold:#f0c97a;--hero-gold2:#fbe6b5;--hero-ink:#f8f3fc;--ongold:#1f1030;--pri:#5a2f74;--gold:#b98ad6;--goldt:#6e3e8f}
+html.app[data-apptheme="forest"]{--hero:#1f3d24;--hero2:#2f5e38;--hero-gold:#e9c46a;--hero-gold2:#f7e2a6;--hero-ink:#f3f7ef;--ongold:#14260f;--pri:#2f5e38;--gold:#b5873c;--goldt:#6e4f1c}
+html.app[data-apptheme="ember"]{--hero:#4a1d14;--hero2:#7a3323;--hero-gold:#f6c177;--hero-gold2:#fde3b6;--hero-ink:#fdf4ee;--ongold:#2a120c;--pri:#7a3323;--gold:#d97942;--goldt:#8f4a22}
+
+/* الأزرار والكروت بتستخدم الألوان دي بدل ألوان ثابتة */
+html.app .sh-qi,html.app .sh-ev-d,html.app .qbar a.on i,html.app .btn.gold,html.app .acct-btn.gold{background:linear-gradient(135deg,var(--hero-gold),var(--hero-gold2))}
+html.app .sh-share,html.app .sh-ev-d,html.app #ann,html.app .sh-qi{color:var(--ongold)}
+html.app #ann{background:var(--hero-gold)}
+html.app .sh-verse small,html.app .sh-cta,html.app .sh-arr,html.app .sh-hi,html.app .sh-bd-h{color:var(--hero-gold)}
+html.app .sh-cta{margin-top:0}
+html.app .sh-verse{justify-content:center}
+
+/* ===== الثيم الافتراضي الجديد: "هادي" ===== بحر هادي + رمل ذهبي خفيف */
+html.app[data-apptheme="calm"]{--hero:#0B1220;--hero2:#172338;--hero-gold:#38BDF8;--hero-gold2:#7DD3FC;--hero-ink:#F8FAFC;--ongold:#0B1220;--pri:#3B82F6;--gold:#38BDF8;--goldt:#0369A1}
+
+/* ===== أيقونات Lucide + حركة هادية ===== */
+.ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto;display:block}
+html.app .qbar a i{display:grid;place-items:center;font-style:normal}
+html.app .qbar a i .ic{width:22px;height:22px}
+html.app .sh-av .ic{width:22px;height:22px;color:var(--hero-gold)}
+html.app .sh-ph .ic{width:28px;height:28px;color:var(--hero-gold)}
+html.app .sh-qi .ic{width:20px;height:20px;color:var(--ongold)}
+html.app .sh-arr .ic,html.app .sh-cta .ic{width:18px;height:18px}
+html.app .sh-lbl{display:flex;align-items:center;gap:8px;color:var(--hero-gold);font-size:13px;font-weight:800}
+html.app .sh-lbl .ic{width:18px;height:18px}
+html.app .sh-cta{display:flex;align-items:center;gap:6px;justify-content:flex-start}
+html.app .sh-share{display:flex;align-items:center;justify-content:center;gap:10px}
+html.app .sh-share .ic{width:20px;height:20px}
+html.app .sh-share span{font-family:var(--fb)}
+
+/* الحركة: 180–350ms، بس لو المستخدم مش طالب يقلل الحركة */
+@keyframes shUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+html.app.onhome .sh-home>*{animation:shUp .32s cubic-bezier(.2,.7,.2,1) both}
+html.app.onhome .sh-home>*:nth-child(2){animation-delay:.04s}
+html.app.onhome .sh-home>*:nth-child(3){animation-delay:.08s}
+html.app.onhome .sh-home>*:nth-child(4){animation-delay:.12s}
+html.app.onhome .sh-home>*:nth-child(5){animation-delay:.16s}
+html.app.onhome .sh-home>*:nth-child(6){animation-delay:.2s}
+html.app .sh-verse,html.app .sh-q,html.app .sh-share,html.app .sh-ev,html.app .sh-av,html.app .qbar a,html.app .sh-bd-s{transition:transform .18s ease,background-color .2s ease,box-shadow .2s ease}
+html.app .sh-q:hover,html.app .sh-ev:hover{background:rgba(255,255,255,.2)}
+html.app .sh-share:hover{filter:brightness(1.06)}
+html.app .sh-share:active,html.app .sh-q:active,html.app .sh-ev:active,html.app .sh-av:active,html.app .sh-bd-s:active{transform:scale(.97)}
+html.app .qbar a:active{transform:scale(.94)}
+@media (prefers-reduced-motion:reduce){html.app.onhome .sh-home>*{animation:none}html.app *{transition-duration:.01ms!important}}
+html.app .sh-verse{justify-content:space-between}
+html.app .sh-cta{margin-top:auto}
+
+/* هيكل التحميل (Skeleton) والحالات الفاضية */
+@keyframes shim{0%{background-position:150% 0}100%{background-position:-50% 0}}
+html.app .sh-vt.skel,html.app .sh-ev.skel{min-height:96px;border-radius:14px;color:transparent;background:linear-gradient(90deg,rgba(255,255,255,.06) 25%,rgba(255,255,255,.18) 50%,rgba(255,255,255,.06) 75%) 0 0/200% 100%;animation:shim 1.4s ease-in-out infinite}
+html.app .sh-ev.skel{pointer-events:none;min-height:70px}
+html.app .sh-ev.skel>*{visibility:hidden}
+html.app .sh-verse .sh-vt.skel{-webkit-line-clamp:3}
+html.app .tile i .ic{width:20px;height:20px}
+html.app .qbar i .ic{width:18px;height:18px}
+@media (prefers-reduced-motion:reduce){html.app .sh-vt.skel,html.app .sh-ev.skel{animation:none}}
+#more-sheet .more-search{display:flex;align-items:center;justify-content:center;gap:10px}
+#more-sheet .more-search .ic{width:20px;height:20px}
+#more-sheet .more-search{display:flex;align-items:center;justify-content:center;gap:10px}
+#more-sheet .more-search .ic{width:20px;height:20px}
+
+/* ===== كارت آية اليوم: هادي ومميز ===== */
+html.app .sh-verse{position:relative;overflow:hidden;padding:22px 22px 18px 20px;gap:0;border-radius:26px;background:rgba(255,255,255,.05);border:1px solid rgba(56,189,248,.22);box-shadow:none;justify-content:space-between}
+html.app .sh-verse::before{content:"";position:absolute;inset-inline-start:0;top:22px;bottom:22px;width:3px;border-radius:3px;background:var(--hero-gold)}
+html.app .sh-verse::after{content:"\201C";position:absolute;inset-inline-end:14px;top:-14px;font-family:'Alexandria',serif;font-size:120px;line-height:1;color:var(--hero-gold);opacity:.14;pointer-events:none}
+html.app .sh-verse .sh-lbl{font-size:12px;letter-spacing:.02em;text-transform:none;color:var(--hero-gold);background:rgba(56,189,248,.12);border-radius:999px;padding:5px 12px 5px 10px;align-self:flex-start;gap:6px}
+html.app .sh-verse .sh-lbl .ic{width:15px;height:15px}
+html.app .sh-vt{font-size:clamp(18px,5vw,21px);line-height:1.85;font-weight:700;color:var(--hero-ink);margin-top:14px;padding-inline-end:6px}
+html.app .sh-vref{display:block;margin-top:12px;font-size:13px;font-weight:700;color:var(--hero-gold);opacity:.95;letter-spacing:.01em}
+html.app .sh-verse .sh-cta{margin-top:14px;align-self:flex-start;font-size:13px;color:var(--hero-gold);border-top:1px solid rgba(255,255,255,.1);padding-top:12px;width:100%}
+
+/* ===== شاشة آية اليوم كاملة (بنفس شكل الرئيسية) ===== */
+html.app .vod{margin-top:0!important;padding:16px}
+html.app .vcard{position:relative;overflow:hidden;background:var(--card);border:1px solid color-mix(in srgb,var(--gold) 35%,transparent);border-radius:26px;padding:22px 20px 20px 22px;box-shadow:none}
+html.app .vcard::before{content:"";position:absolute;inset-inline-start:0;top:22px;bottom:22px;width:3px;border-radius:3px;background:var(--gold)}
+html.app .vcard::after{content:"\201C";position:absolute;inset-inline-end:12px;top:-16px;font-family:'Alexandria',serif;font-size:120px;line-height:1;color:var(--gold);opacity:.14;pointer-events:none}
+html.app .vcard .vh{display:inline-block;font-size:12px;font-weight:800;color:var(--pri);background:color-mix(in srgb,var(--gold) 14%,transparent);border-radius:999px;padding:5px 12px}
+html.app .vcard #vt{font-family:var(--fb);font-weight:700;font-size:clamp(19px,5.4vw,23px);line-height:1.9;color:var(--ink);margin:16px 0 0}
+html.app .vcard .vr{font-weight:700;color:var(--pri);font-size:14px;margin-top:12px}
+html.app .vcard .more{display:block;width:100%;min-height:46px;margin-top:10px;border-radius:16px;font:800 15px var(--fb);cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--ink);text-decoration:none}
+html.app .vcard #vsh{background:var(--gold);color:var(--ongold);border-color:transparent}
+html.app .vcard .more:active{transform:scale(.98)}
+
+/* رسالة الأقسام الفاضية */
+html.app .sh-empty{display:flex;align-items:center;gap:14px;margin-top:8px;padding:18px;border-radius:20px;background:var(--card);border:1px dashed var(--line);color:var(--mute)}
+html.app .sh-empty>.ic{width:28px;height:28px;color:var(--pri);flex:0 0 auto}
+html.app .sh-empty b{display:block;color:var(--ink);font-size:15px;font-weight:800;margin-bottom:2px}
+html.app .sh-empty small{font-size:13px;line-height:1.6}
+
+/* اللوجو لوحده من غير دايرة ولا إطار */
+html.app .sh-title img{width:38px;height:38px;border-radius:0;box-shadow:none;border:0;background:none;object-fit:contain}
+html.app .sh-title b{font-family:var(--fb);font-weight:800;font-size:17px;color:var(--ink)}
+
+/* المرجع جنب الآية على نفس السطر */
+html.app .sh-vref{display:inline;margin:0 8px 0 0;font-size:14px;font-weight:700;color:var(--hero-gold);white-space:nowrap;letter-spacing:0}
+
+/* الموقع: شاشة التطبيق مابتظهرش فوق الهيرو */
+html.app .sh-home{display:flex}
+/* الموقع: أسماء الأقسام في الشريط العلوي ما تتلفش لسطرين */
+.nav .links a{white-space:nowrap}
+@media (min-width:1000px){.nav .links a{font-size:13px;padding:7px 6px}.nav .links a.cta{padding:8px 12px;margin-inline-start:4px}}
+
+/* الموقع: اسم الأسرة يظهر مرة واحدة بس (في الهيرو) + زرار التثبيت */
+.brand span{display:none}
+.install-btn{white-space:nowrap}
+.install-btn[hidden]{display:none}
+
+/* الموقع: زرار الألوان (🎨) اتشال عشان الموقع والتطبيق بنفس الألوان */
+#pl,#palp{display:none!important}
+
+/* ===== الخطوط: داخل التطبيق المثبّت بس (الموقع بيفضل بخطوطه الأصلية) ===== */
+html.app{--fh:'Reem Kufi','Readex Pro',Tahoma,sans-serif;--fb:'Readex Pro','IBM Plex Sans Arabic',Tahoma,Arial,sans-serif;--fnum:'IBM Plex Sans Arabic',Tahoma,Arial,sans-serif;--fv:'Amiri','Traditional Arabic',serif}
+html.app body,html.app button,html.app input,html.app textarea,html.app select{font-family:var(--fb)}
+html.app h1,html.app h2,html.app h3,html.app h4,html.app footer .fe{font-family:var(--fh);font-weight:700}
+html.app .hero h1,html.app .hero h1 *{font-family:'Reem Kufi',var(--fh);font-weight:700}
+html.app .date,html.app .sh-ev-d,html.app .chip,html.app .cnt,html.app .num,html.app time{font-family:var(--fnum);font-variant-numeric:lining-nums}
+html.app .sh-verse .sh-vt,html.app .vcard #vt{font-family:'Amiri',var(--fv),serif;font-weight:700;font-size:clamp(20px,5.6vw,25px);line-height:1.9}
+html.app .sh-name{font-weight:700}
+
+/* لما يكون فيه أعياد ميلاد: الكروت تبقى مضغوطة عشان آية اليوم تفضل ظاهرة كاملة */
+html.app .sh-bday{padding:8px 10px;max-height:none;overflow:visible}
+html.app .sh-bd-h{margin-bottom:6px;font-size:13px}
+html.app .sh-bd-row{display:flex;flex-wrap:wrap;gap:8px}
+html.app .sh-bd{grid-template-columns:40px 1fr auto;gap:8px;background:rgba(255,255,255,.06);border-radius:16px;padding:5px 8px 5px 5px;max-width:100%}
+html.app .sh-bd img{width:40px;height:40px;border-radius:12px}
+html.app .sh-bd-n{font-size:13px;-webkit-line-clamp:1}
+html.app .sh-bd-s{padding:5px 10px;font-size:11.5px}
+html.app .sh-verse{min-height:168px;flex:1 0 auto}
+
+/* ===== الوضع الفاتح/الغامق: مفتاح واحد للموقع والتطبيق كله ===== */
+html.app[data-theme="light"]{--hero:#F4F7FB;--hero2:#FFFFFF;--hero-ink:#0B1220;--hero-gold:#2563EB;--ongold:#FFFFFF}
+html.app[data-theme="light"] .sh-home{background:linear-gradient(170deg,#F4F7FB 0%,#E9EEF6 100%);color:#0B1220}
+html.app[data-theme="light"] .sh-verse,html.app[data-theme="light"] .sh-q,html.app[data-theme="light"] .sh-ev,html.app[data-theme="light"] .sh-bday{background:#FFFFFF;border:1px solid #D8E0EC;color:#0B1220;box-shadow:0 10px 24px -18px rgba(11,18,32,.25)}
+html.app[data-theme="light"] .sh-verse::before{background:#2563EB}
+html.app[data-theme="light"] .sh-verse::after{color:#2563EB}
+html.app[data-theme="light"] .sh-vt,html.app[data-theme="light"] .sh-name,html.app[data-theme="light"] .sh-q b,html.app[data-theme="light"] .sh-ev-b b,html.app[data-theme="light"] .sh-bd-n{color:#0B1220}
+html.app[data-theme="light"] .sh-sub,html.app[data-theme="light"] .sh-q small,html.app[data-theme="light"] .sh-ev-b small,html.app[data-theme="light"] .sh-bd-n{color:#55657F;opacity:1}
+html.app[data-theme="light"] .sh-hi,html.app[data-theme="light"] .sh-vref,html.app[data-theme="light"] .sh-cta,html.app[data-theme="light"] .sh-verse small,html.app[data-theme="light"] .sh-lbl,html.app[data-theme="light"] .sh-arr,html.app[data-theme="light"] .sh-bd-h{color:#2563EB}
+html.app[data-theme="light"] .sh-share{background:#2563EB;color:#FFFFFF}
+html.app[data-theme="light"] .sh-qi{background:linear-gradient(135deg,#2563EB,#60A5FA);color:#FFFFFF}
+html.app[data-theme="light"] .sh-ev-d{background:linear-gradient(135deg,#2563EB,#60A5FA);color:#FFFFFF}
+html.app[data-theme="light"] .sh-ph,html.app[data-theme="light"] .sh-av{background:#FFFFFF;border-color:#2563EB}
+html.app[data-theme="light"] .sh-bd-s{background:#E9EEF6;color:#0B1220}
+html.app[data-theme="light"] .qbar{background:#FFFFFF;border:1px solid #D8E0EC;box-shadow:0 12px 28px -14px rgba(11,18,32,.25)}
+html.app[data-theme="light"] .qbar a{color:#55657F}
+html.app[data-theme="light"] .qbar a.on{color:#0B1220}
+html.app[data-theme="light"] .qbar a.on i{background:#2563EB;box-shadow:none}
+html.app[data-theme="light"] .qbar a.on i .ic{color:#FFFFFF}
+html.app[data-theme="light"] .tabbar{background:#FFFFFF}
+html.app[data-theme="light"] #shelltop{background:#FFFFFF}
+html.app[data-theme="light"] .sh-av .ic,html.app[data-theme="light"] .sh-ph .ic{color:#2563EB}
+html.app[data-theme="light"] .sh-qi .ic{color:#FFFFFF}
+html.app[data-theme="light"] .sh-empty{background:#FFFFFF;color:#55657F}
+html.app[data-theme="light"] #ann{color:#0B1220}
+
+.lang-btn{font-weight:800;font-size:13px;letter-spacing:.02em}
+html[dir="ltr"] .sh-greet>div,html[dir="ltr"] .sh-name,html[dir="ltr"] .sh-sub,html[dir="ltr"] .sh-hi{text-align:left}
